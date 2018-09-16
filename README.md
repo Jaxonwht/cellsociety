@@ -3,13 +3,14 @@ cell society
 
 This project implements a cellular automata simulator.
 
-Names:
+Names: <br/>
+Julia Saveliff, Yunhao Qing, Haotian Wang
 
 ### Timeline
 
-Start Date: 
+Start Date: 09/15/2018
 
-Finish Date: 
+Finish Date: 09/23/2018
 
 Hours Spent:
 
