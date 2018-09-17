@@ -26,7 +26,7 @@ Overview
 --------
 The classes and their relationships are illustrated in the picture below.
 
-![Overview.jpg](data/Overview.jpg)
+![Overview.jpg](../data/Overview.jpg)
 
 As shown in the picture above, this program will be divided into 5 parent classes: CA (main class), ReadXML, UI, Rule, 
 and AbstractCell. This last class will be an abstract class with several subclasses. The inheritance hierarchy, which is 
@@ -81,7 +81,7 @@ User Interface
 --------------
 
 ### Appearance & User Interaction
-![User Interface](data/UserInterface.jpeg)
+![User Interface](../data/UserInterface.jpeg)
 
 ###### *Splash page*:
 There will be a splash page with program options when the program is run. The user will have choices of simulation types 
