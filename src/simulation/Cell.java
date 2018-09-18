@@ -18,14 +18,81 @@ public abstract class Cell {
 
     public abstract List<Cell> getNeighbors();
 
-    public abstract void updateNextState();
-
-    protected abstract void updateState();
-
+    public abstract void determineNextState();
+    
     protected abstract void changeImageView();
 
-    public abstract int getState();
+    // Getter and setter methods for all instance variables
+    public int getNextState() {
+        return myNextState;
+    }
 
-    public abstract ImageView getImageView();
+    public void setNextState(int state) {
+        myNextState = state;
+    }
+
+    public int getState() {
+        return myState;
+    }
+
+    public void setState(int state) {
+        myState = state;
+    }
+
+    public ImageView getImageView() {
+        return myImageView;
+    }
+
+    public void setImageView(ImageView image) {
+        myImageView = image;
+    }
+
+    public double getWidth() {
+        return myWidth;
+    }
+
+    public void setWidth(double width) {
+        myWidth = width;
+    }
+
+    public double getHeight() {
+        return myHeight;
+    }
+
+    public void setHeight(double height) {
+        myHeight = height;
+    }
+
+    public double getX() {
+        return myX;
+    }
+
+    public void setX(double x) {
+        myX = x;
+    }
+
+    public double getY() {
+        return myY;
+    }
+
+    public void setY(double y) {
+        myY = y;
+    }
+
+    public Cell[][] getGrid() {
+        return myGrid;
+    }
+
+    public void setGrid(Cell[][] grid) {
+        myGrid = grid;
+    }
+
+    public Group getRoot() {
+        return myRoot;
+    }
+
+    public void setRoot(Group root) {
+        myRoot = root;
+    }
 
 }
