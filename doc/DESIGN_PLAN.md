@@ -1,5 +1,5 @@
 # Specification
-Describe the primary classes (in packages if possible) you envision are needed to read in and represent a CA model and 
+Describe the primary classes (in packages if possible) you envision are needed to read in and represent a simulation.CA model and 
 its simulation. Focus your design on how to represent a model in a general way and specifically on what behavior (i.e., 
 methods) your classes would have. If describing an inheritance hierarchy, clearly identify what behaviors the classes have 
 in common, the superclass, and what are different, the subclasses, rather than the instance variables.
@@ -7,7 +7,7 @@ in common, the superclass, and what are different, the subclasses, rather than t
 
 Introduction
 ---
-The objective of this project is to write a program that will implement several different Cell Automata (CA) models. 
+The objective of this project is to write a program that will implement several different Cell Automata (simulation.CA) models. 
 The configuration details of the model will be defined in an XML file (written in the format determined by our team), and 
 this file will be read in by the program. Depending on the information read in, the program will generate a simulation of 
 a certain type (i.e. Game of Life, Spreading of Fire). A simulation type is identified by the set of rules it follows for 
@@ -16,7 +16,7 @@ simulation by some interaction via user inputs through mouse and key. The goal o
 additions can be made to certain key features of the simulation. For example, the program should be flexible enough that 
 either an entire new simulation type can be added to the code or individual elements such as new rules or new states can 
 be added to existing simulation types. In terms of the primary architecture of the design, the architecture will be open 
-to modifications so that a new CA model can be readily added by adding a new XML file and new subclass(es) implementing 
+to modifications so that a new simulation.CA model can be readily added by adding a new XML file and new subclass(es) implementing 
 the abstract class that already exists for all simulation types. Behavior can be extended by creating these new 
 subclasses, but the structure and scope of these new subclasses will be limited by the closed abstract superclass. This 
 abstract class, as well as the main program involving visualizing the simulations, should stay unchanged as much as possible 
@@ -28,7 +28,7 @@ The classes and their relationships are illustrated in the picture below.
 
 ![Overview.jpg](Overview.jpg)
 
-As shown in the picture above, this program will be divided into 5 parent classes: CA (main class), ReadXML, UI, Rule, 
+As shown in the picture above, this program will be divided into 5 parent classes: simulation.CA (main class), ReadXML, UI, Rule, 
 and AbstractCell. This last class will be an abstract class with several subclasses. The inheritance hierarchy, which is 
 also diagrammed above, will consist of four subclasses directly extending AbstractCell. Each of these subclasses will 
 represent a typical (middle) cell in each of the four simulations we are going to implement: GameOfLifeCell, 
@@ -36,18 +36,18 @@ SegregationCell, FireCell, and WatorCell. Each of these subclasses will then hav
 example, WatorEdgeCell and WatorCornerCell. The reason that the program is structured this way is so that the 
 simulation-specific rules, parameters, and states can be interpreted directly by every cell in the grid. 
 
-The CA main class will be responsible for reading the appropriate XML file, initializing the cell grid and user 
+The simulation.CA main class will be responsible for reading the appropriate XML file, initializing the cell grid and user 
 interface, launching the animation, and stepping through the simulation. To achieve this functionality, it will require 
 the following methods: main (to launch the start method), start (to set up the animation), initialize (a helper function 
 to initialize all necessary simulation components), step (to update the simulation and animation), and handleUserInput 
 (a helper function to interpret user input of mouse). As the main class, it will make use of all other classes in the 
 program through the behavior within its methods. It will collaborate with the ReadXML class by using an object of this 
-type to parse the necessary XML file within the CA’s start method. This will be done by accessing public methods within 
+type to parse the necessary XML file within the simulation.CA’s start method. This will be done by accessing public methods within 
 the ReadXML class. This will include two getter methods called getCAtype and getCAparams. There will be at least one 
 other private method within ReadXML to help interact with the XML file that is passed into the constructor when this 
 object is initialized. 
 
-With this parsed data, the initialize method will then be called from CA’s start method. The behavior within this 
+With this parsed data, the initialize method will then be called from simulation.CA’s start method. The behavior within this 
 method may be divided into several helper methods to help keeps all methods short and single-purpose. Within the 
 initialize method, the main class will collaborate with the AbstractCell class to initialize the grid, which will be a 
 2D array of type AbstractCell[][]. Applying the concept of reflection, cells of all necessary types corresponding to 
@@ -57,7 +57,7 @@ WatorCell, WatorEdgeCell, or WatorCornerCell. This initialize method will also b
 object corresponding to each cell to the root of the scene. An instance of the UI class and an instance of the class 
 Rule will also be initialized here to be used later on by the simulation. 
 
-Within the step function of CA, Rule’s public apply method will be called to update all elements in the grid 
+Within the step function of simulation.CA, Rule’s public apply method will be called to update all elements in the grid 
 AbstractCell[][]. Rule will have an instance variable of type AbstractCell[][] so that it can iterate over the entire 
 grid to determine the next state of each cell, then update all of the elements in AbstractCell[][]. Both the 
 determination of a cell’s next state and the update of its current state will be done by calling methods on each 
@@ -73,7 +73,7 @@ ImageView instance variable of each cell so that the visualization can also be u
 then be added to the scene using public getter methods. 
 
 As another component of the step function, several methods on the UI object mentioned above will be called in order to 
-update the screen. The handleUserInput method in CA will collaborate with this object to determine when changes to the 
+update the screen. The handleUserInput method in simulation.CA will collaborate with this object to determine when changes to the 
 simulation need to be made based on the user’s actions. Specific behavior within the UI class will be further described 
 later in this design plan. 
 
@@ -110,7 +110,7 @@ Design Details
 
 ### Drill Down on Class Components
 
-* *CA (main class)*
+* *simulation.CA (main class)*
 
     Where major behavior of the program is initiated from, including interpretation of the XML file, initialization and 
     visualisation of the cells, handling user inputs. It extends Application class from JavaFx and implements the start 
@@ -206,8 +206,8 @@ Design Details
     *Justification and Flexibility for Extension*
     * Structuring this component as an entity that is separate from the rest of program is a decision that is beneficial 
     for the flexibility of the interpretation and format of XML files
-    * All that is required by other components of the program via the main CA class are the values of the CA type
-    and other CA parameters as interpreted within the ReadXML class 
+    * All that is required by other components of the program via the main simulation.CA class are the values of the simulation.CA type
+    and other simulation.CA parameters as interpreted within the ReadXML class 
     * Allows format changes to the XML files being read in without needing to modify code in any other component 
 
 * *UI*
@@ -330,7 +330,7 @@ from the Rule Class*
 * *Instantiate a Class by Name with Reflection*
 
     We considered using reflection so that, for example, when we read the XML file and decide the simulation type is 
-    Wator, we can let CA instantiate specifically a WatorCell instead of other kinds of cells. Although it might be a 
+    Wator, we can let simulation.CA instantiate specifically a WatorCell instead of other kinds of cells. Although it might be a 
     challenge to figure out how to use the unfamiliar concept of reflection here, it may be a worthwhile decision in 
     order to allow for this flexibility in the code. [StackOverflow article for reference](https://stackoverflow.com/questions/9886266/is-there-a-way-to-instantiate-a-class-by-name-in-java)
 
@@ -340,7 +340,7 @@ Team Responsibilities
 This section describes the program components each team member plans to take primary and secondary responsibility for 
 and a high-level plan of how the team will complete the program.
 
-* CA: A main class to run simulation from
+* simulation.CA: A main class to run simulation from
 
     Haotian, Julia, Yunhao
 
