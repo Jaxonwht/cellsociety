@@ -66,3 +66,9 @@ Julia
  list of lists?
  not sure how that would be better
  also maybe don't add these messages verbatim to the doc because it's mostly "my ta said this.." lol
+
+Haotian
+>Even if cells are triangles
+ They would still fit into a 2d array?
+ it's basically whether their x-coordinate is even or odd, which may determine the orientation of their imageview object
+ any other data structure is somehow based off an array anyway?
