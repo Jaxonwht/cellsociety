@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class Cell {
     private ImageView myImageView;
-    private double myX;
-    private double myY;
     private Cell[][] myGrid;
     private double myWidth;
     private double myHeight;
@@ -19,7 +17,7 @@ public abstract class Cell {
     public abstract List<Cell> getNeighbors();
 
     public abstract void determineNextState();
-    
+
     protected abstract void changeImageView();
 
     // Getter and setter methods for all instance variables
@@ -61,22 +59,6 @@ public abstract class Cell {
 
     public void setHeight(double height) {
         myHeight = height;
-    }
-
-    public double getX() {
-        return myX;
-    }
-
-    public void setX(double x) {
-        myX = x;
-    }
-
-    public double getY() {
-        return myY;
-    }
-
-    public void setY(double y) {
-        myY = y;
     }
 
     public Cell[][] getGrid() {
