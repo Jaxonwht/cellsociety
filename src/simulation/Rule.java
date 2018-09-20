@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author Haotian Wang
- * An abstract class that defines the rules for updating the states of cells in a grid.
+ * An abstract class that defines the rules for updating the states of cells in a grid. Determine what the next states
  */
 public abstract class Rule {
     private Grid myGrid;
@@ -20,9 +20,7 @@ public abstract class Rule {
     /**
      * Change the state of all Cells in Grid to the next state.
      */
-    public abstract void updateGrid() {
-        for
-    }
+    public abstract void updateGrid();
 
     /**
      * Allow access for the subclasses of rule to the abstract Rule class' Grid object.

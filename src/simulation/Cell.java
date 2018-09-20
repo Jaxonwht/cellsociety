@@ -39,6 +39,8 @@ public abstract class Cell {
         myState = state;
     }
 
+    protected void updateToNextState() { myState = myNextState; }
+
     protected int getIndexX() { return myIndexX; }
 
     protected void setIndexX(int index) { myIndexX = index; }
