@@ -1,5 +1,4 @@
-package sample;
-
+package simulation;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +25,26 @@ public class ReadXML {
     private HashMap<Integer,String> stateNum;
     Document document;
 
+
+
+   /**
+    * Example on how to use this Class;
+    * ReadXML xmlreader = new ReadXML("Wator1.xml");
+    * String name = xmlreader.getName(); 
+    * //This will tell you whether the xml is gol, fire, wator or segregation.
+    * int width = xmlreader.getWidth();
+    * int height = xmlreader.getHeight();
+    * row and column can be obtained similarly.
+    * //If the xml is wator for example;
+    * //int reproductionFish = xmlreader.getReproductionFish;
+    * int[][] cellSate = xmlreader.getCellState
+    * //This returns a 2D array with numbers like 0,1,2 to indicate cell state.
+    * HashMap<Integer,String> stateNum = xmlreader.getStateNum;
+    * //This returns something like {<0,empty><1,X><2,O>}, so one can track
+    * //the corresponding stateNumber and stateName in the main program.
+    */
+    
+    
     public ReadXML (String str) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(str);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -45,8 +64,6 @@ public class ReadXML {
             readFire();
         else if (name.equals("segregation"))
             readSegregation();
-        else if (name.equals("gameOfLife"))
-            readGameOfLife();
         else if (name.equals("wator"))
             readWator();
     }
@@ -55,7 +72,7 @@ public class ReadXML {
         NodeList nodeList = document.getElementsByTagName("state");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            int stateNumber = Integer.valueOf(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
+            int stateNumber = returnInt("stateNumber");
             String stateName = node.getAttributes().getNamedItem("stateName").getNodeValue();
             stateNum.put(stateNumber,stateName);
             String temp = node.getTextContent();
@@ -67,50 +84,40 @@ public class ReadXML {
     }
 
     private void readWator() {
-        reproductionFish = Integer.valueOf( document.getElementsByTagName("reproductionFish").item(0).getTextContent());
-        reproductionShark = Integer.valueOf( document.getElementsByTagName("reproductionShark").item(0).getTextContent());
+        reproductionFish = returnInt("reproductionFish");
+        reproductionShark = returnInt("reproductionShark");
     }
-
-    private void readGameOfLife() {
-    }
+    
 
     private void readSegregation() {
-        threshold = Integer.valueOf( document.getElementsByTagName("threshold").item(0).getTextContent());
-
+        threshold = returnInt("threshold");
     }
 
     public void readFire(){
-        probCatch = Integer.valueOf( document.getElementsByTagName("probCatch").item(0).getTextContent());
-
+        probCatch = returnInt("probCatch");
     }
 
     public void readGrid(){
-        width = Integer.valueOf( document.getElementsByTagName("width").item(0).getTextContent());
-        height = Integer.valueOf( document.getElementsByTagName("height").item(0).getTextContent());
-        row = Integer.valueOf( document.getElementsByTagName("row").item(0).getTextContent());
-        column = Integer.valueOf( document.getElementsByTagName("column").item(0).getTextContent());
+        width = returnInt("width");
+        height = returnInt("height");
+        row = returnInt("row");
+        column = returnInt("column");
         cellState = new int[row][column];
     }
-
-    public String getName(){
-        return name;
+    
+    private void returnInt(String str){
+        Integer.valueOf( document.getElementsByTagName(str).item(0).getTextContent());
     }
 
-    public int getRow(){
-        return row;
-    }
+    public String getName(){return name;}
 
-    public int getColumn(){
-        return column;
-    }
+    public int getRow(){return row;}
 
-    public int getWidth(){
-        return width;
-    }
+    public int getColumn(){return column;}
 
-    public int getHeight(){
-        return height;
-    }
+    public int getWidth(){return width;}
+
+    public int getHeight(){return height;}
 
     public int getThreshold(){return threshold;}
 
@@ -122,9 +129,7 @@ public class ReadXML {
 
     public int[][] getCellState(){return cellState;}
 
-    public HashMap<Integer,String> getStateNum(){
-        return stateNum;
-    }
+    public HashMap<Integer,String> getStateNum(){return stateNum;}
 }
 
 
