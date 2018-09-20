@@ -41,11 +41,11 @@ public abstract class Cell {
 
     protected int getIndexX() { return myIndexX; }
 
-    protected void setIndexX(int index) { myIndexX = index };
+    protected void setIndexX(int index) { myIndexX = index; }
 
     protected int getIndexY() { return myIndexY; }
 
-    protected void setIndexY(int index) { myIndexY = index };
+    protected void setIndexY(int index) { myIndexY = index; }
 
     protected ImageView getImageView() {
         return myImageView;
