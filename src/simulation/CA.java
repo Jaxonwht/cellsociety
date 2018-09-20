@@ -46,10 +46,10 @@ public class CA extends Application {
         primaryStage = stage;
 
         // create UI Manager object
-        myUI = new UIManager();
+        myUI = new UIManager(primaryStage);
 
         // set up scene
-        myUI.initialize(primaryStage);
+        myUI.initialize();
 
         //Group splashRoot = myUI.setUpSplash(primaryStage);
         //mySplashScene = splashRoot.getScene();
@@ -81,16 +81,7 @@ public class CA extends Application {
     private Group initializeSimulation (File file) {
         Group root = new Group();
 
-        try {
-            ReadXML reader = new ReadXML(file);
-            Grid myGrid = new Grid(root, reader);
-        } catch (ParserConfigurationException e) {
-            // TODO: catch parser config exception
-        } catch (IOException ee) {
-            // TODO: catch IO exception
-        } catch (SAXException eee) {
-            // TODO: catch SAX exception
-        }
+        Grid myGrid = new Grid(root, myReader);
 
         //myGrid.addCellImageViewToRoot();
         //Rule myRule = new Rule(myGrid);
