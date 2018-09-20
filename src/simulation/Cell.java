@@ -7,73 +7,83 @@ import java.util.List;
 
 public abstract class Cell {
     private ImageView myImageView;
-    private Cell[][] myGrid;
+    private Grid myGrid;
+    private int myIndexX;
+    private int myIndexY;
     private double myWidth;
     private double myHeight;
     private Group myRoot;
     private int myState;
     private int myNextState;
 
-    public abstract List<Cell> getNeighbors();
+    protected abstract List<Cell> getNeighbors();
 
-    public abstract void determineNextState();
+    protected abstract void determineNextState();
 
     protected abstract void changeImageView();
 
     // Getter and setter methods for all instance variables
-    public int getNextState() {
+    protected int getNextState() {
         return myNextState;
     }
 
-    public void setNextState(int state) {
+    protected void setNextState(int state) {
         myNextState = state;
     }
 
-    public int getState() {
+    protected int getState() {
         return myState;
     }
 
-    public void setState(int state) {
+    protected void setState(int state) {
         myState = state;
     }
 
-    public ImageView getImageView() {
+    protected int getIndexX() { return myIndexX; }
+
+    protected void setIndexX(int index) { myIndexX = index };
+
+    protected int getIndexY() { return myIndexY; }
+
+    protected void setIndexY(int index) { myIndexY = index };
+
+    protected ImageView getImageView() {
         return myImageView;
     }
 
-    public void setImageView(ImageView image) {
+    protected void setImageView(ImageView image) {
         myImageView = image;
     }
 
-    public double getWidth() {
+    protected double getWidth() {
         return myWidth;
     }
 
-    public void setWidth(double width) {
+    protected void setWidth(double width) {
         myWidth = width;
     }
 
-    public double getHeight() {
+    protected double getHeight() {
         return myHeight;
     }
 
-    public void setHeight(double height) {
+    protected void setHeight(double height) {
         myHeight = height;
     }
 
-    public Cell[][] getGrid() {
+    protected Grid getGrid() {
         return myGrid;
     }
 
-    public void setGrid(Cell[][] grid) {
+    protected void setGrid(Grid grid) {
         myGrid = grid;
     }
 
-    public Group getRoot() {
+    protected Group getRoot() {
         return myRoot;
     }
 
-    public void setRoot(Group root) {
+    protected void setRoot(Group root) {
         myRoot = root;
     }
 
