@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class UIManager {
+    private final static int SPLASH_SIZE = 300;
+    private final static int PANEL_WIDTH = 125;
     private Stage myStage;
     private File myFile;
     private ReadXML myReader;
@@ -31,42 +33,41 @@ public class UIManager {
     private Button simToSplashButton;
     private Boolean fileRead = false;
 
-    public UIManager() { }
-
-    public void initialize(Stage stage) {
-
+    public UIManager(Stage stage) {
         myStage = stage;
+    }
 
-        mySplashRoot = setupSplash(stage);
+    public void initialize() {
 
-        stage.setScene(mySplashRoot.getScene());
+        mySplashRoot = setupSplash(myStage);
+        myStage.setScene(mySplashRoot.getScene());
 
     }
 
-    public Group setupSplash(Stage stage) {
-        int width = 300;
-        int height = 300;
+    private Group setupSplash(Stage stage) {
+
         Group root = new Group();
-        Scene scene = new Scene(root, width, height);
-        VBox layout = new VBox(20);
-        layout.setPrefSize(width,height);
+        Scene scene = new Scene(root, SPLASH_SIZE, SPLASH_SIZE);
+        VBox layout = new VBox();
+        layout.setPrefSize(SPLASH_SIZE,SPLASH_SIZE);
 
         myFileChooser = new FileChooser();
         myFileChooser.setTitle("Choose XML file");
 
-        Button chooseButton = new Button("Choose XML file");
+        Button chooseFileButton = new Button("Choose XML file");
         Text selectedFile = new Text("Selected file:");
         myFileString = new Text();
         splashToSimButton = new Button("Start simulation");
 
-        layout.getChildren().add(chooseButton);
-        layout.getChildren().add(selectedFile);
-        layout.getChildren().add(myFileString);
-        layout.getChildren().add(splashToSimButton);
+        // add elements to layout node
+        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileString, splashToSimButton);
         layout.setAlignment(Pos.CENTER);
+
+        // add layout node to root node
         root.getChildren().add(layout);
 
-        chooseButton.setOnAction(
+        // activate choose file button
+        chooseFileButton.setOnAction(
                 new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent e) {
@@ -104,26 +105,26 @@ public class UIManager {
         return root;
     }
 
-    public Group setupSimulation(Stage stage) {
+    private Group setupSimulation(Stage stage) {
+        // should get these values from xml file
         int width = 600;
         int height = 400;
 
-        int panelWidth = 175;
-
+        // set up layout of scene
         Group root = new Group();
         Scene scene = new Scene(root, width, height);
         BorderPane border = new BorderPane();
 
         // user panel
         VBox userPanel = new VBox();
-        userPanel.setPrefSize(panelWidth,height);
+        userPanel.setPrefSize(PANEL_WIDTH,height);
         userPanel.setStyle("-fx-background-color: #336699");
         userPanel.setAlignment(Pos.CENTER);
         simToSplashButton = new Button("Load new simulation");
 
         // grid region
         GridPane gridRegion = new GridPane();
-        gridRegion.setPrefSize(width-panelWidth, height);
+        gridRegion.setPrefSize(width-PANEL_WIDTH, height);
         Button gridButton = new Button("I'm the grid");
 
         // add elements to each region
@@ -141,7 +142,7 @@ public class UIManager {
 
     }
 
-    public void setupSceneTransitions(Stage stage, Group splash, Group simulation) {
+    private void setupSceneTransitions(Stage stage, Group splash, Group simulation) {
 
         splashToSimButton.setOnAction(
                 new EventHandler<ActionEvent>() {
@@ -166,11 +167,10 @@ public class UIManager {
 
     }
 
-    public void handleReader(ReadXML reader) {
+    private void handleReader(ReadXML reader) {
 
         System.out.println("handleReader called");
         mySimRoot = setupSimulation(myStage);
-
         setupSceneTransitions(myStage, mySplashRoot, mySimRoot);
 
     }
