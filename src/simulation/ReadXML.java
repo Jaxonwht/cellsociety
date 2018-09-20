@@ -100,11 +100,12 @@ public class ReadXML {
         width = returnInt("width");
         height = returnInt("height");
         row = returnInt("row");
-        column = returnInt("column");
+        column = returnInt("col");
         cellState = new int[row][column];
     }
     
     private int returnInt(String str){
+        System.out.println("Fetching value of "+str);
         return Integer.valueOf( document.getElementsByTagName(str).item(0).getTextContent());
     }
 
