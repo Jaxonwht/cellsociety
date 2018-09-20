@@ -43,8 +43,8 @@ public class CA extends Application {
      */
     @Override
     public void start(Stage stage) {
-        // new comment
-        // I am going to merge this - julia
+        // new comment - hi
+        // I am going to merge this - julia - bye
 
         primaryStage = stage;
 
