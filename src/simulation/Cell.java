@@ -27,17 +27,11 @@ public abstract class Cell {
         return myNextState;
     }
 
-    protected void setNextState(int state) {
-        myNextState = state;
-    }
+    protected void setNextState(int state) { myNextState = state; }
 
-    protected int getState() {
-        return myState;
-    }
+    protected int getState() { return myState; }
 
-    protected void setState(int state) {
-        myState = state;
-    }
+    protected void setState(int state) { myState = state; }
 
     protected void updateToNextState() { myState = myNextState; }
 
