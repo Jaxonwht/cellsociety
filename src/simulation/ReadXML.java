@@ -105,8 +105,8 @@ public class ReadXML {
         cellState = new int[row][column];
     }
     
-    private void returnInt(String str){
-        Integer.valueOf( document.getElementsByTagName(str).item(0).getTextContent());
+    private int returnInt(String str){
+        return Integer.valueOf( document.getElementsByTagName(str).item(0).getTextContent());
     }
 
     public String getName(){return name;}
