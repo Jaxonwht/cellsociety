@@ -7,6 +7,7 @@ import javafx.css.Rule;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -25,9 +26,11 @@ public class CA extends Application {
     public static final double MILLISECOND_DELAY = 1000 / FRAME_PER_SECOND;
 
     private Stage primaryStage;
-    private Scene myScene;
+    private Scene mySplashScene;
+    private Scene mySimulationScene;
     private Rule myRule;
     private Timeline animation;
+    private UIManager myUI;
 
     /**
      * Initialize the stage and a scene. Define how the scene will be updated.
@@ -35,11 +38,21 @@ public class CA extends Application {
      */
     @Override
     public void start(Stage stage) {
-        myScene = setUpScene();
         primaryStage = stage;
-        primaryStage.setScene(myScene);
+        // create UI Manager object
+        myUI = new UIManager();
+
+        // set up scene
+        Group splashRoot = myUI.setUpSplash(primaryStage);
+        mySplashScene = splashRoot.getScene();
+        primaryStage.setScene(mySplashScene);
         primaryStage.setTitle(TITLE);
         primaryStage.show();
+
+        var startButton = new Button("ENTER GAME");
+        startButton.setOnAction(e -> primaryStage.setScene(mySimulationScene));
+
+        // set up animation
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
