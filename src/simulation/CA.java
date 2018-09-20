@@ -43,9 +43,6 @@ public class CA extends Application {
      */
     @Override
     public void start(Stage stage) {
-        // new comment - hi
-        // I am going to merge this - julia - bye
-
         primaryStage = stage;
 
         // create UI Manager object
