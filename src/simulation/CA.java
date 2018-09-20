@@ -3,7 +3,6 @@ package simulation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.css.Rule;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,8 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -28,9 +31,11 @@ public class CA extends Application {
     private Stage primaryStage;
     private Scene mySplashScene;
     private Scene mySimulationScene;
-    private Rule myRule;
+    //private Rule myRule;
     private Timeline animation;
     private UIManager myUI;
+    private File myFile;
+    private ReadXML myReader;
 
     /**
      * Initialize the stage and a scene. Define how the scene will be updated.
@@ -39,18 +44,25 @@ public class CA extends Application {
     @Override
     public void start(Stage stage) {
         primaryStage = stage;
+
         // create UI Manager object
         myUI = new UIManager();
 
         // set up scene
-        Group splashRoot = myUI.setUpSplash(primaryStage);
-        mySplashScene = splashRoot.getScene();
-        primaryStage.setScene(mySplashScene);
+        myUI.initialize(primaryStage);
+
+        //Group splashRoot = myUI.setUpSplash(primaryStage);
+        //mySplashScene = splashRoot.getScene();
+        //primaryStage.setScene(mySplashScene);
         primaryStage.setTitle(TITLE);
         primaryStage.show();
 
-        var startButton = new Button("ENTER GAME");
-        startButton.setOnAction(e -> primaryStage.setScene(mySimulationScene));
+        // read xml file
+        File myFile = myUI.getFile();
+        myReader = myUI.getReader();
+
+//        var startButton = new Button("ENTER GAME");
+//        startButton.setOnAction(e -> primaryStage.setScene(mySimulationScene));
 
         // set up animation
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
@@ -68,9 +80,20 @@ public class CA extends Application {
      */
     private Group initializeSimulation (File file) {
         Group root = new Group();
-        Grid myGrid = new Grid(root, new XMLReader(file));
-        myGrid.addCellImageViewToRoot();
-        Rule myRule = new Rule(myGrid);
+
+        try {
+            ReadXML reader = new ReadXML(file);
+            Grid myGrid = new Grid(root, reader);
+        } catch (ParserConfigurationException e) {
+            // TODO: catch parser config exception
+        } catch (IOException ee) {
+            // TODO: catch IO exception
+        } catch (SAXException eee) {
+            // TODO: catch SAX exception
+        }
+
+        //myGrid.addCellImageViewToRoot();
+        //Rule myRule = new Rule(myGrid);
         return root;
     }
 
