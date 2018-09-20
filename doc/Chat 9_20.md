@@ -23,3 +23,7 @@ There are some problems I'm not sure how to fix. For example the class reads in 
 Another problem is reading in stateNumber from XML file
 I added a debugging line to ReadXML so that every time it tries to get a value from the xml file, it prints "Fetching value of <str>" then we can see that the error was caused by the last printed str attribute being read in from the file
 Yunhao will you be able to debug this at some point today?
+
+Haotian
+>I see that's the concern I have had with a UI class, it has to know basically everything from main
+ it almost becomes main. so yeah, when we have conflicts, we pull stuff, we don't commit again i guess because that will make the work of others our own. I realized again, that we probably can put getNeighbors in SpecificRule class instead of cel still feels whacky for cell to know the grid.
