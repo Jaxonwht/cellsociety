@@ -35,8 +35,8 @@ public class CA extends Application {
      */
     @Override
     public void start(Stage stage) {
+        myScene = setUpScene();
         primaryStage = stage;
-        myScene = new Scene(initializeSimulation(file), BACKGROUND);
         primaryStage.setScene(myScene);
         primaryStage.setTitle(TITLE);
         primaryStage.show();
@@ -45,6 +45,7 @@ public class CA extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
     }
+
 
 
     /**
