@@ -2,7 +2,7 @@
 <cellSociety>
 	<simulation>
 		<name>segregation</name>
-		<tile>segregation_1</title>
+		<title>segregation_1</title>
 		<author>Team13</author>
 	</simulation>
 	<params>

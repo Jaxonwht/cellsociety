@@ -2,7 +2,7 @@
 <cellSociety>
 	<simulation>
 		<name>spreadingOfFire</name>
-		<tile>spreadingOfFire_1</title>
+		<title>spreadingOfFire_1</title>
 		<author>Team13</author>
 	</simulation>
 	<params>

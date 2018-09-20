@@ -2,7 +2,7 @@
 <cellSociety>
 	<simulation>
 		<name>wator</name>
-		<tile>wator_1</title>
+		<title>wator_1</title>
 		<author>Team13</author>
 	</simulation>
 	<params>
