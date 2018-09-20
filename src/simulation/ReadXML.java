@@ -45,8 +45,7 @@ public class ReadXML {
     */
     
     
-    public ReadXML (String str) throws ParserConfigurationException, IOException, SAXException {
-        File file = new File(str);
+    public ReadXML (File file) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         document = documentBuilder.parse(file);
