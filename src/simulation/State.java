@@ -1,4 +1,8 @@
 package simulation;
 
-public class State {
+public enum State {
+    DEAD,
+    ALIVE;
+
+    private State() { }
 }
