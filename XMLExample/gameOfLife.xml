@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cellSociety>
+	<simulation>
+		<name>gameOfLife</name>
+		<tile>gameOfLife_1</title>
+		<author>Team13</author>
+	</simulation>
+	<params>
+	</params>
+	<dimConfig>
+		<grid>
+			<row>5</row>
+			<col>5</col>
+			<width>500</width>
+			<height>500</height>
+		</grid>
+		<cellState>
+			<state stateNumber = "1" stateName = "alive">0 1 2 3 4 5 6 7 8 9 10 12 13 14 22</state>
+			<state stateNumber = "2" stateName = "dead">11 15 16 17 18 19 20 21 23 24</state>
+		</cellState>
+	</dimConfig>
+</cellSociety>
