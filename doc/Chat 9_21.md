@@ -24,3 +24,13 @@ Yunhao
 Haotian
 >This is done simultaneously
  We can’t update one by one, against the rule
+
+Julia
+>yeah i have it
+ the current problem i am having is that the simulation grid does not change until about the 300th step, and after that the entire grid stays black
+ that may require some debugging in Rule.determineNextStates() and Rule.updateGrid()
+
+Haotian
+>Hmmmm do you print the step to get the number three indeed? ok @Yunhao  Qing, we decided to change from using ImageView to Shape
+                                                             ImageView eats up too much memory. and @Yunhao  Qing your setburningtime reports error
+                                                                                                because now at the testing stage, we hardcorded gameoflifecell into Grid. so if you do grid.item(i, j), it returns a gameoflifecell

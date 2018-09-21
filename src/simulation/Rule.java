@@ -24,7 +24,7 @@ public abstract class Rule {
     public void updateGrid() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
-                this.getGrid().item(i, j).updateImageView();
+                this.getGrid().item(i, j).updateShape();
                 this.getGrid().item(i, j).updateToNextState();
             }
         }

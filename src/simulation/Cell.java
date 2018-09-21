@@ -3,12 +3,16 @@ package simulation;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.List;
 import java.util.Map;
 
 public abstract class Cell {
-    private ImageView myImageView;
+    private Shape myShape;
     private double myXPos;
     private double myYPos;
     private double myWidth;
@@ -27,19 +31,29 @@ public abstract class Cell {
     }
 
     /**
-     * Set the ImageView of the Cell object for interaction with other JavaFx nodes.
-     * @param imageFile: a String which is the name of the image file located in the resources root.
+     * Set the Rectangle of the Cell object for interaction with other JavaFx nodes.
      */
-    protected void setImageView(String imageFile) {
-        Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(imageFile));
-        this.myImageView = new ImageView(image);
-        this.myImageView.setFitWidth(myWidth);
-        this.myImageView.setFitHeight(myHeight);
-        this.myImageView.setX(myXPos);
-        this.myImageView.setY(myYPos);
+    protected void setRectangle(Paint paint) {
+        this.myShape = new Rectangle(this.myXPos, this.myYPos, this.myWidth, this.myHeight);
+        this.myShape.setFill(paint);
     }
 
-    protected abstract void updateImageView();
+    /**
+     * Set the Circle of the Cell object for interaction with other JavaFx nodes.
+     */
+    protected void setCircle(Paint paint) {
+        this.myShape = new Circle(this.myXPos + this.myWidth / 2, this.myYPos + this.myHeight / 2, this.myWidth / 2);
+        this.myShape.setFill(paint);
+    }
+
+    /**
+     * Update the color of the shape of the cell to its corresponding next state.
+     */
+    protected void updateShape(Map<Integer, Paint> map) {
+        if (this.getState() != this.getNextState()) {
+            this.getShape().setFill(map.get(this.getNextState()));
+        }
+    }
 
     // Getter and setter methods for all instance variables
     protected int getNextState() {
@@ -58,8 +72,8 @@ public abstract class Cell {
 
     protected double getY() { return myYPos; }
 
-    protected ImageView getImageView() {
-        return myImageView;
+    protected Shape getShape() {
+        return myShape;
     }
 
     protected double getWidth() {

@@ -23,6 +23,9 @@ Sources for ImageView:
 
 * [alive.gif](https://commons.wikimedia.org/wiki/File:Solid_white.png)
 * [dead.gif](https://commons.wikimedia.org/wiki/File:Solid_black.png)
+* [Schelling's Model of Segregation
+](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/)
+* [Oracle documentation on Circle](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Circle.html)
 
 ### Running the Program
 
