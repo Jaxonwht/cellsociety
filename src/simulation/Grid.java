@@ -1,6 +1,10 @@
 package simulation;
 
 import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Grid {
     private Cell[][] myCells;
@@ -8,9 +12,12 @@ public class Grid {
     private int myNumCol;
     private double myWidth;
     private double myHeight;
+    private ReadXML myReader;
+    private Group myRoot;
 
     public Grid(Group root, ReadXML reader) {
-        reader.readGrid();
+        myRoot = root;
+        myReader = reader;
 
         this.myNumRow = reader.getRow();
         this.myNumCol = reader.getColumn();
@@ -21,15 +28,34 @@ public class Grid {
 
     }
 
+    public void populateCells() {
+        double w = myWidth / myNumCol;
+        double h = myHeight / myNumRow;
+        int[][] states = myReader.getCellState();
+        for (int i=0; i<myNumRow; i++) {
+            for (int j=0; j<myNumCol; j++) {
+                int state = states[i][j];
+                myCells[i][j] = new GameOfLifeCell(myRoot, j*w, i*h, w, h, state);
+            }
+        }
+    }
+
+    public Collection<ImageView> getAllImageView() {
+        Collection<ImageView> allImageView = new ArrayList<>();
+        for (int i=0; i<myNumRow; i++) {
+            for (int j=0; j<myNumCol; j++) {
+                allImageView.add(this.item(i,j).getImageView());
+            }
+        }
+        return allImageView;
+    }
+
     public int getNumRow() { return myNumRow; }
 
     public int getNumCol() { return myNumCol; }
 
-    public Cell item(int i, int j) {
-        return myCells[i][j];
-    }
+    public Cell item(int i, int j) { return myCells[i][j]; }
 
-    public boolean isOutOfBounds(int i, int j) {
-        return i < 0 || i > myNumRow || j < 0 || j > myNumRow;
-    }
+    public boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
+
 }
