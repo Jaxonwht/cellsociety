@@ -19,6 +19,10 @@ Hours Spent:
 
 ### Resources Used
 
+Sources for ImageView:
+
+* [alive.gif](https://commons.wikimedia.org/wiki/File:Solid_white.png)
+* [dead.gif](https://commons.wikimedia.org/wiki/File:Solid_black.png)
 
 ### Running the Program
 
