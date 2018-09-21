@@ -29,14 +29,6 @@ public class Grid {
         return myCells[i][j];
     }
 
-    public void updateCells() {
-        for (int i = 0; i < myNumRow; i++) {
-            for (int j = 0; j < myNumCol; j++) {
-                myCells[i][j].updateToNextState();
-            }
-        }
-    }
-
     public boolean isOutOfBounds(int i, int j) {
         return i < 0 || i > myNumRow || j < 0 || j > myNumRow;
     }
