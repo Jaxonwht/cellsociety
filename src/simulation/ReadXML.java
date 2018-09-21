@@ -17,10 +17,10 @@ public class ReadXML {
     private int column;
     private int width;
     private int height;
-    private int probCatch;
-    private int reproductionFish;
-    private int reproductionShark;
-    private int threshold;
+    private double probCatch;
+    private double reproductionFish;
+    private double reproductionShark;
+    private double threshold;
     private int[][] cellState;
     private HashMap<Integer,String> stateNum;
     Document document;
@@ -83,17 +83,17 @@ public class ReadXML {
     }
 
     private void readWator() {
-        reproductionFish = returnInt("reproductionFish");
-        reproductionShark = returnInt("reproductionShark");
+        reproductionFish = returnDouble("reproductionFish");
+        reproductionShark = returnDouble("reproductionShark");
     }
     
 
     private void readSegregation() {
-        threshold = returnInt("threshold");
+        threshold = returnDouble("threshold");
     }
 
     public void readFire(){
-        probCatch = returnInt("probCatch");
+        probCatch = returnDouble("probCatch");
     }
 
     public void readGrid(){
@@ -106,7 +106,12 @@ public class ReadXML {
     
     private int returnInt(String str){
         System.out.println("Fetching value of "+str);
-        return Integer.valueOf( document.getElementsByTagName(str).item(0).getTextContent());
+        return Integer.valueOf(document.getElementsByTagName(str).item(0).getTextContent());
+    }
+    
+    private double returnDouble(String str){
+        System.out.println("Fetching value of "+str);
+        return Double.parseDouble(document.getElementsByTagName(str).item(0).getTextContent());
     }
 
     public String getName(){return name;}
@@ -119,13 +124,13 @@ public class ReadXML {
 
     public int getHeight(){return height;}
 
-    public int getThreshold(){return threshold;}
+    public double getThreshold(){return threshold;}
 
-    public int getReproductionFish(){return reproductionFish;}
+    public double getReproductionFish(){return reproductionFish;}
 
-    public int getReproductionShark(){return reproductionShark;}
+    public double getReproductionShark(){return reproductionShark;}
 
-    public int getProbCatch(){return probCatch;}
+    public double getProbCatch(){return probCatch;}
 
     public int[][] getCellState(){return cellState;}
 

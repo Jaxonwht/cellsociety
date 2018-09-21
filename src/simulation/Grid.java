@@ -12,12 +12,12 @@ public class Grid {
     public Grid(Group root, ReadXML reader) {
         reader.readGrid();
 
-        myNumRow = reader.getRow();
-        myNumCol = reader.getColumn();
-        myCells = new Cell[myNumRow][myNumCol];
+        this.myNumRow = reader.getRow();
+        this.myNumCol = reader.getColumn();
+        this.myCells = new Cell[myNumRow][myNumCol];
 
-        myWidth = reader.getWidth();
-        myHeight = reader.getHeight();
+        this.myWidth = reader.getWidth();
+        this.myHeight = reader.getHeight();
 
     }
 
@@ -29,5 +29,15 @@ public class Grid {
         return myCells[i][j];
     }
 
+    public void updateCells() {
+        for (int i = 0; i < myNumRow; i++) {
+            for (int j = 0; j < myNumCol; j++) {
+                myCells[i][j].updateToNextState();
+            }
+        }
+    }
 
+    public boolean isOutOfBounds(int i, int j) {
+        return i < 0 || i > myNumRow || j < 0 || j > myNumRow;
+    }
 }
