@@ -12,6 +12,28 @@ public class SpreadingOfFireRule extends Rule {
     public SpreadingOfFireRule(Grid grid) {
         super(grid);
     }
+    
+    @Override
+    protected List<Cell> getNeighbors(int row, int col) {
+        Grid grid = this.getGrid();
+        List<Cell> neighbors = new ArrayList<Cell>();
+        if (!grid.isOutOfBounds(row + 1, col)){
+            neighbors.add(grid.item(row + 1, col));
+        }
+        if (!grid.isOutOfBounds(row - 1, col)){
+            neighbors.add(grid.item(row - 1, col));
+        }
+        if (!grid.isOutOfBounds(row, col + 1)){
+            neighbors.add(grid.item(row, col + 1));
+        }
+        if (!grid.isOutOfBounds(row, col - 1)){
+            neighbors.add(grid.item(row, col - 1));
+        }
+        return neighbors;
+    }
+
+
+    
     /**
      * Calculate the next state of all the cells in the grid, according to this article, http://nifty.stanford.edu/2007/shiflet-fire/.
      */
