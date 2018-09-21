@@ -33,4 +33,12 @@ Julia
 Haotian
 >Hmmmm do you print the step to get the number three indeed? ok @Yunhao  Qing, we decided to change from using ImageView to Shape
                                                              ImageView eats up too much memory. and @Yunhao  Qing your setburningtime reports error
-                                                                                                because now at the testing stage, we hardcorded gameoflifecell into Grid. so if you do grid.item(i, j), it returns a gameoflifecell
+                                                                                                because now at the testing stage, we hardcorded gameoflifecell into Grid. so if you do grid.item(i, j), it returns a gameoflifecell. @Julia Saveliff how do you get the program to run with all the errors, I want to test whether shapes work
+
+Julia
+>I have just been commenting out lines that throw errors
+ Since none of the errors are in code that is needed to run the simulation
+
+Haotian
+>and now run is not clickable
+ is it because there are two packages?

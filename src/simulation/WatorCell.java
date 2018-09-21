@@ -41,7 +41,7 @@ public class WatorCell extends Cell {
      * Update the color of the shape of the cell to its corresponding next state.
      */
     @Override
-    protected void updateShape() {
+    protected void updateShape(Map<Integer, Paint> map) {
         if (this.getState() != this.getNextState()) {
             this.getShape().setFill(STATE_TO_PAINT_MAP.get(this.getNextState()));
         }

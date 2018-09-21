@@ -8,10 +8,16 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Julia Saveliff, Haotian Wang
+ */
 public abstract class Cell {
+    public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = new HashMap<>();
+
     private Shape myShape;
     private double myXPos;
     private double myYPos;

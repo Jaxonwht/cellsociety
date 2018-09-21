@@ -4,6 +4,7 @@ module cellsociety_team13 {
         requires javafx.graphics;
         requires javafx.media;
         requires java.xml;
+    requires javafx.fxml;
 
-        exports simulation;
+    exports simulation;
 }
