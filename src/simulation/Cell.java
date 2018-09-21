@@ -1,26 +1,39 @@
 package simulation;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
 
 public abstract class Cell {
     private ImageView myImageView;
-    private Grid myGrid;
-    private int myIndexX;
-    private int myIndexY;
+    private int myRow;
+    private int myCol;
     private double myWidth;
     private double myHeight;
     private Group myRoot;
     private int myState;
     private int myNextState;
 
-    protected abstract List<Cell> getNeighbors();
+    public Cell(Group root, int row, int col, double width, double height, int state) {
+        this.myRoot = root;
+        this.myRow = row;
+        this.myCol = col;
+        this.myWidth = width;
+        this.myHeight = height;
+        this.myState = state;
+    }
 
-    protected abstract void determineNextState();
+    protected void setImageView(String imageFile, double width, double height) {
+        Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(imageFile));
+        this.myImageView = new ImageView(image);
+        this.myImageView.setFitWidth(width);
+        this.myImageView.setFitHeight(height);
+        // TODO: determine the x and y positions of the cells in the plane.
+    }
 
-    protected abstract void changeImageView();
+    protected abstract void updateImageView();
 
     // Getter and setter methods for all instance variables
     protected int getNextState() {
@@ -35,20 +48,16 @@ public abstract class Cell {
 
     protected void updateToNextState() { myState = myNextState; }
 
-    protected int getIndexX() { return myIndexX; }
+    protected int getRow() { return myRow; }
 
-    protected void setIndexX(int index) { myIndexX = index; }
+    protected void setRow(int index) { myRow = index; }
 
-    protected int getIndexY() { return myIndexY; }
+    protected int getCol() { return myCol; }
 
-    protected void setIndexY(int index) { myIndexY = index; }
+    protected void setCol(int index) { myCol = index; }
 
     protected ImageView getImageView() {
         return myImageView;
-    }
-
-    protected void setImageView(ImageView image) {
-        myImageView = image;
     }
 
     protected double getWidth() {
@@ -67,14 +76,6 @@ public abstract class Cell {
         myHeight = height;
     }
 
-    protected Grid getGrid() {
-        return myGrid;
-    }
-
-    protected void setGrid(Grid grid) {
-        myGrid = grid;
-    }
-
     protected Group getRoot() {
         return myRoot;
     }
@@ -82,5 +83,5 @@ public abstract class Cell {
     protected void setRoot(Group root) {
         myRoot = root;
     }
-
 }
+
