@@ -1,3 +1,13 @@
+Inheritance Review
+
+
+Date: Thursday 9/20/18
+
+Author:  Yunhao Qing (yq50)
+
+Partner:  Inchain Hwang (ih33)
+
+
 **Part 1**
 *What is an implementation decision that your design is encapsulating (i.e., hiding) for other areas of the program?*
 
