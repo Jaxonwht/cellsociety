@@ -39,7 +39,7 @@ public abstract class Cell {
         this.myImageView.setY(myYPos);
     }
 
-    protected abstract void updateImageView();
+    protected abstract void updateImageView()
 
     // Getter and setter methods for all instance variables
     protected int getNextState() {
