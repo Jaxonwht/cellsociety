@@ -8,6 +8,7 @@ import java.util.*;
 public class SpreadingOfFireRule extends Rule {
     
     public static final int myBurningCount = 3;
+    public statif final double probGrowth = 0.1;
     
     public SpreadingOfFireRule(Grid grid) {
         super(grid);
@@ -32,8 +33,6 @@ public class SpreadingOfFireRule extends Rule {
         return neighbors;
     }
 
-
-    
     /**
      * Calculate the next state of all the cells in the grid, according to this article, http://nifty.stanford.edu/2007/shiflet-fire/.
      */
@@ -62,6 +61,13 @@ public class SpreadingOfFireRule extends Rule {
 						boolean val = rand.nextInt(1/probCatch)==0;
 						if (val == true)
 							cell.setNextState(SpreadingOfFireCell.BURNING);
+					}
+                }
+                if (cell.getState() == SpreadingOfFireCell.EMPTY){
+						Random rand = new Random();
+						boolean val = rand.nextInt(1/probGrowth)==0;
+						if (val == true)
+							cell.setNextState(SpreadingOfFireCell.NORMAL);
 					}
                 }
             }
