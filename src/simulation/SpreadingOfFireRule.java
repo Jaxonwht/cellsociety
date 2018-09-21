@@ -6,6 +6,9 @@ import java.util.*;
  * A specific Rule class for SpreadingOfFire game.
  */
 public class SpreadingOfFireRule extends Rule {
+    
+    public static final int myBurningCount = 3;
+    
     public SpreadingOfFireRule(Grid grid) {
         super(grid);
     }
@@ -18,7 +21,11 @@ public class SpreadingOfFireRule extends Rule {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
                 if (cell.getState() == SpreadingOfFireCell.BURNING){
-					cell.setNextState(SpreadingOfFireCell.EMPTY);
+                    cell.setBurningTime(cell.getBurningTime()+1);
+                    if (cell.getBurningTime() == myBurningCount){
+                        cell.setBurningTime(0);
+                        cell.setNextState(SpreadingOfFireCell.EMPTY);
+                    }
 				}
                 if (cell.getState() == SpreadingOfFireCell.NORMAL){
                     boolean check = false;
