@@ -21,7 +21,11 @@ import java.io.IOException;
 
 public class UIManager {
     private final static int SPLASH_SIZE = 300;
-    private final static int PANEL_WIDTH = 125;
+    private final static int PANEL_WIDTH = 175;
+    private final static String LOAD_NEW_TEXT = "Load new simulation";
+    private final static String PAUSE_TEXT = "Pause";
+    private final static String RESUME_TEXT = "Resume";
+    private final static String STEP_TEXT = "Step";
     private Stage myStage;
     private File myFile;
     private ReadXML myReader;
@@ -32,6 +36,7 @@ public class UIManager {
     private Button splashToSimButton;
     private Button simToSplashButton;
     private Boolean fileRead = false;
+
 
     public UIManager(Stage stage) {
         myStage = stage;
@@ -71,33 +76,7 @@ public class UIManager {
                 new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent e) {
-                        File file = myFileChooser.showOpenDialog(stage);
-                        if (file != null) {
-
-                            System.out.println("Got file and it's not null");
-
-                            myFile = file;
-                            String[] myFileNameArray = myFile.toString().split("/");
-                            String myFileName = myFileNameArray[myFileNameArray.length-1];
-                            myFileString.setText(myFileName);
-
-                            try {
-                                myReader = new ReadXML(myFile);
-                                System.out.println("Created reader");
-                                fileRead = true;
-                                handleReader(myReader);
-                            } catch (ParserConfigurationException PCe) {
-                                // TODO: handle exception
-                                System.out.println("ParserConfigurationException: "+PCe.getMessage());
-                            } catch (IOException IOe) {
-                                // TODO: handle exception
-                                System.out.println("IOException: "+IOe.getMessage());
-                            } catch (SAXException SAXe) {
-                                // TODO: handle exception
-                                System.out.println("SAXException: "+SAXe.getMessage());
-                            }
-
-                        }
+                        handleFile(myFileChooser.showOpenDialog(stage));
                     }
                 });
 
@@ -105,30 +84,30 @@ public class UIManager {
         return root;
     }
 
-    private Group setupSimulation(Stage stage) {
-        // should get these values from xml file
-        int width = 600;
-        int height = 400;
-
+    private Group setupSimulation(Stage stage, int width, int height, String title) {
         // set up layout of scene
         Group root = new Group();
-        Scene scene = new Scene(root, width, height);
+        Scene scene = new Scene(root, width+PANEL_WIDTH, height);
         BorderPane border = new BorderPane();
 
         // user panel
-        VBox userPanel = new VBox();
+        VBox userPanel = new VBox(20);
         userPanel.setPrefSize(PANEL_WIDTH,height);
         userPanel.setStyle("-fx-background-color: #336699");
         userPanel.setAlignment(Pos.CENTER);
-        simToSplashButton = new Button("Load new simulation");
+        simToSplashButton = new Button(LOAD_NEW_TEXT);
+        Button pauseButton = new Button(PAUSE_TEXT);
+        Button resumeButton = new Button(RESUME_TEXT);
+        Button stepButton = new Button(STEP_TEXT);
+
 
         // grid region
         GridPane gridRegion = new GridPane();
-        gridRegion.setPrefSize(width-PANEL_WIDTH, height);
-        Button gridButton = new Button("I'm the grid");
+        gridRegion.setPrefSize(width, height);
+        Button gridButton = new Button(title);
 
         // add elements to each region
-        userPanel.getChildren().add(simToSplashButton);
+        userPanel.getChildren().addAll(simToSplashButton, pauseButton, resumeButton, stepButton);
         gridRegion.getChildren().add(gridButton);
 
         // set layout regions
@@ -142,35 +121,46 @@ public class UIManager {
 
     }
 
+    private void handleFile(File file) {
+        if (file != null) {
+
+            System.out.println("Got file and it's not null");
+
+            myFile = file;
+            String[] myFileNameArray = myFile.toString().split("/");
+            String myFileName = myFileNameArray[myFileNameArray.length-1];
+            myFileString.setText(myFileName);
+
+            try {
+                myReader = new ReadXML(myFile);
+                System.out.println("Created reader");
+                fileRead = true;
+                handleReader(myReader);
+            } catch (ParserConfigurationException PCe) {
+                // TODO: handle exception
+                System.out.println("ParserConfigurationException: "+PCe.getMessage());
+            } catch (IOException IOe) {
+                // TODO: handle exception
+                System.out.println("IOException: "+IOe.getMessage());
+            } catch (SAXException SAXe) {
+                // TODO: handle exception
+                System.out.println("SAXException: "+SAXe.getMessage());
+            }
+
+        }
+    }
+
     private void setupSceneTransitions(Stage stage, Group splash, Group simulation) {
 
-        splashToSimButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(final ActionEvent e) {
-                        if (myFile != null) {
-                            stage.setScene(simulation.getScene());
-                        }
-                    }
-                });
-
-        simToSplashButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(final ActionEvent e) {
-                        stage.setScene(splash.getScene());
-                    }
-                }
-        );
-
-
+        splashToSimButton.setOnAction( event -> { if(myFile !=null) { stage.setScene(simulation.getScene()); }});
+        simToSplashButton.setOnAction( event -> stage.setScene(splash.getScene()) );
 
     }
 
     private void handleReader(ReadXML reader) {
 
         System.out.println("handleReader called");
-        mySimRoot = setupSimulation(myStage);
+        mySimRoot = setupSimulation(myStage, reader.getHeight(), reader.getWidth(), reader.getName());
         setupSceneTransitions(myStage, mySplashRoot, mySimRoot);
 
     }
