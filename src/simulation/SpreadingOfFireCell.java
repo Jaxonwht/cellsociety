@@ -12,6 +12,7 @@ public class SpreadingOfFireCell extends Cell {
     public static final String NORMAL_IMAGE = "normal.gif";
     public static final String BURNING_IMAGE = "burning.gif";
     public static final Map<Integer, String> STATE_TO_IMAGE_MAP = initMap();
+    private int myBurningTime;
 
     /**
      * @return An unmodifiable map.
@@ -27,6 +28,7 @@ public class SpreadingOfFireCell extends Cell {
     public  SpreadingOfFireCell(Group root, int row, int col, double width, double height, int state) {
         super(root, row, col, width, height, state);
         setImageView(STATE_TO_IMAGE_MAP.get(state), width, height);
+        myBurningTime = 0;
     }
 
     @Override
@@ -36,4 +38,13 @@ public class SpreadingOfFireCell extends Cell {
             this.setImageView(STATE_TO_IMAGE_MAP.get(getNextState(), this.getWidth(), this.getHeight()));
         }
     }
+    
+    protected int getBurningTime() {
+        return myBurningTime;
+    }
+
+    protected void addBurningTime() {
+        myBurningTime++;
+    }
+
 }
