@@ -51,4 +51,4 @@ Haotian
                             either we have a rule class and extend it
                             or we will have many grid classes
                             all my changes will be in haotian branch
-                            Also we need a way to calculate x and y for each cell, so they can generate an ImageView for themselves.
+                            Also we need a way to calculate x and y for each cell, so they can generate an ImageView for themselves. ok, now cell doesn't need to have access to indices, but rather it'd better have x-coordinates and y-coordinates

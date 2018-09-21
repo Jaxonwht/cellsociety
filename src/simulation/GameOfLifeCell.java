@@ -27,7 +27,7 @@ public class GameOfLifeCell extends Cell {
 
     public GameOfLifeCell(Group root, int row, int col, double width, double height, int state) {
         super(root, row, col, width, height, state);
-        setImageView(STATE_TO_IMAGE_MAP.get(state), width, height);
+        setImageView(STATE_TO_IMAGE_MAP.get(state));
     }
 
     /**
@@ -37,7 +37,7 @@ public class GameOfLifeCell extends Cell {
     protected void updateImageView() {
         if (this.getNextState() != this.getState()) {
             this.getRoot().getChildren().remove(this.getImageView());
-            this.setImageView(STATE_TO_IMAGE_MAP.get(getNextState()), this.getWidth(), this.getHeight());
+            this.setImageView(STATE_TO_IMAGE_MAP.get(getNextState()));
             this.getRoot().getChildren().add(this.getImageView());
         }
     }
