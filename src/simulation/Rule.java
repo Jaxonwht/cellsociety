@@ -24,6 +24,7 @@ public abstract class Rule {
     public void updateGrid() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
+                this.getGrid().item(i, j).updateImageView();
                 this.getGrid().item(i, j).updateToNextState();
             }
         }
@@ -36,13 +37,11 @@ public abstract class Rule {
 
     /**
      * A method used to find the neighbors of a cell in a grid.
-     * @param cell: the Cell object whose neighbors we are trying to find.
-     * @return A List of Cell that contains the neighbors of the cell passed as parameter.
-     */
-    protected List<Cell> getNeighbors(Cell cell) {
+     * @param row: the row number of the cell whose neighbors are to be found.
+     * @param col: the column number of the cell whose neighbors are to be found.
+     * @return A List of Cell that contains the neighbors of the cell passed as parameter.+     */
+    protected List<Cell> getNeighbors(int row, int col) {
         Grid grid = this.getGrid();
-        int row = cell.getRow();
-        int col = cell.getCol();
         List<Cell> neighbors = new ArrayList<>();
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = col - 1; j <= col + 1; j++) {

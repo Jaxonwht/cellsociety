@@ -24,7 +24,7 @@ public class GameOfLifeRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
-                List<Cell> neighbors = this.getNeighbors(cell);
+                List<Cell> neighbors = this.getNeighbors(i, j);
                 int numAliveNeighbors = 0;
                 for (Cell neighbor : neighbors) {
                     if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) { numAliveNeighbors++; }
