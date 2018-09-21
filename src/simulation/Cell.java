@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class Cell {
     private ImageView myImageView;
@@ -23,8 +24,15 @@ public abstract class Cell {
         this.myWidth = width;
         this.myHeight = height;
         this.myState = state;
+        // TODO: decide if to add the ImageView node in Cell or in UIManager
     }
 
+    /**
+     * Set the ImageView of the Cell object for interaction with other JavaFx nodes.
+     * @param imageFile: a String which is the name of the image file located in the resources root.
+     * @param width: width of the cell object.
+     * @param height: height of the cell object.
+     */
     protected void setImageView(String imageFile, double width, double height) {
         Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(imageFile));
         this.myImageView = new ImageView(image);
