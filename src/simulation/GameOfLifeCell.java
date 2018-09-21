@@ -19,6 +19,7 @@ public class GameOfLifeCell extends Cell {
 
     @Override
     protected void updateImageView() {
-
+        this.getRoot().getChildren().remove(this.getImageView());
+        this.setImageView();
     }
 }

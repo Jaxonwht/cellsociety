@@ -28,6 +28,9 @@ public abstract class Cell {
     protected void setImageView(String imageFile, double width, double height) {
         Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(imageFile));
         this.myImageView = new ImageView(image);
+        this.myImageView.setFitWidth(width);
+        this.myImageView.setFitHeight(height);
+        // TODO: determine the x and y positions of the cells in the plane.
     }
 
     protected abstract void updateImageView();

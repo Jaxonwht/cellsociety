@@ -18,6 +18,9 @@ public abstract class Rule {
         this.myGrid = grid;
     }
 
+    /**
+     * Update all the Cells in the grid to their next states.
+     */
     public void updateGrid() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
@@ -27,10 +30,15 @@ public abstract class Rule {
     }
 
     /**
-     * Change the state of all Cells in Grid to the next state.
+     * Calculate and set the next states of all the cells in the grid.
      */
     public abstract void determineNextStates();
 
+    /**
+     * A method used to find the neighbors of a cell in a grid.
+     * @param cell: the Cell object whose neighbors we are trying to find.
+     * @return A List of Cell that contains the neighbors of the cell passed as parameter.
+     */
     protected List<Cell> getNeighbors(Cell cell) {
         Grid grid = this.getGrid();
         int row = cell.getRow();
