@@ -41,7 +41,7 @@ public class Grid {
         }
     }
 
-    public Collection<Shape> getAllImageView() {
+    public Collection<Shape> getAllShape() {
         Collection<Shape> allShape = new ArrayList<>();
         for (int i=0; i<myNumRow; i++) {
             for (int j=0; j<myNumCol; j++) {

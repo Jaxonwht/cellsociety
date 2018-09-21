@@ -42,3 +42,14 @@ Julia
 Haotian
 >and now run is not clickable
  is it because there are two packages?
+
+Julia
+>Hm
+ Is your branch updated? I can take a look at it
+
+Haotian
+>yeah
+ i managed to run even though intellij told me "simulation.ca doesn't exist"
+ but i managed to run
+ and
+ with shapes it's super fast

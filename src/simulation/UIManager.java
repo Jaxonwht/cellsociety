@@ -208,7 +208,7 @@ public class UIManager {
 
         myGrid = new Grid(root, myReader);
         myGrid.populateCells();
-        var cellsToAdd = myGrid.getAllImageView();
+        var cellsToAdd = myGrid.getAllShape();
 
         myRule = new GameOfLifeRule(myGrid);
 
