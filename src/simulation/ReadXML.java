@@ -71,12 +71,12 @@ public class ReadXML {
         NodeList nodeList = document.getElementsByTagName("state");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            int stateNumber = returnInt("stateNumber");
+            int stateNumber = Integer.valueOf(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
             String stateName = node.getAttributes().getNamedItem("stateName").getNodeValue();
             stateNum.put(stateNumber,stateName);
             String temp = node.getTextContent();
             for (String s : temp.split(" ")){
-                int index = Integer.valueOf(s)+1;
+                int index = Integer.valueOf(s);
                 cellState[index/column][index%column] = stateNumber;
             }
         }
