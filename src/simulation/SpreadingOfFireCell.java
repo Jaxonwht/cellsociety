@@ -43,8 +43,8 @@ public class SpreadingOfFireCell extends Cell {
         return myBurningTime;
     }
 
-    protected void addBurningTime() {
-        myBurningTime++;
+    protected void setBurningTime(int time) {
+        myBurningTime = time;
     }
 
 }
