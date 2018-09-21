@@ -42,4 +42,9 @@ Haotian
  yeah [0][1]
  but 0 is y, 1 is x
  oh i see
- so the variables should be called row/col instead of x/y
+ so the variables should be called row/col instead of x/y.
+ there is one problem with cell having access to grid
+ when we initialize grid
+ we have to initialize cell
+ but to initialize cell
+ we have to initialze grid.

@@ -1,13 +1,13 @@
 package simulation;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
 
 public abstract class Cell {
     private ImageView myImageView;
-    private Grid myGrid;
     private int myRow;
     private int myCol;
     private double myWidth;
@@ -16,11 +16,21 @@ public abstract class Cell {
     private int myState;
     private int myNextState;
 
-    protected abstract List<Cell> getNeighbors();
+    public Cell(Group root, int row, int col, double width, double height, int state) {
+        this.myRoot = root;
+        this.myRow = row;
+        this.myCol = col;
+        this.myWidth = width;
+        this.myHeight = height;
+        this.myState = state;
+    }
 
-    protected abstract void determineNextState();
+    protected void setImageView(String imageFile, double width, double height) {
+        Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(imageFile));
+        this.myImageView = new ImageView(image);
+    }
 
-    protected abstract void changeImageView();
+    protected abstract void updateImageView();
 
     // Getter and setter methods for all instance variables
     protected int getNextState() {
@@ -47,10 +57,6 @@ public abstract class Cell {
         return myImageView;
     }
 
-    protected void setImageView(ImageView image) {
-        myImageView = image;
-    }
-
     protected double getWidth() {
         return myWidth;
     }
@@ -65,14 +71,6 @@ public abstract class Cell {
 
     protected void setHeight(double height) {
         myHeight = height;
-    }
-
-    protected Grid getGrid() {
-        return myGrid;
-    }
-
-    protected void setGrid(Grid grid) {
-        myGrid = grid;
     }
 
     protected Group getRoot() {

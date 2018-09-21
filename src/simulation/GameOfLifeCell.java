@@ -1,38 +1,24 @@
 package simulation;
 
+import javafx.scene.Group;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameOfLifeCell extends Cell {
+    public static final int DEAD = 0;
+    public static final int ALIVE = 1;
+    public static final String DEAD_IMAGE = "dead.gif";
+    public static final String ALIVE_IMAGE = "alive.gif";
 
-    /**
-     * @return A list of Cells that are "neighbors" of this Cell in GameOfLife.
-     */
-    @Override
-    public List<Cell> getNeighbors() {
-        Grid grid = this.getGrid();
-        int row = this.getRow();
-        int col = this.getCol();
-        List<Cell> neighbors = new ArrayList<>();
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                if (!(i == row && j == col && grid.isOutOfBounds(i, j))) {
-                    neighbors.add(grid.item(i, j));
-                }
-            }
-        }
-        return neighbors;
+    public GameOfLifeCell(Group root, int row, int col, double width, double height, int state) {
+        super(root, row, col, width, height, state);
+        if (state == DEAD) { setImageView(DEAD_IMAGE, width, height); }
+        else if (state == ALIVE) { setImageView(ALIVE_IMAGE, width, height); }
     }
 
     @Override
-    public void determineNextState() {
+    protected void updateImageView() {
 
     }
-
-    @Override
-    protected void changeImageView() {
-
-    }
-
-
 }
