@@ -24,7 +24,7 @@ public class SpreadingOfFireCell extends Cell {
         return Collections.unmodifiableMap(map);
     }
 
-    public GameOfLifeCell(Group root, int row, int col, double width, double height, int state) {
+    public  SpreadingOfFireCell(Group root, int row, int col, double width, double height, int state) {
         super(root, row, col, width, height, state);
         setImageView(STATE_TO_IMAGE_MAP.get(state), width, height);
     }
