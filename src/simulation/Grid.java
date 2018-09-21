@@ -36,4 +36,8 @@ public class Grid {
             }
         }
     }
+
+    public boolean isOutOfBounds(int i, int j) {
+        return i < 0 || i > myNumRow || j < 0 || j > myNumRow;
+    }
 }

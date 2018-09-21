@@ -8,8 +8,8 @@ import java.util.List;
 public abstract class Cell {
     private ImageView myImageView;
     private Grid myGrid;
-    private int myIndexX;
-    private int myIndexY;
+    private int myRow;
+    private int myCol;
     private double myWidth;
     private double myHeight;
     private Group myRoot;
@@ -35,13 +35,13 @@ public abstract class Cell {
 
     protected void updateToNextState() { myState = myNextState; }
 
-    protected int getIndexX() { return myIndexX; }
+    protected int getRow() { return myRow; }
 
-    protected void setIndexX(int index) { myIndexX = index; }
+    protected void setRow(int index) { myRow = index; }
 
-    protected int getIndexY() { return myIndexY; }
+    protected int getCol() { return myCol; }
 
-    protected void setIndexY(int index) { myIndexY = index; }
+    protected void setCol(int index) { myCol = index; }
 
     protected ImageView getImageView() {
         return myImageView;
@@ -82,5 +82,5 @@ public abstract class Cell {
     protected void setRoot(Group root) {
         myRoot = root;
     }
-
 }
+

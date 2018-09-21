@@ -26,4 +26,20 @@ Yunhao will you be able to debug this at some point today?
 
 Haotian
 >I see that's the concern I have had with a UI class, it has to know basically everything from main
- it almost becomes main. so yeah, when we have conflicts, we pull stuff, we don't commit again i guess because that will make the work of others our own. I realized again, that we probably can put getNeighbors in SpecificRule class instead of cel still feels whacky for cell to know the grid.
+ it almost becomes main. so yeah, when we have conflicts, we pull stuff, we don't commit again i guess because that will make the work of others our own. I realized again, that we probably can put getNeighbors in SpecificRule class instead of cel still feels whacky for cell to know the grid.ok for now I am going to discard Rule class and do everything inside cell
+
+ Julia
+ > got it i won't make any changes there
+
+ Haotian
+ >and getX is actually the y-index
+ because
+ [[1,2,3]
+  [a,b,c]]
+ 2 is at [1][0] actually
+ so x should be called row actually
+ are you sure? i think 2 is [0][1]
+ yeah [0][1]
+ but 0 is y, 1 is x
+ oh i see
+ so the variables should be called row/col instead of x/y
