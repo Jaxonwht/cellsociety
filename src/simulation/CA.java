@@ -23,15 +23,8 @@ import java.lang.reflect.InvocationTargetException;
 public class CA extends Application {
     public static final Paint BACKGROUND = Color.WHITE;
     public static final String TITLE = "Cell Society Simulation";
-    public static final double windowWidth = 900;
-    public static final double windowHeight = 900;
-    public static final int FRAME_PER_SECOND = 60;
-    public static final double MILLISECOND_DELAY = 1000 / FRAME_PER_SECOND;
 
     private Stage primaryStage;
-    private Scene mySplashScene;
-    private Scene mySimulationScene;
-    //private Rule myRule;
     private Timeline animation;
     private UIManager myUI;
     private File myFile;
@@ -49,29 +42,18 @@ public class CA extends Application {
         myUI = new UIManager(primaryStage);
 
         // set up scene
-        myUI.initialize();
-
-        //Group splashRoot = myUI.setUpSplash(primaryStage);
-        //mySplashScene = splashRoot.getScene();
-        //primaryStage.setScene(mySplashScene);
+        myUI.create();
         primaryStage.setTitle(TITLE);
         primaryStage.show();
+
+        // start simulation
+        // myUI.run();
 
         // read xml file
         File myFile = myUI.getFile();
         myReader = myUI.getReader();
 
-//        var startButton = new Button("ENTER GAME");
-//        startButton.setOnAction(e -> primaryStage.setScene(mySimulationScene));
-
-        // set up animation
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
-        animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
     }
-
-
 
     /**
      * Create
@@ -86,13 +68,6 @@ public class CA extends Application {
         //myGrid.addCellImageViewToRoot();
         //Rule myRule = new Rule(myGrid);
         return root;
-    }
-
-    /**
-     * Animation for the simulations. Change states and appearances of cells. Forward the states of the cells to the next generation.
-     */
-    private void step() {
-
     }
 
     /**
