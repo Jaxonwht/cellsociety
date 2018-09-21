@@ -52,7 +52,7 @@ public class UIManager {
     private Button simToSplashButton;
     private Slider mySpeedSlider;
     private Grid myGrid;
-    private Rule myRule;
+    private GameOfLifeRule myRule;
     private int myNumGenerations=1;
     private Text myGenerationsDisplay;
 
@@ -90,7 +90,7 @@ public class UIManager {
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
-        myAnimation.play();
+        //myAnimation.play();
     }
 
     /**
@@ -106,6 +106,9 @@ public class UIManager {
 
         // Update num generations
         myNumGenerations += 1;
+        if (myNumGenerations > 800) {
+            myAnimation.stop();
+        }
         myGenerationsDisplay.setText("Generations: "+myNumGenerations);
         System.out.println(myNumGenerations);
 

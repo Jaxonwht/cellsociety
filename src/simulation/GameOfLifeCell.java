@@ -25,8 +25,8 @@ public class GameOfLifeCell extends Cell {
         return Collections.unmodifiableMap(map);
     }
 
-    public GameOfLifeCell(Group root, int row, int col, double width, double height, int state) {
-        super(root, row, col, width, height, state);
+    public GameOfLifeCell(Group root, double x, double y, double width, double height, int state) {
+        super(root, x, y, width, height, state);
         setImageView(STATE_TO_IMAGE_MAP.get(state));
     }
 
