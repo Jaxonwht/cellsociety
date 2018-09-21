@@ -7,8 +7,10 @@ import java.util.*;
  */
 public class SpreadingOfFireRule extends Rule {
     
-    public static final int myBurningCount = 3;
-    public statif final double probGrowth = 0.1;
+    private static final int myBurningCount = 3;
+    private static final double probGrowth = 0.1;
+    private static final double probCatch = 0.2;
+    //This two params may be passed into this class and this part need to be changed in the future.
     
     public SpreadingOfFireRule(Grid grid) {
         super(grid);
@@ -50,23 +52,18 @@ public class SpreadingOfFireRule extends Rule {
 				}
                 if (cell.getState() == SpreadingOfFireCell.NORMAL){
                     boolean check = false;
-                    List<Cell> neighbors = cell.getNeighbors(i, j);
+                    List<Cell> neighbors = this.getNeighbors(i,j);
                     for (Cell neighbor : neighbors) {
-					if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING){
-						check = true;
-						}
+                        if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING){
+                            check = true;
+                        }
 					}
-					if (check == true){
-						Random rand = new Random();
-						boolean val = rand.nextInt(1/probCatch)==0;
-						if (val == true)
-							cell.setNextState(SpreadingOfFireCell.BURNING);
+					if (check && Math.random()<probCatch){
+					    cell.setNextState(SpreadingOfFireCell.BURNING);
 					}
                 }
                 if (cell.getState() == SpreadingOfFireCell.EMPTY){
-						Random rand = new Random();
-						boolean val = rand.nextInt(1/probGrowth)==0;
-						if (val == true)
+						if(Math.random()<probGrowth)
 							cell.setNextState(SpreadingOfFireCell.NORMAL);
 					}
                 }
