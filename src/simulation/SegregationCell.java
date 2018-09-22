@@ -1,7 +1,5 @@
 package simulation;
 
-
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -22,6 +20,7 @@ public class SegregationCell extends Cell{
     public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
     /**
+     * @author Haotian Wang
      * A static method that creates an unmodifiable map for GameOfLife, relating the state int to the String representing image file name.
      * @return An unmodifiable map.
      */

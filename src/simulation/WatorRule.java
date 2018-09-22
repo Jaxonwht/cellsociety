@@ -2,12 +2,10 @@ package simulation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
- * A specific Rule class for Wator.
- *
  * @author Yunhao Qing
+ * A specific Rule class for Wator.
  */
 public class WatorRule extends Rule {
 
@@ -15,13 +13,11 @@ public class WatorRule extends Rule {
 
     public final int REPRODUCTION_FISH;
     public final int REPRODUCTION_SHARK;
-    public final Random rand = new Random();
 
     public WatorRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         REPRODUCTION_FISH = (int) Math.floor(extraParameters.get(0));
         REPRODUCTION_SHARK = (int) Math.floor(extraParameters.get(1));
-
     }
 
     @Override
@@ -41,94 +37,104 @@ public class WatorRule extends Rule {
         return neighbors;
     }
 
+    public boolean moveCell(WatorCell cell, List<Cell> neighbors){
+        List<Cell> possMoves = new ArrayList<>();
+        for (Cell neighbor : neighbors) {
+            if (neighbor.getState() == WatorCell.EMPTY &&
+                    neighbor.getNextState() == Cell.UNINITIALIZED) {
+                possMoves.add(neighbor);
+            }
+        }
+        if (!possMoves.isEmpty()) {
+            WatorCell move = (WatorCell) possMoves.get(Rule.rand.nextInt(possMoves.size()));
+            move.setNextState(cell.getState());
+            move.setSurviveTime(cell.getSurviveTime());
+            cell.setNextState(WatorCell.EMPTY);
+            cell.setSurviveTime(0);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean reprobCell(WatorCell cell,List<Cell> neighbors){
+        if (cell.getSurviveTime() >= REPRODUCTION_SHARK) {
+            List<Cell> possReprobs = new ArrayList<Cell>();
+            for (Cell neighbor : neighbors) {
+                if (neighbor.getState() == WatorCell.EMPTY &&
+                        neighbor.getNextState() == Cell.UNINITIALIZED) {
+                    possReprobs.add(neighbor);
+                }
+            }
+            if (!possReprobs.isEmpty()) {
+                cell.setSurviveTime(0);
+                Cell reprob = possReprobs.get(Rule.rand.nextInt(possReprobs.size()));
+                reprob.setNextState(WatorCell.SHARK);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean eatCell(List<Cell> neighbors){
+        List<Cell> possFoods = new ArrayList<Cell>();
+        for (Cell neighbor : neighbors) {
+            if (neighbor.getState() == WatorCell.FISH &&
+                    neighbor.getNextState() == Cell.UNINITIALIZED) {
+                possFoods.add(neighbor);
+            }
+        }
+        if (!possFoods.isEmpty()) {
+            WatorCell food = (WatorCell) possFoods.get(Rule.rand.nextInt(possFoods.size()));
+            food.setNextState(WatorCell.EMPTY);
+            food.setSurviveTime(0);
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void determineNextStates() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
-                List<Cell> neighbors = this.getNeighbors(i, j);
                 if (cell.getState() == WatorCell.SHARK) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
-                    boolean reprob = false;
-                    if (cell.getSurviveTime() >= REPRODUCTION_SHARK) {
-                        List<Cell> possReprobs = new ArrayList<Cell>();
-                        for (Cell neighbor : neighbors) {
-                            if (neighbor.getState() == WatorCell.EMPTY && neighbor.getNextState() == WatorCell.EMPTY) {
-                                possReprobs.add(neighbor);
-                            }
-                        }
-                        if (!possReprobs.isEmpty()) {
-                            reprob = true;
-                            cell.setSurviveTime(0);
-                            Cell possReprob = possReprobs.get(rand.nextInt(possReprobs.size()));
-                            possReprob.setNextState(WatorCell.SHARK);
-                        }
-                    }
-                    if (!reprob) {
-                        boolean eat = false;
-                        List<Cell> possFoods = new ArrayList<Cell>();
-                        for (Cell neighbor : neighbors) {
-                            if (neighbor.getState() == WatorCell.FISH && neighbor.getNextState() != WatorCell.EMPTY) {
-                                possFoods.add(neighbor);
-                            }
-                        }
-                        if (!possFoods.isEmpty()) {
-                            eat = true;
-                            WatorCell food = (WatorCell) possFoods.get(rand.nextInt(possFoods.size()));
-                            food.setNextState(WatorCell.EMPTY);
-                            food.setSurviveTime(0);
-                        }
-                        if (!eat) {
-                            List<Cell> possMoves = new ArrayList<Cell>();
-                            for (Cell neighbor : neighbors) {
-                                if (neighbor.getState() == WatorCell.EMPTY && neighbor.getNextState() == WatorCell.EMPTY) {
-                                    possMoves.add(neighbor);
-                                }
-                            }
-                            if (!possMoves.isEmpty()) {
-                                WatorCell move = (WatorCell) possMoves.get(rand.nextInt(possMoves.size()));
-                                move.setNextState(WatorCell.SHARK);
-                                move.setSurviveTime(cell.getSurviveTime());
-                                cell.setSurviveTime(0);
-                            }
+                    List<Cell> neighbors = this.getNeighbors(i, j);
+                    if (!reprobCell(cell,neighbors)) {
+                        if (!eatCell(neighbors)) {
+                            moveCell(cell,neighbors);
                         }
                     }
                 }
-                if (cell.getState() == WatorCell.FISH && cell.getNextState() == WatorCell.FISH) {
-                    cell.setSurviveTime(cell.getSurviveTime() + 1);
-                    boolean reprob = false;
-                    if (cell.getSurviveTime() >= REPRODUCTION_FISH) {
-                        List<Cell> possReprobs = new ArrayList<Cell>();
-                        for (Cell neighbor : neighbors) {
-                            if (neighbor.getState() == WatorCell.EMPTY && neighbor.getNextState() == WatorCell.EMPTY) {
-                                possReprobs.add(neighbor);
-                            }
-                        }
-                        if (!possReprobs.isEmpty()) {
-                            reprob = true;
-                            cell.setSurviveTime(0);
-                            Cell possReprob = possReprobs.get(rand.nextInt(possReprobs.size()));
-                            possReprob.setNextState(WatorCell.FISH);
-                        }
-                    }
-                    if (!reprob) {
-                        List<Cell> possMoves = new ArrayList<Cell>();
-                        for (Cell neighbor : neighbors) {
-                            if (neighbor.getState() == WatorCell.EMPTY && neighbor.getNextState() == WatorCell.EMPTY) {
-                                possMoves.add(neighbor);
-                            }
-                        }
-                        if (!possMoves.isEmpty()) {
-                            WatorCell move = (WatorCell) possMoves.get(rand.nextInt(possMoves.size()));
-                            move.setNextState(WatorCell.FISH);
-                            move.setSurviveTime(cell.getSurviveTime());
-                            cell.setSurviveTime(0);
-                        }
-                    }
-                }
-
             }
         }
+        for (int i = 0; i < this.getGrid().getNumRow(); i++) {
+            for (int j = 0; j < this.getGrid().getNumCol(); j++) {
+                WatorCell cell = (WatorCell) this.getGrid().item(i, j);
+                if (cell.getState() == WatorCell.FISH && cell.getNextState() == Cell.UNINITIALIZED) {
+                    cell.setSurviveTime(cell.getSurviveTime() + 1);
+                    List<Cell> neighbors = this.getNeighbors(i, j);
+                    if (!reprobCell(cell,neighbors)) {
+                            moveCell(cell,neighbors);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < this.getGrid().getNumRow(); i++) {
+            for (int j = 0; j < this.getGrid().getNumCol(); j++) {
+                WatorCell cell = (WatorCell) this.getGrid().item(i, j);
+                if (cell.getNextState() == Cell.UNINITIALIZED)
+                    cell.setNextState(cell.getState());
+            }
+        }
+
+        /*
+        for (int i = 0; i < this.getGrid().getNumRow(); i++) {
+            for (int j = 0; j < this.getGrid().getNumCol(); j++) {
+                WatorCell cell = (WatorCell) this.getGrid().item(i, j);
+                //System.out.printf("Cell at row " + i + "column" + j)
+            }
+        }
+        */
     }
 }

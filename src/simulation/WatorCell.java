@@ -7,7 +7,7 @@ import javafx.scene.paint.Paint;
 import java.util.*;
 
 /**
- * @author Yunhao Qing, Haotian Wang
+ * @author Yunhao Qing
  */
 public class WatorCell extends Cell {
     public static final int EMPTY = 0;

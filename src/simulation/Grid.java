@@ -7,6 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Julia Saveliff
+ */
 public class Grid {
     private Cell[][] myCells;
     private int myNumRow;
