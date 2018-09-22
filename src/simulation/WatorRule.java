@@ -16,10 +16,10 @@ public class WatorRule extends Rule {
 	public final int REPRODUCTION_SHARK;
     public final Random rand = new Random();
 
-    public WatorRule(Grid grid, List<int> extraParameters) {
+    public WatorRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
-        REPRODUCTION_FISH = extraParameters.get(0);
-		REPRODUCTION_SHARK = extraParameters.get(0);
+        REPRODUCTION_FISH = (int)Math.floor(extraParameters.get(0));
+		REPRODUCTION_SHARK = (int)Math.floor(extraParameters.get(1);
     }
 
     @Override
@@ -45,19 +45,24 @@ public class WatorRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell)this.getGrid().item(i, j);
+
 				if (cell.getState() == WatorCell.SHARK){
-					cell.addSurviveTime();
+					cell.setSurviveTime(cell.getSurviveTime()+1);
 					List<Cell> neighbors = this.getNeighbors(i, j);
-					
+					boolean eat = false;
 					List<Cell> possibleFoods = new ArrayList<Cell>();
 					for (Cell neighbor : neighbors) {
                         if (neighbor.getState() == WatorCell.FISH && neighbor.getNextState() != WatorCell.EMPTY) {
                             possibleFoods.add(neighbor);
                         }
                     }
-					Cell food = possibleFoods.get(rand.nextInt(possibleFoods.size()));
-					food.setNextState(WatorCell.EMPTY);
-					
+                    if (!possibleFoods.isEmpty()){
+                        eat = true;
+                        Cell food = possibleFoods.get(rand.nextInt(possibleFoods.size()));
+                        food.setNextState(WatorCell.EMPTY);
+                    }
+
+                    if (!eat){
 					List<Cell> possibleMoves = new ArrayList<Cell>();
 					for (Cell neighbor : neighbors) {
                         if (neighbor.getState() == WatorCell.EMPTY && neighbor.getNextState() == WatorCell.EMPTY) {
@@ -66,6 +71,7 @@ public class WatorRule extends Rule {
                     }
 					Cell move = possibleMoves.get(rand.nextInt(possibleMoves.size()));
 					move.setNextState(WatorCell.EMPTY);
+                    }
 					
 					if (cell.getSurviveTime() >= REPRODUCTION_SHARK){
 						List<Cell> possibleReprobs = new ArrayList<Cell>();

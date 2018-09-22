@@ -10,8 +10,7 @@ public class SpreadingOfFireRule extends Rule {
     public final int MY_BURNING_COUNT;
     public final double PROB_GROWTH;
     public final double PROB_CATCH;
-    //This two params may be passed into this class and this part need to be changed in the future.
-    
+
     public SpreadingOfFireRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         PROB_CATCH = extraParameters.get(0);
@@ -41,6 +40,7 @@ public class SpreadingOfFireRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 SpreadingOfFireCell cell = (SpreadingOfFireCell) this.getGrid().item(i, j);
+
                 if (cell.getState() == SpreadingOfFireCell.BURNING) {
                     cell.setBurningTime(cell.getBurningTime() + 1);
                     if (cell.getBurningTime() == MY_BURNING_COUNT) {
@@ -61,9 +61,9 @@ public class SpreadingOfFireRule extends Rule {
                     }
                 }
                 if (cell.getState() == SpreadingOfFireCell.EMPTY) {
-                    if (Math.random() < PROB_GROWTH)
+                    if (Math.random() < PROB_GROWTH){
                         cell.setNextState(SpreadingOfFireCell.NORMAL);
-
+                    }
                 }
             }
         }
