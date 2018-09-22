@@ -3,14 +3,14 @@ package simulation;
 import java.util.*;
 
 /**
+ * @author Yunhao Qing
  * A specific Rule class for SpreadingOfFire game, adapting rules from http://nifty.stanford.edu/2007/shiflet-fire/.
  */
 public class SpreadingOfFireRule extends Rule {
     public final int MY_BURNING_COUNT;
     public final double PROB_GROWTH;
     public final double PROB_CATCH;
-    //This two params may be passed into this class and this part need to be changed in the future.
-    
+
     public SpreadingOfFireRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         PROB_CATCH = extraParameters.get(0);
@@ -22,17 +22,15 @@ public class SpreadingOfFireRule extends Rule {
     protected List<Cell> getNeighbors(int row, int col) {
         Grid grid = this.getGrid();
         List<Cell> neighbors = new ArrayList<Cell>();
-        if (!grid.isOutOfBounds(row + 1, col)){
-            neighbors.add(grid.item(row + 1, col));
-        }
-        if (!grid.isOutOfBounds(row - 1, col)){
-            neighbors.add(grid.item(row - 1, col));
-        }
-        if (!grid.isOutOfBounds(row, col + 1)){
-            neighbors.add(grid.item(row, col + 1));
-        }
-        if (!grid.isOutOfBounds(row, col - 1)){
-            neighbors.add(grid.item(row, col - 1));
+        List<int[]> cells  = new ArrayList<>();
+        cells.add(new int[]{row+1,col});
+        cells.add(new int[]{row-1,col});
+        cells.add(new int[]{row,col+1});
+        cells.add(new int[]{row+1,col-1});
+        for (int[] cell : cells){
+            if (!grid.isOutOfBounds(cell[0], cell[1])) {
+                neighbors.add(grid.item(cell[0], cell[1]));
+            }
         }
         return neighbors;
     }
@@ -42,6 +40,7 @@ public class SpreadingOfFireRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 SpreadingOfFireCell cell = (SpreadingOfFireCell) this.getGrid().item(i, j);
+
                 if (cell.getState() == SpreadingOfFireCell.BURNING) {
                     cell.setBurningTime(cell.getBurningTime() + 1);
                     if (cell.getBurningTime() == MY_BURNING_COUNT) {
@@ -62,9 +61,9 @@ public class SpreadingOfFireRule extends Rule {
                     }
                 }
                 if (cell.getState() == SpreadingOfFireCell.EMPTY) {
-                    if (Math.random() < PROB_GROWTH)
+                    if (Math.random() < PROB_GROWTH){
                         cell.setNextState(SpreadingOfFireCell.NORMAL);
-
+                    }
                 }
             }
         }
