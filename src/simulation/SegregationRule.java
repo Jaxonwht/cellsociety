@@ -29,7 +29,7 @@ public class SegregationRule extends Rule {
                             numSameType++;
                         }
                     }
-                    if (numSameType / neighbors.size() < SATISFACTION_THRESHOLD) {
+                    if (numSameType / (float) neighbors.size() < SATISFACTION_THRESHOLD) {
                         int destX = rand.nextInt(this.getGrid().getNumCol());
                         int destY = rand.nextInt(this.getGrid().getNumRow());
                         while (this.getGrid().item(destX, destY).getState() != SegregationCell.EMPTY && this.getGrid().item(destX, destY).getNextState() != SegregationCell.EMPTY) {
