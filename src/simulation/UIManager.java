@@ -106,7 +106,6 @@ public class UIManager {
             myAnimation.stop();
         }
         myGenerationsDisplay.setText("Generations: "+myNumGenerations);
-        System.out.println(myNumGenerations);
 
         //update cells
         myRule.determineNextStates();
@@ -205,13 +204,13 @@ public class UIManager {
 
         String type = myReader.getName();
         try {
-            Class<?> clazz = Class.forName("com.simulation." + type + "Cell");
+            Class<?> clazz = Class.forName("simulation." + type + "Rule");
             Constructor<?> constructor = clazz.getConstructor(Grid.class);
             Object instance = constructor.newInstance(myGrid);
             myRule = (Rule) instance;
         } catch (Exception e){
             // TODO: catch exception
-            myRule = new GameOfLifeRule(myGrid);
+            System.out.println("Exception caught: "+e.getMessage());
         }
 
         // add elements to each region
