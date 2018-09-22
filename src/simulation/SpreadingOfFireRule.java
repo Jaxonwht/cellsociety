@@ -38,35 +38,36 @@ public class SpreadingOfFireRule extends Rule {
     /**
      * Calculate the next state of all the cells in the grid, according to this article, http://nifty.stanford.edu/2007/shiflet-fire/.
      */
-    @Override
+
     public void determineNextStates() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
-                if (cell.getState() == SpreadingOfFireCell.BURNING){
-                    cell.setBurningTime(cell.getBurningTime()+1);
-                    if (cell.getBurningTime() == myBurningCount){
+                /*if (cell.getState() == SpreadingOfFireCell.BURNING) {
+                    cell.setBurningTime(cell.getBurningTime() + 1);
+                    if (cell.getBurningTime() == myBurningCount) {
                         cell.setBurningTime(0);
                         cell.setNextState(SpreadingOfFireCell.EMPTY);
                     }
-				}
-                if (cell.getState() == SpreadingOfFireCell.NORMAL){
+                }*/
+                if (cell.getState() == SpreadingOfFireCell.NORMAL) {
                     boolean check = false;
-                    List<Cell> neighbors = this.getNeighbors(i,j);
+                    List<Cell> neighbors = this.getNeighbors(i, j);
                     for (Cell neighbor : neighbors) {
-                        if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING){
+                        if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING) {
                             check = true;
                         }
-					}
-					if (check && Math.random()<probCatch){
-					    cell.setNextState(SpreadingOfFireCell.BURNING);
-					}
+                    }
+                    if (check && Math.random() < probCatch) {
+                        cell.setNextState(SpreadingOfFireCell.BURNING);
+                    }
                 }
-                if (cell.getState() == SpreadingOfFireCell.EMPTY){
-						if(Math.random()<probGrowth)
-							cell.setNextState(SpreadingOfFireCell.NORMAL);
-					}
+                if (cell.getState() == SpreadingOfFireCell.EMPTY) {
+                    if (Math.random() < probGrowth)
+                        cell.setNextState(SpreadingOfFireCell.NORMAL);
+
                 }
             }
         }
+    }
 }

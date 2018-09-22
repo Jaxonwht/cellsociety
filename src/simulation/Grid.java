@@ -2,6 +2,7 @@ package simulation;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Shape;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -54,14 +55,14 @@ public class Grid {
         }
     }
 
-    public Collection<ImageView> getAllImageView() {
-        Collection<ImageView> allImageView = new ArrayList<>();
+    public Collection<Shape> getAllShape() {
+        Collection<Shape> allShape = new ArrayList<>();
         for (int i=0; i<myNumRow; i++) {
             for (int j=0; j<myNumCol; j++) {
-                allImageView.add(this.item(i,j).getImageView());
+                allShape.add(this.item(i,j).getShape());
             }
         }
-        return allImageView;
+        return allShape;
     }
 
     public int getNumRow() { return myNumRow; }
