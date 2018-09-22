@@ -47,8 +47,6 @@ public class SpreadingOfFireRule extends Rule {
 
                 if (cell.getState() == SpreadingOfFireCell.BURNING) {
                     cell.setBurningTime(cell.getBurningTime() + 1);
-                    System.out.println("cell ["+i+"]["+j+"] has been burning for "+cell.getBurningTime()+" rounds");
-                    System.out.println(MY_BURNING_COUNT);
                     if (cell.getBurningTime() == MY_BURNING_COUNT) {
                         cell.setBurningTime(0);
                         cell.setNextState(SpreadingOfFireCell.EMPTY);
