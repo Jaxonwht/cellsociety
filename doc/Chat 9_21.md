@@ -167,3 +167,105 @@ Julia
 >ok
  i can make those changes
 
+Haotian
+>wow no conflicts, magical
+ 😆
+ 1
+ ok, pushed to master, remember to pull before you merge with master
+ or resolve painful conflicts later on.
+ byebye everyone
+
+Julia
+>good night!
+ got it
+ 22:28
+ make sure to update your branches based on current master before you start working again.. i have modified many classes to get the extraParameters working
+
+Haotian
+>They work??
+ Wow
+
+Julia
+>it's working but not all rule classes are done so the simulations don't work as expected
+ but they run
+
+Haotian
+>wait how can this run? shouldn't it be Integer.class instead of int.class
+
+Julia
+>hm
+ i would think you are right about that but it is running fine
+
+Haotian
+>you mean not throwing error, or the simulation actually appears
+ and we do need simulation. to signify it's from this package?
+ oh and we don't have the List<Object> otherVariables yet right
+ according to stack masters, Interface is also called List.class and not List.interface
+ and we can remove root from cell, i'll start working on that. any objection?
+
+Julia
+>go ahead
+ both, it is not throwing error and the simulation appears
+ and yes simulation. specifies package so it can locate the class
+ not sure what you mean by your 3rd message, readXML is modified to get those variables to each cell type
+
+Haotian
+>ok now i kind of know why the simulation runs
+you have the new GameOfLifeCell before the reflection part
+which already guarantees it works
+I'm experimenting
+
+Julia
+>ahh missed that
+ ok
+
+Haotian
+>it's still working
+https://stackoverflow.com/questions/22470985/integer-class-vs-int-class ok according to this article, even primitive types have associated class objects
+
+Julia
+>who knew
+ should use Integer.class instead? not sure if int is trustworthy?
+
+Haotian
+>nononon int.classs
+ it works
+ i see you insert list<Double> extra into rule
+ i'm seeing how to implement. is it better to be in rule than in cell
+                              @Yunhao  Qing did you remove your own firespreading?
+
+Julia
+>i think so
+ there's no reason for each cell to have a copy of it if each individual cell doesn't care about its value
+
+Haotian
+>what if the cell cares about its value
+such as energy of the fish
+
+Julia
+>oh hm
+ well one thing is yunhao said the nifty version of wator only cared about reproduction cycles of shark and fish (not energy cyles), but i guess they still need those values
+ i guess if the cell had values like numCycle
+ then in rule, you could compare the reproduction to fishcell.getnumcycle
+ because the only logic we really need to do there is if numcycle%reproductioncycle == 0 then create new fish
+ right?
+ but numcycle would be initialized to 0 and updated every generation
+ numcycle doesnt depend on xml file
+
+Haotian
+>ok
+ do you feel it's good to add very arbitrary methddos to ReadXML
+ when theres a new simulation
+ buyt i dont have a solution anw
+ i'm done with segregation
+ for some reason
+ people die away
+ that's not supposed to happen
+
+Julia
+>Ok I can take a look in the morning
+
+Haotian
+>thx
+@Yunhao  Qing i'm done with segregation
+but people are commiting suicide for some reason
