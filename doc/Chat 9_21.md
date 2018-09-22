@@ -144,3 +144,13 @@ Julia
 Haotian
 >trying to read Oracle's Class class doc
  still confused. ok i'll evaporate for the next few hours, have fun with reflectionz
+
+Julia
+>haha ok
+ are all your changes on master?
+
+Haotian
+>soon
+ also we may have this new convention. Since each simulation will different weird variables.
+ Those that largely stay the same such as threshold, we put in SomeRule
+ those that change a lot such as FishEnerge goes to their cell class
