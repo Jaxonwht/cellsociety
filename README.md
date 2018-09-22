@@ -26,6 +26,11 @@ Sources for ImageView:
 * [Schelling's Model of Segregation
 ](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/)
 * [Oracle documentation on Circle](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Circle.html)
+* [Java: Self for static method calls within the same class](https://stackoverflow.com/questions/22700944/java-self-for-static-method-calls-within-the-same-class)
+* [Calling a subclass method from superclass](https://stackoverflow.com/questions/10021603/calling-a-subclass-method-from-superclass)
+* [Is there a way to instantiate a class by name in Java?](https://stackoverflow.com/questions/9886266/is-there-a-way-to-instantiate-a-class-by-name-in-java)
+* [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules)
+* [Oracle documentation on Class](https://docs.oracle.com/javase/7/docs/api/java/lang/Class.html#getConstructor(java.lang.Class...))
 
 ### Running the Program
 

@@ -3,7 +3,8 @@ package simulation;
 import java.util.*;
 
 /**
- * A specific Rule class for Wator game.
+ * @author Yunhao Qing
+ * A specific Rule class for Wator game, adapting from http://nifty.stanford.edu/2007/shiflet-fire/.
  */
 public class WatorRule extends Rule {
 
@@ -35,7 +36,7 @@ public class WatorRule extends Rule {
 
     //TODO
     /**
-     * Calculate the next state of all the cells in the grid, according to this article, http://nifty.stanford.edu/2007/shiflet-fire/.
+     *
      */
     @Override
     public void determineNextStates() {
