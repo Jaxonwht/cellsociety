@@ -79,4 +79,22 @@ public class Grid {
 
     public boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
 
+    public void printAllStates() {
+        for (int i=0; i<myNumRow; i++) {
+            for (int j = 0; j < myNumCol; j++) {
+                System.out.print(this.item(i, j).getState());
+            }
+        }
+        System.out.print("\n");
+    }
+
+    public void printAllNextStates() {
+        for (int i=0; i<myNumRow; i++) {
+            for (int j = 0; j < myNumCol; j++) {
+                System.out.print(this.item(i, j).getNextState());
+            }
+        }
+        System.out.print("\n");
+    }
+
 }
