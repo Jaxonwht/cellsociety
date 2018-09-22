@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Julia Saveliff, Yunhao Qing
@@ -203,10 +204,11 @@ public class UIManager {
         var cellsToAdd = myGrid.getAllShape();
 
         String type = myReader.getName();
+        List<Double> extraParameters = myReader.getExtraParameters();
         try {
             Class<?> clazz = Class.forName("simulation." + type + "Rule");
-            Constructor<?> constructor = clazz.getConstructor(Grid.class);
-            Object instance = constructor.newInstance(myGrid);
+            Constructor<?> constructor = clazz.getConstructor(Grid.class, List.class);
+            Object instance = constructor.newInstance(myGrid, extraParameters);
             myRule = (Rule) instance;
         } catch (Exception e){
             // TODO: catch exception
