@@ -34,7 +34,7 @@ public class WatorCell extends Cell {
     public WatorCell(double x, double y, double width, double height, int state) {
         super(x, y, width, height, state);
         this.setRectangle(STATE_TO_PAINT_MAP.get(state));
-        mySurviveTime = 0;
+        this.mySurviveTime = 0;
     }
 
     /**
@@ -49,8 +49,8 @@ public class WatorCell extends Cell {
         return mySurviveTime;
     }
 
-    public void addSurviveTime() {
-        mySurviveTime++;
+    public void setSurviveTime(int time) {
+        mySurviveTime = time;
     }
 
 }
