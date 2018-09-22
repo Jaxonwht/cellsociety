@@ -18,10 +18,16 @@ public class SegregationRule extends Rule {
 
     @Override
     public void determineNextStates() {
+        // RESET ALL NEXT STATES TO UNINITIALIZED
+        super.clearNextStates();
+
+        // DETERMINE NEXT STATES
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
+
                 if (cell.getState() == SegregationCell.TYPE_A || cell.getState() == SegregationCell.TYPE_B) {
+                    // If Type A or Type B...
                     int numSameType = 0;
                     List<Cell> neighbors = this.getNeighbors(i, j);
                     for (Cell neighbor : neighbors) {
@@ -29,16 +35,25 @@ public class SegregationRule extends Rule {
                             numSameType++;
                         }
                     }
-                    if (numSameType / neighbors.size() < SATISFACTION_THRESHOLD) {
+                    if (numSameType / (float) neighbors.size() < SATISFACTION_THRESHOLD) {
+                        // If unsatisfied...
                         int destX = rand.nextInt(this.getGrid().getNumCol());
                         int destY = rand.nextInt(this.getGrid().getNumRow());
-                        while (this.getGrid().item(destX, destY).getState() != SegregationCell.EMPTY && this.getGrid().item(destX, destY).getNextState() != SegregationCell.EMPTY) {
+                        while (this.getGrid().item(destX, destY).getState() != SegregationCell.EMPTY
+                                || (this.getGrid().item(destX, destY).getNextState() == SegregationCell.TYPE_A
+                                     || this.getGrid().item(destX, destY).getNextState() == SegregationCell.TYPE_B)) {
                             destX = rand.nextInt(this.getGrid().getNumRow());
                             destY = rand.nextInt(this.getGrid().getNumCol());
                         }
                         this.getGrid().item(destX, destY).setNextState(cell.getState());
                         cell.setNextState(SegregationCell.EMPTY);
+                    } else {
+                        // If satisfied...
+                        cell.setNextState(cell.getState());
                     }
+                } else if (cell.getState() == SegregationCell.EMPTY && cell.getNextState() == Cell.UNINITIALIZED) {
+                    // If uninitialized empty...
+                    cell.setNextState(SegregationCell.EMPTY);
                 }
             }
         }

@@ -17,6 +17,7 @@ import java.util.Map;
  */
 public abstract class Cell {
     public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = new HashMap<>();
+    public static final int UNINITIALIZED = -1;
 
     private Shape myShape;
     private double myXPos;
@@ -32,6 +33,7 @@ public abstract class Cell {
         this.myWidth = width;
         this.myHeight = height;
         this.myState = state;
+        this.myNextState = UNINITIALIZED;
     }
 
     /**
