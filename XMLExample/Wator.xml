@@ -4,6 +4,7 @@
 		<name>Wator</name>
 		<title>wator_1</title>
 		<author>Team13</author>
+		<extraParameters>reproductionFish reproductionShark</extraParameters>
 	</simulation>
 	<params>
 		<reproductionFish>5.0</reproductionFish>

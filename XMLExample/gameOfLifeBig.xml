@@ -4,6 +4,7 @@
         <name>GameOfLife</name>
         <title>gameOfLife_1</title>
         <author>Team13</author>
+        <extraParameters></extraParameters>
     </simulation>
     <params>
     </params>
