@@ -31,7 +31,7 @@ Sources for ImageView:
 * [Is there a way to instantiate a class by name in Java?](https://stackoverflow.com/questions/9886266/is-there-a-way-to-instantiate-a-class-by-name-in-java)
 * [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules)
 * [Oracle documentation on Class](https://docs.oracle.com/javase/7/docs/api/java/lang/Class.html#getConstructor(java.lang.Class...))
-
+* [Initialize a static final field in the constructor](https://stackoverflow.com/questions/5093744/initialize-a-static-final-field-in-the-constructor)
 ### Running the Program
 
 Main class:
