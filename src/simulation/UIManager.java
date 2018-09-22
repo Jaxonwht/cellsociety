@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author Julia Saveliff, Yunhao Qing
+ * @author Julia Saveliff
  */
 public class UIManager {
     // constant screen dimensions

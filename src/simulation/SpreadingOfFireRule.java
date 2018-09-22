@@ -37,10 +37,6 @@ public class SpreadingOfFireRule extends Rule {
 
     @Override
     public void determineNextStates() {
-        // RESET ALL NEXT STATES TO UNINITIALIZED
-        super.clearNextStates();
-
-        // DETERMINE NEXT STATES
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 SpreadingOfFireCell cell = (SpreadingOfFireCell) this.getGrid().item(i, j);
@@ -62,14 +58,14 @@ public class SpreadingOfFireRule extends Rule {
                             check = true;
                         }
                     }
-                    if (check && Math.random() < PROB_CATCH) {
+                    if (check && rand.nextDouble() < PROB_CATCH) {
                         cell.setNextState(SpreadingOfFireCell.BURNING);
                     } else {
                         cell.setNextState(cell.getState());
                     }
                 }
                 if (cell.getState() == SpreadingOfFireCell.EMPTY) {
-                    if (Math.random() < PROB_GROWTH){
+                    if (rand.nextDouble() < PROB_GROWTH){
                         cell.setNextState(SpreadingOfFireCell.NORMAL);
                     } else {
                         cell.setNextState(cell.getState());

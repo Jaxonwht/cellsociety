@@ -6,11 +6,12 @@ Haotian
 >No not me
  The segregation little cells are committing suicide
 
-Yunhao
+Julia
 >I have a meeting 12-1 but free otherwise
  I could do 130? Or we could meet earlier and I’ll just disappear for an hour
- 09:13
- lets do 130
+
+Yunhao
+>lets do 130
 
 Haotian
 >I can’t come at 130
@@ -35,7 +36,7 @@ Haotian
 Julia
 >no worries
 
-Yunaho
+Yunhao
 >@Haotian Wang nextstate value is not initialised, so its 0
 
 Haotian
@@ -96,3 +97,38 @@ Haotian
 Julia
 >i did all the above and i had to fix one if statement from && to ||
  i think the blue blocks were hiding underneath the happy red blocks
+
+Haotian
+>Hmmmmmnn
+ I’ll come now
+ Where are you all
+
+Julia
+>same place
+ middle of edge
+
+Haotian
+>Coming from east
+ 😢
+ 👍
+ 2
+ 18:10
+ we ' re done
+ neondonoe
+
+Yunhao
+>we made It
+
+Haotian
+>@Julia Saveliff I added clearnextstates to updateToNextState
+
+Yunhao
+>wator works
+
+Haotian
+>so we don't need to call them
+explicity
+this cost one fewer loop
+
+Julia
+>Woooo! Nice

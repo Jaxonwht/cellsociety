@@ -14,7 +14,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 /**
- * @Author Julia Saveliff, Haotian Wang
+ * @author Julia Saveliff, Yunhao Qing, Haotian Wang
  */
 public class ReadXML {
     private String name;

@@ -3,6 +3,9 @@ package simulation;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * @author Julia Saveliff
+ */
 public class CA extends Application {
     public static final String TITLE = "Cell Society Simulation";
     private Stage primaryStage;
