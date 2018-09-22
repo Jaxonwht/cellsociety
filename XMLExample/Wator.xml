@@ -6,8 +6,8 @@
 		<author>Team13</author>
 	</simulation>
 	<params>
-		<reproductionFish>0.3</reproductionFish>
-		<reproductionShark>0.3</reproductionShark>
+		<reproductionFish>5.0</reproductionFish>
+		<reproductionShark>7.0</reproductionShark>
 	</params>
 	<dimConfig>
 		<grid>
