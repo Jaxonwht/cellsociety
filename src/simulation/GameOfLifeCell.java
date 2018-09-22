@@ -14,7 +14,7 @@ import java.util.*;
 public class GameOfLifeCell extends Cell {
     public static final int DEAD = 0;
     public static final int ALIVE = 1;
-    public static final Paint DEAD_COLOR = Color.BLACK;
+    public static final Paint DEAD_COLOR = Color.RED;
     public static final Paint ALIVE_COLOR = Color.WHITE;
     public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
