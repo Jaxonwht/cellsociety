@@ -16,7 +16,7 @@ public class SegregationCell extends Cell{
     public static final int TYPE_A = 0;
     public static final int TYPE_B = 1;
     public static final int EMPTY = 2;
-    public static final Paint TYPE_A_COLOR = Color.BLACK;
+    public static final Paint TYPE_A_COLOR = Color.BLUE;
     public static final Paint TYPE_B_COLOR = Color.RED;
     public static final Paint EMPTY_COLOR = Color.WHITE;
     public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
@@ -33,8 +33,8 @@ public class SegregationCell extends Cell{
         return Collections.unmodifiableMap(map);
     }
 
-    public SegregationCell(Group root, double x, double y, double width, double height, int state) {
-        super(root, x, y, width, height, state);
+    public SegregationCell(double x, double y, double width, double height, int state) {
+        super(x, y, width, height, state);
         this.setRectangle(STATE_TO_PAINT_MAP.get(state));
     }
 

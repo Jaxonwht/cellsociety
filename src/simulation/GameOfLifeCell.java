@@ -29,8 +29,8 @@ public class GameOfLifeCell extends Cell {
         return Collections.unmodifiableMap(map);
     }
 
-    public GameOfLifeCell(Group root, double x, double y, double width, double height, int state) {
-        super(root, x, y, width, height, state);
+    public GameOfLifeCell(double x, double y, double width, double height, int state) {
+        super(x, y, width, height, state);
         this.setRectangle(STATE_TO_PAINT_MAP.get(state));
     }
 
