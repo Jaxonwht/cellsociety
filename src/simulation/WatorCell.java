@@ -49,8 +49,8 @@ public class WatorCell extends Cell {
         return mySurviveTime;
     }
 
-    public void setSurviveTime(int time) {
-        mySurviveTime = time;
+    public void addSurviveTime() {
+        mySurviveTime++;
     }
 
 }

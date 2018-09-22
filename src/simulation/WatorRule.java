@@ -1,23 +1,27 @@
 package simulation;
 
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 
 /**
+ * A specific Rule class for Wator.
  * @author Yunhao Qing
- * A specific Rule class for Wator game, adapting from http://nifty.stanford.edu/2007/shiflet-fire/.
  */
 public class WatorRule extends Rule {
-    public final int FISH_REPRODUCTION;
-    public final int SHARK_REPRODUCTION;
-    //This two params may be passed into this class and this part need to be changed in the future.
+	
+	//nextState = currentState, this must be initilised for this class to work.
+	
+    public final int REPRODUCTION_FISH;
+	public final int REPRODUCTION_SHARK;
+    public final Random rand = new Random();
 
-    public WatorRule(Grid grid, List<Double> extraParameters) {
+    public WatorRule(Grid grid, List<int> extraParameters) {
         super(grid, extraParameters);
-        FISH_REPRODUCTION = (int) Math.floor(extraParameters.get(0));
-        SHARK_REPRODUCTION = (int) Math.floor(extraParameters.get(1));
+        REPRODUCTION_FISH = extraParameters.get(0);
+		REPRODUCTION_SHARK = extraParameters.get(0);
     }
 
-    @Override
+	@Override
     protected List<Cell> getNeighbors(int row, int col) {
         Grid grid = this.getGrid();
         List<Cell> neighbors = new ArrayList<Cell>();
@@ -36,11 +40,51 @@ public class WatorRule extends Rule {
         return neighbors;
     }
 
-    //TODO
-    /**
-     *
-     */
+	
     @Override
     public void determineNextStates() {
+        for (int i = 0; i < this.getGrid().getNumRow(); i++) {
+            for (int j = 0; j < this.getGrid().getNumCol(); j++) {
+                Cell cell = this.getGrid().item(i, j);
+				if (cell.getState() == WatorCell.SHARK){
+					cell.addSurviveTime();
+					List<Cell> neighbors = this.getNeighbors(i, j);
+					
+					List<Cell> possibleFoods = new ArrayList<Cell>();
+					for (Cell neighbor : neighbors) {
+                        if (neighbor.getState() == WatorCell.FISH && neighbor.getNextState != WatorCell.EMPTY) {
+                            possibleFoods.add(neighbor);
+                        }
+                    }
+					Cell food = possibleFoods.get(rand.nextInt(possibleFoods.size()));
+					food.setNextState = WatorCell.EMPTY;
+					
+					List<Cell> possibleMove = new ArrayList<Cell>();
+					for (Cell neighbor : neighbors) {
+                        if (neighbor.getState() == WatorCell.EMPTY && neighbor.getNextState == WatorCell.EMPTY) {
+                            possibleMove.add(neighbor);
+                        }
+                    }
+					Cell move = possibleMoves.get(rand.nextInt(possibleMoves.size()));
+					move.setNextState = WatorCell.EMPTY;
+					
+					if (cell.getSurviveTime >= REPRODUCTION_SHARK){
+						List<Cell> possibleReprobs = new ArrayList<Cell>();
+						for (Cell neighbor : neighbors) {
+							if (neighbor.getState() == WatorCell.EMPTY && neighbor.getNextState == WatorCell.EMPTY) {
+								possibleReprobs.add(neighbor);
+							}
+						}
+						Cell possibleReprob = possibleReprobs.get(rand.nextInt(possibleReprobs.size()));
+						placeToReprob.setNextState = WatorCell.SHARK;
+					}
+				}
+				
+				
+				if (cell.getState() == WatorCell.FISH && cell.getNextState == WatorCell.FISH){
+					//TODO
+				}
+            }
+        }
     }
 }
