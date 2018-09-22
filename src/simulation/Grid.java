@@ -3,6 +3,7 @@ package simulation;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,15 +39,24 @@ public class Grid {
             for (int j=0; j<myNumCol; j++) {
                 int state = states[i][j];
                 myCells[i][j] = new GameOfLifeCell(myRoot, j*w, i*h, w, h, state);
-                System.out.println("com.simulation." + type+"Cell");
                 try {
-                    Class<?> clazz = Class.forName("com.simulation." + type+"Cell");
+                    Class<?> clazz = Class.forName("simulation."+type+"Cell");
                     Constructor<?> constructor = clazz.getConstructor(Group.class, double.class, double.class, double.class, double.class, int.class);
                     Object instance = constructor.newInstance(myRoot, j*w, i*h, w, h, state);
                     myCells[i][j] = (Cell) instance;
-                } catch (Exception e) {
+                } catch (ClassNotFoundException e){
                     // TODO: catch exception
+                    System.out.println("Exception 1 caught: "+e.getMessage());
+                } catch (NoSuchMethodException ee){
+                    System.out.println("Exception 2 caught: "+ee.getMessage());
+                } catch (InstantiationException eee){
+                    System.out.println("Exception 3 caught: "+eee.getMessage());
+                } catch (IllegalAccessException eeee){
+                    System.out.println("Exception 4 caught: "+eeee.getMessage());
+                } catch (InvocationTargetException eeeee){
+                    System.out.println("Exception 5 caught: "+eeeee.getMessage());
                 }
+
             }
         }
     }

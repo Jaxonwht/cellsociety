@@ -10,10 +10,10 @@ public class GameOfLifeRule extends Rule {
     // If number of neighbors < UNDERPOPULATION_THRESHOLD, underpopulation happens.
     public static final int UNDERPOPULATION_THRESHOLD = 2;
     // If number of neighbors > OVERPOPULATION_THRESHOLD, overpopulation happens.
-    public static final int OVERPOPUlATION_THRESHOLD = 3;
+    public static final int OVERPOPULATION_THRESHOLD = 3;
 
-    public GameOfLifeRule(Grid grid) {
-        super(grid);
+    public GameOfLifeRule(Grid grid, List<Double> extraParameters) {
+        super(grid, extraParameters);
     }
 
     /**
@@ -29,10 +29,10 @@ public class GameOfLifeRule extends Rule {
                 for (Cell neighbor : neighbors) {
                     if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) { numAliveNeighbors++; }
                 }
-                if (cell.getState() == GameOfLifeCell.DEAD && numAliveNeighbors == OVERPOPUlATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.ALIVE); }
+                if (cell.getState() == GameOfLifeCell.DEAD && numAliveNeighbors == OVERPOPULATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.ALIVE); }
                 else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors < UNDERPOPULATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.DEAD); }
-                else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors <= OVERPOPUlATION_THRESHOLD) {}
-                else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors > OVERPOPUlATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.DEAD); }
+                else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors <= OVERPOPULATION_THRESHOLD) {}
+                else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors > OVERPOPULATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.DEAD); }
             }
         }
     }
