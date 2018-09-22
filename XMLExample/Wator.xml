@@ -17,9 +17,9 @@
 			<height>500</height>
 		</grid>
 		<cellState>
-			<state stateNumber = "0" stateName = "empty">12 13 14 15 16</state>
-			<state stateNumber = "1" stateName = "fish">0 1 2 3 4 5 6 7 8 9 10 22</state>
-			<state stateNumber = "2" stateName = "shark">11 17 18 19 20 21 23 24</state>
+			<state stateNumber = "0" stateName = "empty">11 19 10 22 1 2 3 4 6 5 9 17 7 18 21 23 24 12 13 14 15 16</state>
+			<state stateNumber = "1" stateName = "fish">8</state>
+			<state stateNumber = "2" stateName = "shark">20</state>
 		</cellState>
 	</dimConfig>
 </cellSociety>
