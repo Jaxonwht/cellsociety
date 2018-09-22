@@ -105,12 +105,10 @@ public class ReadXML {
     }
     
     private int returnInt(String str){
-        System.out.println("Fetching value of "+str);
         return Integer.valueOf(document.getElementsByTagName(str).item(0).getTextContent());
     }
     
     private double returnDouble(String str){
-        System.out.println("Fetching value of "+str);
         return Double.parseDouble(document.getElementsByTagName(str).item(0).getTextContent());
     }
 
