@@ -17,6 +17,7 @@ public class SpreadingOfFireCell extends Cell {
     public static final Paint NORMAL_COLOR = Color.GREEN;
     public static final Paint BURNING_COLOR = Color.RED;
     public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
+
     private int myBurningTime;
 
     /**

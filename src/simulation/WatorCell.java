@@ -42,9 +42,7 @@ public class WatorCell extends Cell {
      */
     @Override
     protected void updateShape(Map<Integer, Paint> map) {
-        if (this.getState() != this.getNextState()) {
-            this.getShape().setFill(STATE_TO_PAINT_MAP.get(this.getNextState()));
-        }
+        super.updateShape(WatorCell.STATE_TO_PAINT_MAP);
     }
 
     public int getSurviveTime() {
