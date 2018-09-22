@@ -14,8 +14,8 @@ public class WatorCell extends Cell {
     public static final int FISH = 1;
     public static final int SHARK = 2;
     public static final Paint EMPTY_COLOR = Color.WHITE;
-    public static final Paint FISH_COLOR = Color.AZURE;
-    public static final Paint SHARK_COLOR = Color.BLACK;
+    public static final Paint FISH_COLOR = Color.GREEN;
+    public static final Paint SHARK_COLOR = Color.BLUE;
     public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
     private int mySurviveTime;

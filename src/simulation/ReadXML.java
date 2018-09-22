@@ -102,7 +102,7 @@ public class ReadXML {
     public void readFire(){
         probCatch = returnDouble("probCatch");
         probGrowth = returnDouble("probGrowth");
-        burningCount = returnInt("burningCount");
+        burningCount = returnDouble("burningCount");
     }
 
     public void readGrid(){
