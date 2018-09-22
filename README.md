@@ -36,6 +36,8 @@ Sources for ImageView:
 ](https://l.messenger.com/l.php?u=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F22470985%2Finteger-class-vs-int-class&h=AT0oxh3T6S7cgm3CMzhRzM-bvukfJYa5z3dXlGkvSAJkB-cd-ucubCPXM4pLevC69Rc95Srq_DW-I0h1FdTZsHNwYd470REraRFeRU-z1YK_47OpJFGXvmkI6ulIDw)
 * [How to permanently remove few commits from remote branch
 ](https://stackoverflow.com/questions/3293531/how-to-permanently-remove-few-commits-from-remote-branch)
+* [Split() String method in Java with examples
+](https://www.geeksforgeeks.org/split-string-java-examples/)
 
 ### Running the Program
 
