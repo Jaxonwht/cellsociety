@@ -26,7 +26,7 @@ public class SpreadingOfFireRule extends Rule {
         cells.add(new int[]{row+1,col});
         cells.add(new int[]{row-1,col});
         cells.add(new int[]{row,col+1});
-        cells.add(new int[]{row+1,col-1});
+        cells.add(new int[]{row,col-1});
         for (int[] cell : cells){
             if (!grid.isOutOfBounds(cell[0], cell[1])) {
                 neighbors.add(grid.item(cell[0], cell[1]));
