@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 
 /**
@@ -31,21 +32,21 @@ public class UIManager {
 
     // button text
     private final static String LOAD_NEW_TEXT = "Load new simulation";
-    private final static String RESET_TEXT = "Reset";
     private final static String PAUSE_TEXT = "Pause";
-    private final static String RESUME_TEXT = "Play";
+    private final static String PLAY_TEXT = "Play";
     private final static String STEP_TEXT = "Step";
     private final static String CHOOSE_TEXT = "Select XML file";
     private final static String SELECTED_TEXT = "Selected file:";
     private final static String START_TEXT = "Start simulation";
 
     // animation constants
-    private static final int FRAMES_PER_SECOND = 40;
+    private static final int FRAMES_PER_SECOND = 3;
     private static final double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private final static double MIN_RATE = 0.1;
     private final static double MAX_RATE = 3;
     private final static double RATE = 1.5;
+    private final static int MAX_GENERATION = 500;
 
     // UI components
     private Stage myStage;
@@ -55,7 +56,7 @@ public class UIManager {
     private Button simToSplashButton;
     private Slider mySpeedSlider;
     private Grid myGrid;
-    private GameOfLifeRule myRule;
+    private Rule myRule;
     private int myNumGenerations=1;
     private Text myGenerationsDisplay;
 
@@ -66,10 +67,6 @@ public class UIManager {
 
     // animation components
     private Timeline myAnimation;
-
-    // test
-    private Text textToTestStep;
-
 
     public UIManager(Stage stage) {
         myStage = stage;
@@ -93,7 +90,6 @@ public class UIManager {
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
-        // myAnimation.play();
     }
 
     /**
@@ -104,12 +100,9 @@ public class UIManager {
         // Adjust rate according to user speed input
         myAnimation.setRate(mySpeedSlider.getValue());
 
-        // Move test text across screen
-        textToTestStep.setX(textToTestStep.getX()-50*stepTime);
-
         // Update num generations
         myNumGenerations += 1;
-        if (myNumGenerations > 800) {
+        if (myNumGenerations > MAX_GENERATION) {
             myAnimation.stop();
         }
         myGenerationsDisplay.setText("Generations: "+myNumGenerations);
@@ -190,12 +183,10 @@ public class UIManager {
         // user simulation controls
         myGenerationsDisplay = new Text("Generations: "+myNumGenerations);
         simToSplashButton = new Button(LOAD_NEW_TEXT);
-        var resetButton = new Button(RESET_TEXT);
-        resetButton.setOnAction( event -> handleReset() );
+        var playButton = new Button(PLAY_TEXT);
+        playButton.setOnAction( event -> handlePlay() );
         var pauseButton = new Button(PAUSE_TEXT);
         pauseButton.setOnAction( event -> handlePause() );
-        var resumeButton = new Button(RESUME_TEXT);
-        resumeButton.setOnAction( event -> handleResume() );
         var stepButton = new Button(STEP_TEXT);
         stepButton.setOnAction( event -> handleStep() );
         var speedText = new Text("Speed");
@@ -207,22 +198,25 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-        var gridButton = new Button(title);
 
         myGrid = new Grid(root, myReader);
         myGrid.populateCells();
         var cellsToAdd = myGrid.getAllShape();
 
-        myRule = new GameOfLifeRule(myGrid);
-
-        textToTestStep = new Text("hi...");
-        textToTestStep.setX(300);
-        textToTestStep.setY(150);
+        String type = myReader.getName();
+        try {
+            Class<?> clazz = Class.forName("com.simulation." + type + "Cell");
+            Constructor<?> constructor = clazz.getConstructor(Grid.class);
+            Object instance = constructor.newInstance(myGrid);
+            myRule = (Rule) instance;
+        } catch (Exception e){
+            // TODO: catch exception
+            myRule = new GameOfLifeRule(myGrid);
+        }
 
         // add elements to each region
-        userPanel.getChildren().addAll(myGenerationsDisplay, simToSplashButton, resetButton, pauseButton, resumeButton, stepButton, speedText, mySpeedSlider);
+        userPanel.getChildren().addAll(myGenerationsDisplay, simToSplashButton, playButton, pauseButton, stepButton, speedText, mySpeedSlider);
         gridRegion.getChildren().addAll(cellsToAdd);
-        gridRegion.getChildren().add(textToTestStep);
 
         // set layout regions
         border.setRight(userPanel);
@@ -243,7 +237,11 @@ public class UIManager {
                 run();
             }
         });
-        simToSplashButton.setOnAction( event -> stage.setScene(splash.getScene()) );
+        simToSplashButton.setOnAction( event -> {
+            myAnimation.stop();
+            stage.setScene(splash.getScene());
+            myNumGenerations = 1;
+        } );
 
     }
 
@@ -259,7 +257,7 @@ public class UIManager {
         myAnimation.pause();
     }
 
-    private void handleResume() {
+    private void handlePlay() {
         // resume animation
         myAnimation.play();
     }
@@ -268,10 +266,6 @@ public class UIManager {
         // step through animation
         myAnimation.pause();
         step(SECOND_DELAY);
-    }
-
-    private void handleReset() {
-        myAnimation.playFromStart();
     }
 
     public File getFile() { return myFile; }

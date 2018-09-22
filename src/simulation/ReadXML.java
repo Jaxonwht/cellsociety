@@ -59,11 +59,11 @@ public class ReadXML {
 
     private void readByType(){
         name = document.getElementsByTagName("name").item(0).getTextContent();
-        if (name.equals("spreadingOfFire"))
+        if (name.equals("SpreadingOfFire"))
             readFire();
-        else if (name.equals("segregation"))
+        else if (name.equals("Segregation"))
             readSegregation();
-        else if (name.equals("wator"))
+        else if (name.equals("Wator"))
             readWator();
     }
 

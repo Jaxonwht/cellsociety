@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cellSociety>
 	<simulation>
-		<name>spreadingOfFire</name>
+		<name>SpreadingOfFire</name>
 		<title>spreadingOfFire_1</title>
 		<author>Team13</author>
 	</simulation>
