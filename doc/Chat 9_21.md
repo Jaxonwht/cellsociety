@@ -89,4 +89,58 @@ Haotian
  Cell cell = (Cell) instance
  the other problem we have is each cell will have this ugly list<Double> parameter in their constructor.
 
+Julia
+>right
+ I am not sure how to get around that
+ if we don't want it in the constructor we could have some set parameters function that takes a double list and sets whatever values that cell is expecting
+ but that would need to happen as soon as each cell is created anyway
+ we could keep those parameters in rule?
+ since that has an empty constructor anyway right?
+ never mind it takes grid
 
+Haotian
+>rule has the grid as constructor
+ rule takes grid, grid creates cell[][]
+ the pain is still in cell's constructor and grid's way of creating cell. rule has the grid as constructor
+                                                                          rule takes grid, grid creates cell[][]
+                                                                          the pain is still in cell's constructor and grid's way of creating cell
+                                                                          so the best way to do this is  grid use reflection to create
+                                                                          and frankly now cell does not need to have access to root btw
+                                                                          we are adding them from UIManager. and we don't need to remove them when we update states. I'll just use setFill to change its color to show the state is empty or something
+
+Julia
+>use reflection to create what? a specific grid?
+
+Haotian
+>no grid use reflection to create cell in that for loop
+ in other words, modify populateCells. no grid use reflection to create cell in that for loop
+                                       in other words, modify populateCells
+                                       Class<?> clazz = Class.forName(simulationType + "Cell");
+                                       Constructor<?> constructor = clazz.getConstructor(Double.class, Double.class, Double.class, Double.class, List.interface);
+                                       Cell cell = (Cell) constructor.newInstance(x, y, width, height, listOfOtherProperties);
+
+Julia
+>ok yes i think that's what we should do
+
+Haotian
+>I'm not sure if "List.interface" is legal though
+
+Julia
+>and just figure out how to deal with other properties list
+
+Haotian
+>i don't even know what Double.class means. like, this thing Double class
+                                            doesn't have a static instance variable called class
+
+Julia
+>i think it's just some kind of placeholder
+
+Haotian
+>another place we are using reflection is in UIManager, when we want to create Rule, that's straight and easy
+
+Julia
+>yep got that
+
+Haotian
+>trying to read Oracle's Class class doc
+ still confused. ok i'll evaporate for the next few hours, have fun with reflectionz

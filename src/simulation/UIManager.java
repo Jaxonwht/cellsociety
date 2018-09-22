@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * @author Julia Saveliff, Yunhao Qing
+ */
 public class UIManager {
     // constant screen dimensions
     private final static int SPLASH_SIZE = 300;
