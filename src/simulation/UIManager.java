@@ -30,7 +30,7 @@ public class UIManager {
     private final static String LOAD_NEW_TEXT = "Load new simulation";
     private final static String RESET_TEXT = "Reset";
     private final static String PAUSE_TEXT = "Pause";
-    private final static String RESUME_TEXT = "Resume";
+    private final static String RESUME_TEXT = "Play";
     private final static String STEP_TEXT = "Step";
     private final static String CHOOSE_TEXT = "Select XML file";
     private final static String SELECTED_TEXT = "Selected file:";
@@ -90,7 +90,7 @@ public class UIManager {
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
-        //myAnimation.play();
+        // myAnimation.play();
     }
 
     /**

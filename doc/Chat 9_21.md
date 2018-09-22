@@ -52,4 +52,41 @@ Haotian
  i managed to run even though intellij told me "simulation.ca doesn't exist"
  but i managed to run
  and
- with shapes it's super fast
+ with shapes it's super fast. you can pull master. and see why it doesn't run like a normal application
+
+Julia
+>trying to get reflection working, as soon as that's done i will make sure simulation works for every type of cell
+ will do
+
+Haotian
+>yeah
+ no
+ in the window configuration
+ nvm i'll ignore it for now
+ are you doing reflection?
+ and don't foget resoures ppl! haha
+
+Julia
+>Yes I’m trying reflection
+ the problem with the method in the webpage we were looking at is that you cannot do any cell specific things to instance after because it is initialized as Object
+ and we need to add it to cell[][]
+
+Haotian
+>Just do
+ (Cell)
+ Calling a subclass method from superclass
+ also this article may be useful
+ Calling a subclass method from superclass
+ https://stackoverflow.com/questions/10021603/calling-a-subclass-method-from-superclass.
+
+Julia
+>Kk thanks will take a look
+
+Haotian
+>Class<?> clazz = Class.forName("com.foo.MyClass");
+ Constructor<?> constructor = clazz.getConstructor(String.class, Integer.class);
+ Object instance = constructor.newInstance("stringparam", 42);
+ Cell cell = (Cell) instance
+ the other problem we have is each cell will have this ugly list<Double> parameter in their constructor.
+
+

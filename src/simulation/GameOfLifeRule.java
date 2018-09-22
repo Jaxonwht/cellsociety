@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author Haotian Wang
- * A specific Rule class for GameOfLife game.
+ * A specific Rule class for GameOfLife game, adapting from https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules.
  */
 public class GameOfLifeRule extends Rule {
     // If number of neighbors < UNDERPOPULATION_THRESHOLD, underpopulation happens.
@@ -17,7 +17,7 @@ public class GameOfLifeRule extends Rule {
     }
 
     /**
-     * Calculate the next state of all the cells in the grid, according to this article, https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules.
+     *
      */
     @Override
     public void determineNextStates() {
@@ -29,7 +29,6 @@ public class GameOfLifeRule extends Rule {
                 for (Cell neighbor : neighbors) {
                     if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) { numAliveNeighbors++; }
                 }
-                int numDeadNeighbors = neighbors.size() - numAliveNeighbors;
                 if (cell.getState() == GameOfLifeCell.DEAD && numAliveNeighbors == OVERPOPUlATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.ALIVE); }
                 else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors < UNDERPOPULATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.DEAD); }
                 else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors <= OVERPOPUlATION_THRESHOLD) {}
