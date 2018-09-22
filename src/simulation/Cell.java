@@ -23,12 +23,10 @@ public abstract class Cell {
     private double myYPos;
     private double myWidth;
     private double myHeight;
-    private Group myRoot;
     private int myState;
     private int myNextState;
 
-    public Cell(Group root, double x, double y, double width, double height, int state) {
-        this.myRoot = root;
+    public Cell(double x, double y, double width, double height, int state) {
         this.myXPos = x;
         this.myYPos = y;
         this.myWidth = width;
@@ -96,14 +94,6 @@ public abstract class Cell {
 
     protected void setHeight(double height) {
         myHeight = height;
-    }
-
-    protected Group getRoot() {
-        return myRoot;
-    }
-
-    protected void setRoot(Group root) {
-        myRoot = root;
     }
 }
 

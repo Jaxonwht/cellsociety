@@ -154,3 +154,16 @@ Haotian
  also we may have this new convention. Since each simulation will different weird variables.
  Those that largely stay the same such as threshold, we put in SomeRule
  those that change a lot such as FishEnerge goes to their cell class
+
+Julia
+>yeah that makes sense
+ but i think all the constants read in from the file can go just to SpecificRule
+ and cell only has the variable that differs for each cell? which will not have values read in from file
+
+Haotian
+>yep
+
+Julia
+>ok
+ i can make those changes
+

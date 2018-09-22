@@ -38,11 +38,11 @@ public class Grid {
         for (int i=0; i<myNumRow; i++) {
             for (int j=0; j<myNumCol; j++) {
                 int state = states[i][j];
-                myCells[i][j] = new GameOfLifeCell(myRoot, j*w, i*h, w, h, state);
+                // myCells[i][j] = new GameOfLifeCell(myRoot, j*w, i*h, w, h, state);
                 try {
                     Class<?> clazz = Class.forName("simulation."+type+"Cell");
-                    Constructor<?> constructor = clazz.getConstructor(Group.class, double.class, double.class, double.class, double.class, int.class);
-                    Object instance = constructor.newInstance(myRoot, j*w, i*h, w, h, state);
+                    Constructor<?> constructor = clazz.getConstructor(double.class, double.class, double.class, double.class, int.class);
+                    Object instance = constructor.newInstance(j*w, i*h, w, h, state);
                     myCells[i][j] = (Cell) instance;
                 } catch (ClassNotFoundException e){
                     // TODO: catch exception

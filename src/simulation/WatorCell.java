@@ -31,8 +31,8 @@ public class WatorCell extends Cell {
         return Collections.unmodifiableMap(map);
     }
 
-    public WatorCell(Group root, double x, double y, double width, double height, int state) {
-        super(root, x, y, width, height, state);
+    public WatorCell(double x, double y, double width, double height, int state) {
+        super(x, y, width, height, state);
         this.setRectangle(STATE_TO_PAINT_MAP.get(state));
         mySurviveTime = 0;
     }
