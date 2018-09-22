@@ -8,7 +8,7 @@
 	<params>
 		<probCatch>0.3</probCatch>
 		<probGrowth>0.1</probGrowth>
-		<burningCount>3</burningCount>
+		<burningCount>3.0</burningCount>
 	</params>
 	<dimConfig>
 		<grid>
