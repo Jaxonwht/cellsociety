@@ -37,15 +37,23 @@ public class SpreadingOfFireRule extends Rule {
 
     @Override
     public void determineNextStates() {
+        // RESET ALL NEXT STATES TO UNINITIALIZED
+        super.clearNextStates();
+
+        // DETERMINE NEXT STATES
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 SpreadingOfFireCell cell = (SpreadingOfFireCell) this.getGrid().item(i, j);
 
                 if (cell.getState() == SpreadingOfFireCell.BURNING) {
                     cell.setBurningTime(cell.getBurningTime() + 1);
+                    System.out.println("cell ["+i+"]["+j+"] has been burning for "+cell.getBurningTime()+" rounds");
+                    System.out.println(MY_BURNING_COUNT);
                     if (cell.getBurningTime() == MY_BURNING_COUNT) {
                         cell.setBurningTime(0);
                         cell.setNextState(SpreadingOfFireCell.EMPTY);
+                    } else {
+                        cell.setNextState(cell.getState());
                     }
                 }
                 if (cell.getState() == SpreadingOfFireCell.NORMAL) {
@@ -58,11 +66,15 @@ public class SpreadingOfFireRule extends Rule {
                     }
                     if (check && Math.random() < PROB_CATCH) {
                         cell.setNextState(SpreadingOfFireCell.BURNING);
+                    } else {
+                        cell.setNextState(cell.getState());
                     }
                 }
                 if (cell.getState() == SpreadingOfFireCell.EMPTY) {
                     if (Math.random() < PROB_GROWTH){
                         cell.setNextState(SpreadingOfFireCell.NORMAL);
+                    } else {
+                        cell.setNextState(cell.getState());
                     }
                 }
             }
