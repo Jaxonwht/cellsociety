@@ -269,3 +269,4 @@ Haotian
 >thx
 @Yunhao  Qing i'm done with segregation
 but people are commiting suicide for some reason
+and do we really want state class
