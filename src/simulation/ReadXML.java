@@ -2,7 +2,9 @@ package simulation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,6 +13,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+/**
+ * @Author Yunhao Qing, Julia Saveliff
+ */
 public class ReadXML {
     private String name;
     private int row;
@@ -18,6 +23,8 @@ public class ReadXML {
     private int width;
     private int height;
     private double probCatch;
+    private double probGrowth;
+    private double burningCount;
     private double reproductionFish;
     private double reproductionShark;
     private double threshold;
@@ -94,6 +101,8 @@ public class ReadXML {
 
     public void readFire(){
         probCatch = returnDouble("probCatch");
+        probGrowth = returnDouble("probGrowth");
+        burningCount = returnInt("burningCount");
     }
 
     public void readGrid(){
@@ -110,6 +119,21 @@ public class ReadXML {
     
     private double returnDouble(String str){
         return Double.parseDouble(document.getElementsByTagName(str).item(0).getTextContent());
+    }
+
+    public List<Double> getExtraParameters() {
+        List<Double> extraParameters = new ArrayList<>();
+        if (name.equals("SpreadingOfFire")) {
+            extraParameters.add(probCatch);
+            extraParameters.add(probGrowth);
+            extraParameters.add(burningCount);
+        } else if (name.equals("Segregation")) {
+            extraParameters.add(threshold);
+        } else if (name.equals("Wator")) {
+            extraParameters.add(reproductionFish);
+            extraParameters.add(reproductionShark);
+        }
+        return extraParameters;
     }
 
     public String getName(){return name;}

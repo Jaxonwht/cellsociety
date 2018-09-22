@@ -14,7 +14,7 @@ public abstract class Rule {
      * Construct a Rule object using grid as the only parameter.
      * @param grid: the Grid object containing the information of the grid of cells.
      */
-    public Rule (Grid grid) {
+    public Rule (Grid grid, List<Double> extraParameters) {
         this.myGrid = grid;
     }
 
