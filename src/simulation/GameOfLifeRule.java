@@ -21,18 +21,28 @@ public class GameOfLifeRule extends Rule {
      */
     @Override
     public void determineNextStates() {
+        // RESET ALL NEXT STATES TO UNINITIALIZED
+        super.clearNextStates();
+
+        // DETERMINE NEXT STATES
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
                 List<Cell> neighbors = this.getNeighbors(i, j);
                 int numAliveNeighbors = 0;
                 for (Cell neighbor : neighbors) {
-                    if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) { numAliveNeighbors++; }
+                    if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) {
+                        numAliveNeighbors++;
+                    }
                 }
-                if (cell.getState() == GameOfLifeCell.DEAD && numAliveNeighbors == OVERPOPULATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.ALIVE); }
-                else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors < UNDERPOPULATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.DEAD); }
-                else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors <= OVERPOPULATION_THRESHOLD) {}
-                else if (cell.getState() == GameOfLifeCell.ALIVE && numAliveNeighbors > OVERPOPULATION_THRESHOLD) { cell.setNextState(GameOfLifeCell.DEAD); }
+                if (cell.getState() == GameOfLifeCell.DEAD && numAliveNeighbors == OVERPOPULATION_THRESHOLD) {
+                    cell.setNextState(GameOfLifeCell.ALIVE);
+                } else if (cell.getState() == GameOfLifeCell.ALIVE &&
+                        (numAliveNeighbors < UNDERPOPULATION_THRESHOLD || numAliveNeighbors > OVERPOPULATION_THRESHOLD)) {
+                    cell.setNextState(GameOfLifeCell.DEAD);
+                } else {
+                    cell.setNextState(cell.getState());
+                }
             }
         }
     }
