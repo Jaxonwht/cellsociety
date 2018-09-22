@@ -7,8 +7,12 @@ package simulation;
 public class SegregationRule extends Rule {
     public static final double SATISFACTION_THRESHOLD = 0.3;
 
+    public SegregationRule(Grid grid) {
+        super(grid);
+    }
+
     @Override
     public void determineNextStates() {
-        for
+
     }
 }
