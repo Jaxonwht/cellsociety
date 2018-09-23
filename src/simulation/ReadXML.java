@@ -14,7 +14,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 /**
- * @Author Yunhao Qing, Julia Saveliff
+ * @author Julia Saveliff, Yunhao Qing, Haotian Wang
  */
 public class ReadXML {
     private String name;
@@ -22,16 +22,18 @@ public class ReadXML {
     private int column;
     private int width;
     private int height;
+    private int[][] cellState;
+    private List<Double> extraParameters;
+    Document document;
+    /*
     private double probCatch;
     private double probGrowth;
     private double burningCount;
     private double reproductionFish;
     private double reproductionShark;
     private double threshold;
-    private int[][] cellState;
     private HashMap<Integer,String> stateNum;
-    Document document;
-
+    */
 
 
    /**
@@ -57,55 +59,44 @@ public class ReadXML {
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         document = documentBuilder.parse(file);
         document.getDocumentElement().normalize();
-        stateNum = new HashMap<>();
+        this.name = returnString("name");
+        this.extraParameters = new ArrayList<>();
         readGrid();
-        readByType();
         readState();
-
+        readExtraParameters();
+        // stateNum = new HashMap<>();
+        // readByType();
     }
 
-    private void readByType(){
-        name = document.getElementsByTagName("name").item(0).getTextContent();
-        if (name.equals("SpreadingOfFire"))
-            readFire();
-        else if (name.equals("Segregation"))
-            readSegregation();
-        else if (name.equals("Wator"))
-            readWator();
-    }
-
-    private void readState(){
+    private void readState() {
         NodeList nodeList = document.getElementsByTagName("state");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            int stateNumber = Integer.valueOf(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
-            String stateName = node.getAttributes().getNamedItem("stateName").getNodeValue();
-            stateNum.put(stateNumber,stateName);
+            int stateNumber = Integer.parseInt(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
+            // String stateName = node.getAttributes().getNamedItem("stateName").getNodeValue();
+            // stateNum.put(stateNumber,stateName);
             String temp = node.getTextContent();
             for (String s : temp.split(" ")){
-                int index = Integer.valueOf(s);
+                int index = Integer.parseInt(s);
                 cellState[index/column][index%column] = stateNumber;
             }
         }
     }
 
-    private void readWator() {
-        reproductionFish = returnDouble("reproductionFish");
-        reproductionShark = returnDouble("reproductionShark");
-    }
-    
-
-    private void readSegregation() {
-        threshold = returnDouble("threshold");
-    }
-
-    public void readFire(){
-        probCatch = returnDouble("probCatch");
-        probGrowth = returnDouble("probGrowth");
-        burningCount = returnDouble("burningCount");
+    /**
+     * Return the extra parameters specified in the XML file if there is any.
+     */
+    private void readExtraParameters() {
+        String parameters = returnString("extraParameters");
+        if (!parameters.equals("")) {
+            String[] parameterList = parameters.split(" ");
+            for (String para : parameterList) {
+                this.extraParameters.add(returnDouble(para));
+            }
+        }
     }
 
-    public void readGrid(){
+    private void readGrid(){
         width = returnInt("width");
         height = returnInt("height");
         row = returnInt("row");
@@ -113,15 +104,21 @@ public class ReadXML {
         cellState = new int[row][column];
     }
     
-    private int returnInt(String str){
-        return Integer.valueOf(document.getElementsByTagName(str).item(0).getTextContent());
+    private int returnInt(String tag) {
+        return Integer.parseInt(returnString(tag));
     }
     
-    private double returnDouble(String str){
-        return Double.parseDouble(document.getElementsByTagName(str).item(0).getTextContent());
+    private double returnDouble(String tag) {
+        return Double.parseDouble(returnString(tag));
+    }
+
+    private String returnString(String tag) {
+        return document.getElementsByTagName(tag).item(0).getTextContent();
     }
 
     public List<Double> getExtraParameters() {
+        return this.extraParameters;
+        /*
         List<Double> extraParameters = new ArrayList<>();
         if (name.equals("SpreadingOfFire")) {
             extraParameters.add(probCatch);
@@ -133,7 +130,7 @@ public class ReadXML {
             extraParameters.add(reproductionFish);
             extraParameters.add(reproductionShark);
         }
-        return extraParameters;
+        */
     }
 
     public String getName(){return name;}
@@ -146,6 +143,18 @@ public class ReadXML {
 
     public int getHeight(){return height;}
 
+    public int[][] getCellState(){return cellState;}
+    /*
+    private void readByType(){
+        name = document.getElementsByTagName("name").item(0).getTextContent();
+        if (name.equals("SpreadingOfFire"))
+            readFire();
+        else if (name.equals("Segregation"))
+            readSegregation();
+        else if (name.equals("Wator"))
+            readWator();
+    }
+
     public double getThreshold(){return threshold;}
 
     public double getReproductionFish(){return reproductionFish;}
@@ -154,9 +163,24 @@ public class ReadXML {
 
     public double getProbCatch(){return probCatch;}
 
-    public int[][] getCellState(){return cellState;}
-
     public HashMap<Integer,String> getStateNum(){return stateNum;}
+
+    private void readWator() {
+        reproductionFish = returnDouble("reproductionFish");
+        reproductionShark = returnDouble("reproductionShark");
+    }
+
+
+    private void readSegregation() {
+        threshold = returnDouble("threshold");
+    }
+
+    public void readFire(){
+        probCatch = returnDouble("probCatch");
+        probGrowth = returnDouble("probGrowth");
+        burningCount = returnDouble("burningCount");
+    }
+    */
 }
 
 

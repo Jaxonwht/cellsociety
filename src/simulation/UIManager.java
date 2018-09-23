@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author Julia Saveliff, Yunhao Qing
+ * @author Julia Saveliff
  */
 public class UIManager {
     // constant screen dimensions
@@ -204,11 +204,11 @@ public class UIManager {
         var cellsToAdd = myGrid.getAllShape();
 
         String type = myReader.getName();
-        List<Double> extraParameters = myReader.getExtraParameters();
+        // Use reflection to construct a corresponding specific Rule class.
         try {
             Class<?> clazz = Class.forName("simulation." + type + "Rule");
             Constructor<?> constructor = clazz.getConstructor(Grid.class, List.class);
-            Object instance = constructor.newInstance(myGrid, extraParameters);
+            Object instance = constructor.newInstance(myGrid, this.myReader.getExtraParameters());
             myRule = (Rule) instance;
         } catch (Exception e){
             // TODO: catch exception

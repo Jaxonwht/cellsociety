@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Julia Saveliff, Haotian Wang
+ * @author Haotian Wang
  */
 public abstract class Cell {
     public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = new HashMap<>();

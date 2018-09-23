@@ -4,6 +4,7 @@
 		<name>SpreadingOfFire</name>
 		<title>spreadingOfFire_1</title>
 		<author>Team13</author>
+		<extraParameters>probCatch probGrowth burningCount</extraParameters>
 	</simulation>
 	<params>
 		<probCatch>0.3</probCatch>

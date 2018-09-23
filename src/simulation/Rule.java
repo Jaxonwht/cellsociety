@@ -2,12 +2,14 @@ package simulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Haotian Wang
  * An abstract class that defines the rules for updating the states of cells in a grid. Determine what the next states
  */
 public abstract class Rule {
+    public final static Random rand = new Random();
     private Grid myGrid;
 
     /**
@@ -26,6 +28,7 @@ public abstract class Rule {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 this.getGrid().item(i, j).updateShape(Cell.STATE_TO_PAINT_MAP);
                 this.getGrid().item(i, j).updateToNextState();
+                this.getGrid().item(i, j).setNextState(Cell.UNINITIALIZED);
             }
         }
     }
@@ -38,7 +41,7 @@ public abstract class Rule {
         for (int i = 0; i < myGrid.getNumRow(); i++) {
             for (int j = 0; j < myGrid.getNumCol(); j++) {
                 Cell cell = myGrid.item(i, j);
-                cell.setNextState(SegregationCell.UNINITIALIZED);
+                cell.setNextState(Cell.UNINITIALIZED);
             }
         }
     }

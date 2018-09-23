@@ -16,15 +16,8 @@ public class GameOfLifeRule extends Rule {
         super(grid, extraParameters);
     }
 
-    /**
-     *
-     */
     @Override
     public void determineNextStates() {
-        // RESET ALL NEXT STATES TO UNINITIALIZED
-        super.clearNextStates();
-
-        // DETERMINE NEXT STATES
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);

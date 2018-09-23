@@ -4,6 +4,7 @@
 		<name>Segregation</name>
 		<title>segregation_1</title>
 		<author>Team13</author>
+		<extraParameters>threshold</extraParameters>
 	</simulation>
 	<params>
 		<threshold>0.3</threshold>

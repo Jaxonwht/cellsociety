@@ -2,12 +2,10 @@ package simulation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
- * A specific Rule class for Wator.
- *
  * @author Yunhao Qing
+ * A specific Rule class for Wator.
  */
 public class WatorRule extends Rule {
 
@@ -15,16 +13,11 @@ public class WatorRule extends Rule {
 
     public final int REPRODUCTION_FISH;
     public final int REPRODUCTION_SHARK;
-    public final Random rand = new Random();
 
     public WatorRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         REPRODUCTION_FISH = (int) Math.floor(extraParameters.get(0));
         REPRODUCTION_SHARK = (int) Math.floor(extraParameters.get(1));
-        System.out.println(REPRODUCTION_FISH);
-        System.out.println(REPRODUCTION_SHARK);
-
-
     }
 
     @Override
@@ -45,15 +38,15 @@ public class WatorRule extends Rule {
     }
 
     public boolean moveCell(WatorCell cell, List<Cell> neighbors){
-        List<Cell> possMoves = new ArrayList<Cell>();
+        List<Cell> possMoves = new ArrayList<>();
         for (Cell neighbor : neighbors) {
             if (neighbor.getState() == WatorCell.EMPTY &&
-                    neighbor.getNextState() == WatorCell.UNINITIALIZED) {
+                    neighbor.getNextState() == Cell.UNINITIALIZED) {
                 possMoves.add(neighbor);
             }
         }
         if (!possMoves.isEmpty()) {
-            WatorCell move = (WatorCell) possMoves.get(rand.nextInt(possMoves.size()));
+            WatorCell move = (WatorCell) possMoves.get(Rule.rand.nextInt(possMoves.size()));
             move.setNextState(cell.getState());
             move.setSurviveTime(cell.getSurviveTime());
             cell.setNextState(WatorCell.EMPTY);
@@ -68,13 +61,13 @@ public class WatorRule extends Rule {
             List<Cell> possReprobs = new ArrayList<Cell>();
             for (Cell neighbor : neighbors) {
                 if (neighbor.getState() == WatorCell.EMPTY &&
-                        neighbor.getNextState() == WatorCell.UNINITIALIZED) {
+                        neighbor.getNextState() == Cell.UNINITIALIZED) {
                     possReprobs.add(neighbor);
                 }
             }
             if (!possReprobs.isEmpty()) {
                 cell.setSurviveTime(0);
-                Cell reprob = possReprobs.get(rand.nextInt(possReprobs.size()));
+                Cell reprob = possReprobs.get(Rule.rand.nextInt(possReprobs.size()));
                 reprob.setNextState(WatorCell.SHARK);
                 return true;
             }
@@ -86,12 +79,12 @@ public class WatorRule extends Rule {
         List<Cell> possFoods = new ArrayList<Cell>();
         for (Cell neighbor : neighbors) {
             if (neighbor.getState() == WatorCell.FISH &&
-                    neighbor.getNextState() == WatorCell.UNINITIALIZED) {
+                    neighbor.getNextState() == Cell.UNINITIALIZED) {
                 possFoods.add(neighbor);
             }
         }
         if (!possFoods.isEmpty()) {
-            WatorCell food = (WatorCell) possFoods.get(rand.nextInt(possFoods.size()));
+            WatorCell food = (WatorCell) possFoods.get(Rule.rand.nextInt(possFoods.size()));
             food.setNextState(WatorCell.EMPTY);
             food.setSurviveTime(0);
             return true;
@@ -118,7 +111,7 @@ public class WatorRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
-                if (cell.getState() == WatorCell.FISH && cell.getNextState() == WatorCell.UNINITIALIZED) {
+                if (cell.getState() == WatorCell.FISH && cell.getNextState() == Cell.UNINITIALIZED) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
                     List<Cell> neighbors = this.getNeighbors(i, j);
                     if (!reprobCell(cell,neighbors)) {
@@ -130,16 +123,18 @@ public class WatorRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
-                if (cell.getNextState() == WatorCell.UNINITIALIZED)
+                if (cell.getNextState() == Cell.UNINITIALIZED)
                     cell.setNextState(cell.getState());
             }
         }
 
-       /* for (int i = 0; i < this.getGrid().getNumRow(); i++) {
+        /*
+        for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
                 //System.out.printf("Cell at row " + i + "column" + j)
             }
-        }*/
+        }
+        */
     }
 }

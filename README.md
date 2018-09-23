@@ -3,8 +3,7 @@ cell society
 
 This project implements a cellular automata simulator.
 
-Names: <br/>
-Julia Saveliff, Yunhao Qing, Haotian Wang
+Authors in alphabetical order: Julia Saveliff, Haotian Wang, Yunhao Qing
 
 ### Timeline
 
@@ -15,14 +14,29 @@ Finish Date: 09/23/2018
 Hours Spent:
 
 ### Primary Roles
-
+* CA: Julia Saveliff
+* UIManager: Julia Saveliff
+* Grid: Julia Saveliff
+* Cell: Haotian Wang
+    * GameOfLifeCell: Haotian Wang
+    * SegregationCell: Haotian Wang
+    * SpreadingOfFireCell: Yunhao Qing
+    * WartorCell: Yunhao Qing
+* Rule: Haotian Wang
+    * GameOfLifeRule: Haotian Wang
+    * SegregationRule: Haotian Wang, Julia Saveliff
+    * SpreadingOfFireRule: Yunhao Qing
+    * WatorRule: Yunhao Qing
+* ReadXML: Julia Saveliff, Yunhao Qing, Haotian Wang
+* XML format: Yunhao Qing
 
 ### Resources Used
 
-Sources for ImageView:
-
+###### Images
 * [alive.gif](https://commons.wikimedia.org/wiki/File:Solid_white.png)
 * [dead.gif](https://commons.wikimedia.org/wiki/File:Solid_black.png)
+
+###### Articles
 * [Schelling's Model of Segregation
 ](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/)
 * [Oracle documentation on Circle](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Circle.html)
@@ -36,10 +50,18 @@ Sources for ImageView:
 ](https://l.messenger.com/l.php?u=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F22470985%2Finteger-class-vs-int-class&h=AT0oxh3T6S7cgm3CMzhRzM-bvukfJYa5z3dXlGkvSAJkB-cd-ucubCPXM4pLevC69Rc95Srq_DW-I0h1FdTZsHNwYd470REraRFeRU-z1YK_47OpJFGXvmkI6ulIDw)
 * [How to permanently remove few commits from remote branch
 ](https://stackoverflow.com/questions/3293531/how-to-permanently-remove-few-commits-from-remote-branch)
+* [Split() String method in Java with examples
+](https://www.geeksforgeeks.org/split-string-java-examples/)
+* [Is there a way to instantiate a class by name in Java?
+](https://stackoverflow.com/questions/9886266/is-there-a-way-to-instantiate-a-class-by-name-in-java)
+* [How to convert Double to int directly? [duplicate]
+](https://stackoverflow.com/questions/5404149/how-to-convert-double-to-int-directly)
+* [Oracle documentation on Random](https://docs.oracle.com/javase/7/docs/api/java/util/Random.html)
+
 
 ### Running the Program
 
-Main class:
+Main class: CA
 
 Data files needed: 
 
