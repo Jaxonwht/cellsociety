@@ -34,7 +34,7 @@ public class WatorRule extends Rule {
         return neighbors;
     }
 
-    public boolean moveCell(WatorCell cell, List<Cell> neighbors){
+    private boolean moveCell(WatorCell cell, List<Cell> neighbors){
         List<Cell> possMoves = new ArrayList<>();
         for (Cell neighbor : neighbors) {
             if (neighbor.getState() == WatorCell.EMPTY &&
@@ -54,8 +54,10 @@ public class WatorRule extends Rule {
     }
 
     private boolean reprobCell(WatorCell cell,List<Cell> neighbors){
-        if (cell.getSurviveTime() >= REPRODUCTION_SHARK) {
-            List<Cell> possReprobs = new ArrayList<Cell>();
+        if ((cell.getState() == WatorCell.SHARK && cell.getSurviveTime() >= REPRODUCTION_SHARK)
+                || (cell.getState() == WatorCell.FISH && cell.getSurviveTime() >= REPRODUCTION_FISH)) {
+
+            List<Cell> possReprobs = new ArrayList<>();
             for (Cell neighbor : neighbors) {
                 if (neighbor.getState() == WatorCell.EMPTY &&
                         neighbor.getNextState() == Cell.UNINITIALIZED) {
@@ -65,15 +67,16 @@ public class WatorRule extends Rule {
             if (!possReprobs.isEmpty()) {
                 cell.setSurviveTime(0);
                 Cell reprob = possReprobs.get(Rule.rand.nextInt(possReprobs.size()));
-                reprob.setNextState(WatorCell.SHARK);
+                reprob.setNextState(cell.getState());
                 return true;
             }
         }
+
         return false;
     }
 
     private boolean eatCell(List<Cell> neighbors){
-        List<Cell> possFoods = new ArrayList<Cell>();
+        List<Cell> possFoods = new ArrayList<>();
         for (Cell neighbor : neighbors) {
             if (neighbor.getState() == WatorCell.FISH &&
                     neighbor.getNextState() == Cell.UNINITIALIZED) {
@@ -124,14 +127,5 @@ public class WatorRule extends Rule {
                     cell.setNextState(cell.getState());
             }
         }
-
-        /*
-        for (int i = 0; i < this.getGrid().getNumRow(); i++) {
-            for (int j = 0; j < this.getGrid().getNumCol(); j++) {
-                WatorCell cell = (WatorCell) this.getGrid().item(i, j);
-                //System.out.printf("Cell at row " + i + "column" + j)
-            }
-        }
-        */
     }
 }
