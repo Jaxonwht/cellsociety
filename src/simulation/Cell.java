@@ -1,15 +1,11 @@
 package simulation;
 
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,9 +74,7 @@ public abstract class Cell {
 
     protected double getY() { return myYPos; }
 
-    protected Shape getShape() {
-        return myShape;
-    }
+    protected Shape getShape() { return myShape; }
 
     protected double getWidth() {
         return myWidth;

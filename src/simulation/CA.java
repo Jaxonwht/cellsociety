@@ -7,26 +7,21 @@ import javafx.stage.Stage;
  * @author Julia Saveliff
  */
 public class CA extends Application {
-    public static final String TITLE = "Cell Society Simulation";
     private Stage primaryStage;
     private UIManager myUI;
 
     /**
-     * Initialize the stage and a scene. Define how the scene will be updated.
+     * Initialize and show the stage. Call UIManager to handle all user interface components and updates.
      * @param stage: A JavaFx Stage object.
      */
     @Override
     public void start(Stage stage) {
         primaryStage = stage;
 
-        // create UI Manager object
         myUI = new UIManager(primaryStage);
-
-        // set up scene
         myUI.create();
-        primaryStage.setTitle(TITLE);
-        primaryStage.show();
 
+        primaryStage.show();
     }
 
     /**

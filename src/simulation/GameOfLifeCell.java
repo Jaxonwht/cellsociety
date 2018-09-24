@@ -1,10 +1,7 @@
 package simulation;
 
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 import java.util.*;
 
@@ -14,9 +11,9 @@ import java.util.*;
 public class GameOfLifeCell extends Cell {
     public static final int DEAD = 0;
     public static final int ALIVE = 1;
-    public static final Paint DEAD_COLOR = Color.RED;
-    public static final Paint ALIVE_COLOR = Color.WHITE;
-    public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
+    private static final Paint DEAD_COLOR = Color.RED;
+    private static final Paint ALIVE_COLOR = Color.LIGHTGRAY;
+    private static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
     /**
      * A static method that creates an unmodifiable map for GameOfLife, relating the state int to the String representing image file name.

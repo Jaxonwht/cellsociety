@@ -7,9 +7,9 @@ import java.util.*;
  * A specific Rule class for SpreadingOfFire game, adapting rules from http://nifty.stanford.edu/2007/shiflet-fire/.
  */
 public class SpreadingOfFireRule extends Rule {
-    public final int MY_BURNING_COUNT;
-    public final double PROB_GROWTH;
-    public final double PROB_CATCH;
+    private final int MY_BURNING_COUNT;
+    private final double PROB_GROWTH;
+    private final double PROB_CATCH;
 
     public SpreadingOfFireRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
