@@ -25,35 +25,12 @@ public class ReadXML {
     private int[][] cellState;
     private List<Double> extraParameters;
     Document document;
-    /*
-    private double probCatch;
-    private double probGrowth;
-    private double burningCount;
-    private double reproductionFish;
-    private double reproductionShark;
-    private double threshold;
-    private HashMap<Integer,String> stateNum;
-    */
-
-
-   /**
-    * Example on how to use this Class;
-    * ReadXML xmlreader = new ReadXML("Wator1.xml");
-    * String name = xmlreader.getName(); 
-    * //This will tell you whether the xml is gol, fire, wator or segregation.
-    * int width = xmlreader.getWidth();
-    * int height = xmlreader.getHeight();
-    * row and column can be obtained similarly.
-    * //If the xml is wator for example;
-    * //int reproductionFish = xmlreader.getReproductionFish;
-    * int[][] cellSate = xmlreader.getCellState
-    * //This returns a 2D array with numbers like 0,1,2 to indicate cell state.
-    * HashMap<Integer,String> stateNum = xmlreader.getStateNum;
-    * //This returns something like {<0,empty><1,X><2,O>}, so one can track
-    * //the corresponding stateNumber and stateName in the main program.
-    */
     
-    
+    /**
+     * Constructor for ReadXML with the file, the xml file.
+     * It reads the type of simulation, grid and initial states configuration
+     * and extra parameters for each specific simulation.
+     */
     public ReadXML (File file) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -64,17 +41,16 @@ public class ReadXML {
         readGrid();
         readState();
         readExtraParameters();
-        // stateNum = new HashMap<>();
-        // readByType();
     }
-
+    
+    /**
+     * Read in initial state for each cell and update the 2D array cellState.
+     */
     private void readState() {
         NodeList nodeList = document.getElementsByTagName("state");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             int stateNumber = Integer.parseInt(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
-            // String stateName = node.getAttributes().getNamedItem("stateName").getNodeValue();
-            // stateNum.put(stateNumber,stateName);
             String temp = node.getTextContent();
             for (String s : temp.split(" ")){
                 int index = Integer.parseInt(s);
@@ -95,6 +71,9 @@ public class ReadXML {
             }
         }
     }
+    /**
+     * Read in the grid configuration and initialise the 2D array cellState.
+     */
 
     private void readGrid(){
         width = returnInt("width");
@@ -118,19 +97,6 @@ public class ReadXML {
 
     public List<Double> getExtraParameters() {
         return this.extraParameters;
-        /*
-        List<Double> extraParameters = new ArrayList<>();
-        if (name.equals("SpreadingOfFire")) {
-            extraParameters.add(probCatch);
-            extraParameters.add(probGrowth);
-            extraParameters.add(burningCount);
-        } else if (name.equals("Segregation")) {
-            extraParameters.add(threshold);
-        } else if (name.equals("Wator")) {
-            extraParameters.add(reproductionFish);
-            extraParameters.add(reproductionShark);
-        }
-        */
     }
 
     public String getName(){return name;}
@@ -144,43 +110,6 @@ public class ReadXML {
     public int getHeight(){return height;}
 
     public int[][] getCellState(){return cellState;}
-    /*
-    private void readByType(){
-        name = document.getElementsByTagName("name").item(0).getTextContent();
-        if (name.equals("SpreadingOfFire"))
-            readFire();
-        else if (name.equals("Segregation"))
-            readSegregation();
-        else if (name.equals("Wator"))
-            readWator();
-    }
-
-    public double getThreshold(){return threshold;}
-
-    public double getReproductionFish(){return reproductionFish;}
-
-    public double getReproductionShark(){return reproductionShark;}
-
-    public double getProbCatch(){return probCatch;}
-
-    public HashMap<Integer,String> getStateNum(){return stateNum;}
-
-    private void readWator() {
-        reproductionFish = returnDouble("reproductionFish");
-        reproductionShark = returnDouble("reproductionShark");
-    }
-
-
-    private void readSegregation() {
-        threshold = returnDouble("threshold");
-    }
-
-    public void readFire(){
-        probCatch = returnDouble("probCatch");
-        probGrowth = returnDouble("probGrowth");
-        burningCount = returnDouble("burningCount");
-    }
-    */
 }
 
 
