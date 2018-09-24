@@ -65,13 +65,30 @@ Main class: CA
 
 Data files needed: 
 
+* `simulation/UI_text.properties` required to set all user interface text
+
+* XML files to run simulation with:
+
+    * `data/fire.xml`
+    * `data/gameOfLife.xml`
+    * `data/gameOfLifeBig.xml`
+    * `data/segregation.xml`
+    * `data/Wator.xml`
+
 Interesting data files:
 
 Features implemented:
 
 Assumptions or Simplifications:
 
+* Simulation automatically stops after 500 generations 
+
+* To avoid potential collisions in simulations where cells are to "move" about the grid, 
+the current state and next state of different cells may be compared
+
 Known Bugs:
+
+* None
 
 Extra credit:
 
