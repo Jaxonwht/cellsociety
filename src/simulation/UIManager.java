@@ -7,23 +7,22 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * @author Julia Saveliff
+ *
+ * Handles and controls all user interface components. All UI functionality is handled
+ * by calling the method public void create().
  */
 public class UIManager {
     // constant screen dimensions
@@ -32,17 +31,12 @@ public class UIManager {
     private final static int LAYOUT_SPACING = 20;
 
     // button text
-    private final static String LOAD_NEW_TEXT = "Load new simulation";
-    private final static String PAUSE_TEXT = "Pause";
-    private final static String PLAY_TEXT = "Play";
-    private final static String STEP_TEXT = "Step";
-    private final static String CHOOSE_TEXT = "Select XML file";
-    private final static String SELECTED_TEXT = "Selected file:";
-    private final static String START_TEXT = "Start simulation";
+    private ResourceBundle myResources;
+    private final static String DEFAULT_RESOURCE_FILE = "simulation/UI_text";
 
     // animation constants
     private static final int FRAMES_PER_SECOND = 3;
-    private static final double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double MILLISECOND_DELAY = 1000.0 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private final static double MIN_RATE = 0.1;
     private final static double MAX_RATE = 3;
@@ -52,24 +46,27 @@ public class UIManager {
     // UI components
     private Stage myStage;
     private Group mySplashRoot;
-    private Group mySimRoot;
     private Button splashToSimButton;
     private Button simToSplashButton;
     private Slider mySpeedSlider;
-    private Grid myGrid;
     private Rule myRule;
-    private int myNumGenerations=1;
+    private int myGenerationCount=1;
     private Text myGenerationsDisplay;
+    private Text myErrorDisplay;
 
     // file read components
     private File myFile;
-    private ReadXML myReader;
-    private Text myFileString;
+    private Text myFileText;
 
     // animation components
     private Timeline myAnimation;
 
+    /**
+     * Class constructor
+     * @param stage: A JavaFx Stage object.
+     */
     public UIManager(Stage stage) {
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_FILE);
         myStage = stage;
     }
 
@@ -77,16 +74,14 @@ public class UIManager {
      * Method to be called once from main class to initiate UI.
      */
     public void create() {
-
-        mySplashRoot = setupSplash(myStage);
+        mySplashRoot = setupSplash();
         myStage.setScene(mySplashRoot.getScene());
-
     }
 
     /**
      * Begins animation to regularly call step method.
      */
-    public void run() {
+    private void run() {
         myAnimation = new Timeline();
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         myAnimation.setCycleCount(Timeline.INDEFINITE);
@@ -94,27 +89,29 @@ public class UIManager {
     }
 
     /**
-     * Animation for the simulations.
-     * TODO: Change states and appearances of cells. Forward the states of the cells to the next generation.
+     * Animation for the simulations to run every moment in time. Update state and appearances of cells and forward
+     * states of cells to next generation.
      */
     private void step(double stepTime) {
-        // Adjust rate according to user speed input
+        // adjust animation rate according to user input
         myAnimation.setRate(mySpeedSlider.getValue());
 
-        // Update num generations
-        myNumGenerations += 1;
-        if (myNumGenerations > MAX_GENERATION) {
-            myAnimation.stop();
-        }
-        myGenerationsDisplay.setText("Generations: "+myNumGenerations);
+        // update generation count
+        myGenerationCount += 1;
+        if (myGenerationCount > MAX_GENERATION) { myAnimation.stop(); }
+        myGenerationsDisplay.setText(myResources.getString("GenerationText")+myGenerationCount);
 
-        //update cells
+        // update cells
         myRule.determineNextStates();
         myRule.updateGrid();
 
     }
 
-    private Group setupSplash(Stage stage) {
+    /**
+     * Create all components for splash screen.
+     * @return root node of splash scene
+     */
+    private Group setupSplash() {
 
         var root = new Group();
         var scene = new Scene(root, SPLASH_SIZE, SPLASH_SIZE);
@@ -123,53 +120,60 @@ public class UIManager {
         layout.setPrefSize(SPLASH_SIZE,SPLASH_SIZE);
         layout.setAlignment(Pos.CENTER);
 
-        var chooseFileButton = new Button(CHOOSE_TEXT);
-        var selectedFile = new Text(SELECTED_TEXT);
-        myFileString = new Text();
-        splashToSimButton = new Button(START_TEXT);
+        var chooseFileButton = makeButton("ChooseFileText");
+        var selectedFile = new Text(myResources.getString("SelectedText"));
+        myFileText = new Text();
+        splashToSimButton = makeButton("StartText");
 
-        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileString, splashToSimButton);
+        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton);
         root.getChildren().add(layout);
 
         var fileChooser = new FileChooser();
-        fileChooser.setTitle(CHOOSE_TEXT);
-        chooseFileButton.setOnAction( event -> handleFile(fileChooser.showOpenDialog(stage)) );
+        chooseFileButton.setOnAction( event -> handleFile(fileChooser.showOpenDialog(myStage)) );
 
         return root;
 
     }
 
-    private void handleFile(File file) {
-        // TODO: Error checking on file type
-        if (file != null) {
+    /**
+     * Initialize new button using resource bundle property files.
+     * @param text: key of text to use in property file
+     * @return Button displaying desired text value
+     */
+    private Button makeButton(String text) {
+        return new Button(myResources.getString(text));
+    }
 
+    /**
+     * To check file chosen from file chooser feature and update UI.
+     * @param file chosen by user
+     */
+    private void handleFile(File file) {
+        if (file != null) {
             myFile = file;
             String[] myFileNameArray = myFile.toString().split("/");
             String myFileName = myFileNameArray[myFileNameArray.length-1];
-            myFileString.setText(myFileName);
-
+            myFileText.setText(myFileName);
             try {
-                myReader = new ReadXML(myFile);
-                handleReader(myReader);
-            } catch (ParserConfigurationException PCe) {
-                // TODO: handle exception
-                System.out.println("ParserConfigurationException: "+PCe.getMessage());
-            } catch (IOException IOe) {
-                // TODO: handle exception
-                System.out.println("IOException: "+IOe.getMessage());
-            } catch (SAXException SAXe) {
-                // TODO: handle exception
-                System.out.println("SAXException: "+SAXe.getMessage());
+                handleReader(new ReadXML(myFile));
+            } catch (Exception e) {
+                myFileText.setText(myResources.getString("FileErrorText"));
             }
-
         } else {
-            // TODO: Handle null file
+            myFileText.setText(myResources.getString("FileErrorText"));
         }
     }
 
-
-    private Group setupSimulation(Stage stage, int width, int height, String title) {
+    /**
+     * Create all components for simulation screen.
+     * @param reader ReadXML object created with user selected file
+     * @return root node of simulation screen
+     */
+    private Group setupSimulation(ReadXML reader) {
         // set up layout of scene
+        var width = reader.getWidth();
+        var height = reader.getHeight();
+
         var root = new Group();
         var scene = new Scene(root, width+PANEL_WIDTH, height);
         var border = new BorderPane();
@@ -177,19 +181,19 @@ public class UIManager {
         // user panel
         var userPanel = new VBox(20);
         userPanel.setPrefSize(PANEL_WIDTH,height);
-        userPanel.setStyle("-fx-background-color: #336699");
         userPanel.setAlignment(Pos.CENTER);
 
-        // user simulation controls
-        myGenerationsDisplay = new Text("Generations: "+myNumGenerations);
-        simToSplashButton = new Button(LOAD_NEW_TEXT);
-        var playButton = new Button(PLAY_TEXT);
+        // user controls
+        myErrorDisplay = new Text();
+        myGenerationsDisplay = new Text(myResources.getString("GenerationText")+myGenerationCount);
+        simToSplashButton = makeButton("LoadText");
+        var playButton = makeButton("PlayText");
         playButton.setOnAction( event -> handlePlay() );
-        var pauseButton = new Button(PAUSE_TEXT);
+        var pauseButton = makeButton("PauseText");
         pauseButton.setOnAction( event -> handlePause() );
-        var stepButton = new Button(STEP_TEXT);
+        var stepButton = makeButton("StepText");
         stepButton.setOnAction( event -> handleStep() );
-        var speedText = new Text("Speed");
+        var speedText = new Text(myResources.getString("SpeedText"));
         mySpeedSlider = new Slider();
         mySpeedSlider.setMin(MIN_RATE);
         mySpeedSlider.setMax(MAX_RATE);
@@ -198,26 +202,14 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-
-        myGrid = new Grid(root, myReader);
-        myGrid.populateCells();
-        var cellsToAdd = myGrid.getAllShape();
-
-        String type = myReader.getName();
-        // Use reflection to construct a corresponding specific Rule class.
-        try {
-            Class<?> clazz = Class.forName("simulation." + type + "Rule");
-            Constructor<?> constructor = clazz.getConstructor(Grid.class, List.class);
-            Object instance = constructor.newInstance(myGrid, this.myReader.getExtraParameters());
-            myRule = (Rule) instance;
-        } catch (Exception e){
-            // TODO: catch exception
-            System.out.println("Exception caught: "+e.getMessage());
-        }
+        var grid = new Grid(root, reader);
+        grid.populateCells();
+        var gridNodes = grid.getAllShape();
+        myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 
         // add elements to each region
-        userPanel.getChildren().addAll(myGenerationsDisplay, simToSplashButton, playButton, pauseButton, stepButton, speedText, mySpeedSlider);
-        gridRegion.getChildren().addAll(cellsToAdd);
+        userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton, pauseButton, stepButton, speedText, mySpeedSlider);
+        gridRegion.getChildren().addAll(gridNodes);
 
         // set layout regions
         border.setRight(userPanel);
@@ -230,8 +222,35 @@ public class UIManager {
 
     }
 
-    private void setupSceneTransitions(Stage stage, Group splash, Group simulation) {
+    /**
+     * Instantiates a simulation Rule subclass according to simulation type read in from XML file.
+     * For example, if simulationType is "GameOfLife", this method will return an instance of the GameOfLifeRule class.
+     * @param grid simulation grid to pass to Rule constructor
+     * @param simulationType type read in from XML file
+     * @param simulationParameters extra parameters read in from XML file
+     * @return instantiated Rule instance of desired subclass
+     */
+    private Rule makeRuleByReflection(Grid grid, String simulationType, List<Double> simulationParameters) {
+        try {
+            var packageName = "simulation.";
+            var className = "Rule";
+            Class<?> clazz = Class.forName(packageName + simulationType + className);
+            Constructor<?> constructor = clazz.getConstructor(Grid.class, List.class);
+            Object instance = constructor.newInstance(grid, simulationParameters);
+            return (Rule) instance;
+        } catch (Exception e) {
+            myErrorDisplay.setText(myResources.getString("InterpretErrorText"));
+            return null;
+        }
+    }
 
+    /**
+     * Defines transitions between animation nodes after both have been created.
+     * @param stage animation stage
+     * @param splash splash root node
+     * @param simulation simulation root node
+     */
+    private void setupSceneTransitions(Stage stage, Group splash, Group simulation) {
         splashToSimButton.setOnAction( event -> {
             if(myFile !=null) {
                 stage.setScene(simulation.getScene());
@@ -241,36 +260,43 @@ public class UIManager {
         simToSplashButton.setOnAction( event -> {
             myAnimation.stop();
             stage.setScene(splash.getScene());
-            myNumGenerations = 1;
+            myGenerationCount = 1;
         } );
 
     }
 
+    /**
+     * Creates simulation root node using ReadXML created by user's input.
+     * @param reader ReadXML created with user's choice of XML file
+     */
     private void handleReader(ReadXML reader) {
-
-        mySimRoot = setupSimulation(myStage, reader.getHeight(), reader.getWidth(), reader.getName());
-        setupSceneTransitions(myStage, mySplashRoot, mySimRoot);
-
+        var simulationRoot = setupSimulation(reader);
+        setupSceneTransitions(myStage, mySplashRoot, simulationRoot);
     }
 
+    /**
+     * To be called when user pauses simulation.
+     */
     private void handlePause() {
         // pause animation
         myAnimation.pause();
     }
 
+    /**
+     * To be called when user starts simulation.
+     */
     private void handlePlay() {
         // resume animation
         myAnimation.play();
     }
 
+    /**
+     * To be called when user steps through simulation.
+     */
     private void handleStep() {
         // step through animation
         myAnimation.pause();
         step(SECOND_DELAY);
     }
-
-    public File getFile() { return myFile; }
-
-    public ReadXML getReader() { return myReader; }
 
 }
