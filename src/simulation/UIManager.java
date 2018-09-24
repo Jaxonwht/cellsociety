@@ -68,6 +68,7 @@ public class UIManager {
     public UIManager(Stage stage) {
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_FILE);
         myStage = stage;
+        myStage.setTitle(myResources.getString("Title"));
     }
 
     /**
