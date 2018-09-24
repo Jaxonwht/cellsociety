@@ -12,7 +12,7 @@ public class WatorCell extends Cell {
     public static final int EMPTY = 0;
     public static final int FISH = 1;
     public static final int SHARK = 2;
-    private static final Paint EMPTY_COLOR = Color.WHITE;
+    private static final Paint EMPTY_COLOR = Color.LIGHTGRAY;
     private static final Paint FISH_COLOR = Color.GREEN;
     private static final Paint SHARK_COLOR = Color.BLUE;
     private static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();

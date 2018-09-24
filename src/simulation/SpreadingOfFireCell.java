@@ -13,7 +13,7 @@ public class SpreadingOfFireCell extends Cell {
     public static final int EMPTY = 0;
     public static final int NORMAL = 1;
     public static final int BURNING = 2;
-    private static final Paint EMPTY_COLOR = Color.WHITE;
+    private static final Paint EMPTY_COLOR = Color.LIGHTGRAY;
     private static final Paint NORMAL_COLOR = Color.GREEN;
     private static final Paint BURNING_COLOR = Color.RED;
     private static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();

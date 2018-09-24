@@ -12,7 +12,7 @@ public class GameOfLifeCell extends Cell {
     public static final int DEAD = 0;
     public static final int ALIVE = 1;
     private static final Paint DEAD_COLOR = Color.RED;
-    private static final Paint ALIVE_COLOR = Color.WHITE;
+    private static final Paint ALIVE_COLOR = Color.LIGHTGRAY;
     private static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
     /**
