@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class GameOfLifeRule extends Rule {
     // If number of neighbors < UNDERPOPULATION_THRESHOLD, underpopulation happens.
-    public static final int UNDERPOPULATION_THRESHOLD = 2;
+    private static final int UNDERPOPULATION_THRESHOLD = 2;
     // If number of neighbors > OVERPOPULATION_THRESHOLD, overpopulation happens.
-    public static final int OVERPOPULATION_THRESHOLD = 3;
+    private static final int OVERPOPULATION_THRESHOLD = 3;
 
     public GameOfLifeRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);

@@ -8,11 +8,8 @@ import java.util.List;
  * A specific Rule class for Wator.
  */
 public class WatorRule extends Rule {
-
-    //nextState = currentState, this must be initilised for this class to work.
-
-    public final int REPRODUCTION_FISH;
-    public final int REPRODUCTION_SHARK;
+    private final int REPRODUCTION_FISH;
+    private final int REPRODUCTION_SHARK;
 
     public WatorRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
@@ -56,7 +53,7 @@ public class WatorRule extends Rule {
         return false;
     }
 
-    public boolean reprobCell(WatorCell cell,List<Cell> neighbors){
+    private boolean reprobCell(WatorCell cell,List<Cell> neighbors){
         if (cell.getSurviveTime() >= REPRODUCTION_SHARK) {
             List<Cell> possReprobs = new ArrayList<Cell>();
             for (Cell neighbor : neighbors) {
@@ -75,7 +72,7 @@ public class WatorRule extends Rule {
         return false;
     }
 
-    public boolean eatCell(List<Cell> neighbors){
+    private boolean eatCell(List<Cell> neighbors){
         List<Cell> possFoods = new ArrayList<Cell>();
         for (Cell neighbor : neighbors) {
             if (neighbor.getState() == WatorCell.FISH &&
