@@ -4,13 +4,19 @@ import java.util.*;
 
 /**
  * @author Yunhao Qing
- * A specific Rule class for SpreadingOfFire game, adapting rules from http://nifty.stanford.edu/2007/shiflet-fire/.
+ * A specific Rule class for SpreadingOfFire game,
+ * adapting rules from http://nifty.stanford.edu/2007/shiflet-fire/.
  */
 public class SpreadingOfFireRule extends Rule {
-    private final int MY_BURNING_COUNT;
+    private final int MY_BURNING_COUNT; //how long the tree has been buring
     private final double PROB_GROWTH;
     private final double PROB_CATCH;
-
+    
+    /**
+     * Constructor for SpreadingOfFireRule.
+     * @param grid the grid with states number in each cell
+     * @param extraParameters MY_BURNING_COUNT, PROB_GROWTH and PROB_CATCH
+     */
     public SpreadingOfFireRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         PROB_CATCH = extraParameters.get(0);
@@ -18,6 +24,10 @@ public class SpreadingOfFireRule extends Rule {
         MY_BURNING_COUNT = (int) Math.floor(extraParameters.get(2));
     }
     
+    /**
+     * @return neighbors a list that consists of direct neighbours (up, down,
+     * left, right) that are within the grid.
+     */
     @Override
     protected List<Cell> getNeighbors(int row, int col) {
         Grid grid = this.getGrid();
@@ -34,7 +44,10 @@ public class SpreadingOfFireRule extends Rule {
         }
         return neighbors;
     }
-
+    
+    /**
+     * Transver the grid and determine the next state for each cell.
+     */
     @Override
     public void determineNextStates() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
@@ -50,7 +63,8 @@ public class SpreadingOfFireRule extends Rule {
                         cell.setNextState(cell.getState());
                     }
                 }
-                if (cell.getState() == SpreadingOfFireCell.NORMAL) {
+                
+                else if (cell.getState() == SpreadingOfFireCell.NORMAL) {
                     boolean check = false;
                     List<Cell> neighbors = this.getNeighbors(i, j);
                     for (Cell neighbor : neighbors) {
@@ -64,7 +78,8 @@ public class SpreadingOfFireRule extends Rule {
                         cell.setNextState(cell.getState());
                     }
                 }
-                if (cell.getState() == SpreadingOfFireCell.EMPTY) {
+                
+                else if (cell.getState() == SpreadingOfFireCell.EMPTY) {
                     if (rand.nextDouble() < PROB_GROWTH){
                         cell.setNextState(SpreadingOfFireCell.NORMAL);
                     } else {
