@@ -70,12 +70,19 @@ Data files needed:
 * XML files to run simulation with:
 
     * `data/fire.xml`
+    * `data/fireNoRegrowth.xml`
     * `data/gameOfLife.xml`
     * `data/gameOfLifeBig.xml`
     * `data/segregation.xml`
+    * `data/segregationBig.xml`
+    * `data/Wator.xml`
     * `data/Wator.xml`
 
 Interesting data files:
+
+* `data/gameOfLifeFlicker.xml` oscillates between two states
+* `data/gameOfLifeReappear.xml` involves a reappearing pattern of states
+* `data/WatorLonelyShark.xml` shows what happens when there's only one non-reproducing shark
 
 Features implemented:
 
@@ -83,12 +90,19 @@ Assumptions or Simplifications:
 
 * Simulation automatically stops after 500 generations 
 
+* If a cell is listed as two different states in the XML file, it will be assigned whichever 
+state is read last
+
 * To avoid potential collisions in simulations where cells are to "move" about the grid, 
 the current state and next state of different cells may be compared
 
 Known Bugs:
 
-* None
+* There are certain cases for invalid XML values that are not checked. For example, if a cell is assigned outside
+of the grid's dimensions or if a cell goes unassigned
+
+* If during a simulation, the user presses the `Load new simulation` button, but then just
+presses `Start simulation` without loading a file, the simulation screen will not clear
 
 Extra credit:
 
