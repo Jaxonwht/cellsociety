@@ -57,6 +57,8 @@ Hours Spent:
 * [How to convert Double to int directly? [duplicate]
 ](https://stackoverflow.com/questions/5404149/how-to-convert-double-to-int-directly)
 * [Oracle documentation on Random](https://docs.oracle.com/javase/7/docs/api/java/util/Random.html)
+* [Location-Independent Access to Resources
+](https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html).
 
 
 ### Running the Program
