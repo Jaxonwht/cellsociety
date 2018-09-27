@@ -24,28 +24,6 @@ public class SpreadingOfFireRule extends Rule {
         MY_BURNING_COUNT = (int) Math.floor(extraParameters.get(2));
     }
     
-    /**
-     * @return neighbors a list that consists of direct neighbours (up, down,
-     * left, right) that are within the grid.
-     */
-    @Override
-    protected List<Cell> getNeighbors(int row, int col) {
-        Grid grid = this.getGrid();
-        List<Cell> neighbors = new ArrayList<Cell>();
-        List<int[]> cells  = new ArrayList<>();
-        cells.add(new int[]{row+1,col});
-        cells.add(new int[]{row-1,col});
-        cells.add(new int[]{row,col+1});
-        cells.add(new int[]{row,col-1});
-        for (int[] cell : cells){
-            if (!grid.isOutOfBounds(cell[0], cell[1])) {
-                neighbors.add(grid.item(cell[0], cell[1]));
-            }
-        }
-        return neighbors;
-    }
-    
-    
     public void determineNextStatesBurning(SpreadingOfFireCell cell) {
         cell.setBurningTime(cell.getBurningTime() + 1);
         if (cell.getBurningTime() == MY_BURNING_COUNT) {
@@ -90,7 +68,7 @@ public class SpreadingOfFireRule extends Rule {
                     determineNextStatesBurning(cell);
                 }
                 else if (cell.getState() == SpreadingOfFireCell.NORMAL) {
-                    List<Cell> neighbors = this.getNeighbors(i, j);
+                    List<Cell> neighbors = this.getNeighborsFour(i, j);
                     determineNextStatesNormal(cell, neighbors);
                 }
                 else if (cell.getState() == SpreadingOfFireCell.EMPTY) {

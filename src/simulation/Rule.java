@@ -9,6 +9,7 @@ import java.util.Random;
  * An abstract class that defines the rules for updating the states of cells in a grid. Determine what the next states
  */
 public abstract class Rule {
+
     public final static Random rand = new Random();
     private Grid myGrid;
 
@@ -64,6 +65,25 @@ public abstract class Rule {
                 if (!(i == row && j == col || grid.isOutOfBounds(i, j))) {
                     neighbors.add(grid.item(i, j));
                 }
+            }
+        }
+        return neighbors;
+    }
+
+    /**
+     * @return neighbors a list that consists of direct neighbours (up, down,
+     * left, right) that are within the grid.
+     */
+    protected  List<Cell> getNeighborsFour(int row, int col) {
+        List<Cell> neighbors = new ArrayList<Cell>();
+        List<int[]> cells  = new ArrayList<>();
+        cells.add(new int[]{row+1,col});
+        cells.add(new int[]{row-1,col});
+        cells.add(new int[]{row,col+1});
+        cells.add(new int[]{row,col-1});
+        for (int[] cell : cells){
+            if (!myGrid.isOutOfBounds(cell[0], cell[1])) {
+                neighbors.add(myGrid.item(cell[0], cell[1]));
             }
         }
         return neighbors;
