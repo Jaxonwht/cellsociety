@@ -150,8 +150,9 @@ public class WatorRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
-                if (cell.getNextState() == Cell.UNINITIALIZED)
+                if (cell.getNextState() == Cell.UNINITIALIZED) {
                     cell.setNextState(cell.getState());
+                }
             }
         }
     }
