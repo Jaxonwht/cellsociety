@@ -13,3 +13,4 @@ Duplication Refactoring
 Longest Method Refactoring
 --------------------------
 * In RuleOfLife, break determineNextStates to smaller methods.
+* In SpreadingOfFire, break down determineNextStates to smaller methods.
