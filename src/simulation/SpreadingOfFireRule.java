@@ -46,7 +46,7 @@ public class SpreadingOfFireRule extends Rule {
     }
     
     
-    public void determineNextStatesBurning(Cell cell){
+    public void determineNextStatesBurning(SpreadingOfFireCell cell) {
         cell.setBurningTime(cell.getBurningTime() + 1);
         if (cell.getBurningTime() == MY_BURNING_COUNT) {
             cell.setBurningTime(0);
@@ -70,7 +70,7 @@ public class SpreadingOfFireRule extends Rule {
         }
     }
     
-    public void determineNextStatesEmpty(){
+    public void determineNextStatesEmpty(SpreadingOfFireCell cell) {
         if (rand.nextDouble() < PROB_GROWTH){
             cell.setNextState(SpreadingOfFireCell.NORMAL);
         } else {
@@ -91,7 +91,7 @@ public class SpreadingOfFireRule extends Rule {
                 }
                 else if (cell.getState() == SpreadingOfFireCell.NORMAL) {
                     List<Cell> neighbors = this.getNeighbors(i, j);
-                    determineNextStatesBurning(cell,neighbors);
+                    determineNextStatesNormal(cell, neighbors);
                 }
                 else if (cell.getState() == SpreadingOfFireCell.EMPTY) {
                     determineNextStatesEmpty(cell);
