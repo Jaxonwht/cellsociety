@@ -22,21 +22,25 @@ public class GameOfLifeRule extends Rule {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
                 List<Cell> neighbors = this.getNeighbors(i, j);
-                int numAliveNeighbors = 0;
-                for (Cell neighbor : neighbors) {
-                    if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) {
-                        numAliveNeighbors++;
-                    }
-                }
-                if (cell.getState() == GameOfLifeCell.DEAD && numAliveNeighbors == OVERPOPULATION_THRESHOLD) {
-                    cell.setNextState(GameOfLifeCell.ALIVE);
-                } else if (cell.getState() == GameOfLifeCell.ALIVE &&
-                        (numAliveNeighbors < UNDERPOPULATION_THRESHOLD || numAliveNeighbors > OVERPOPULATION_THRESHOLD)) {
-                    cell.setNextState(GameOfLifeCell.DEAD);
-                } else {
-                    cell.setNextState(cell.getState());
-                }
+                checkCell(cell, neighbours);
             }
+        }
+    }
+    
+    public void checkCell(Cell cell, List<Cell> neighbors){
+        int numAliveNeighbors = 0;
+        for (Cell neighbor : neighbors) {
+            if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) {
+                numAliveNeighbors++;
+            }
+        }
+        if (cell.getState() == GameOfLifeCell.DEAD && numAliveNeighbors == OVERPOPULATION_THRESHOLD) {
+            cell.setNextState(GameOfLifeCell.ALIVE);
+        } else if (cell.getState() == GameOfLifeCell.ALIVE &&
+                (numAliveNeighbors < UNDERPOPULATION_THRESHOLD || numAliveNeighbors > OVERPOPULATION_THRESHOLD)) {
+            cell.setNextState(GameOfLifeCell.DEAD);
+        } else {
+            cell.setNextState(cell.getState());
         }
     }
 }
