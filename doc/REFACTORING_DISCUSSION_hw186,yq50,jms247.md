@@ -14,6 +14,7 @@ Checklist Refactoring
 * Added a USER_PANEL_ITEM_SPACING to replace the magic value that represents the spacing between user panel children.
 * Bring multiple statements in one line to several lines.
 * In Rule, replace the type specification in this constructor call with the diamond operator ("<>").
+* Import specific classes instead of wild card generals.
 
 
 Longest Method Refactoring
