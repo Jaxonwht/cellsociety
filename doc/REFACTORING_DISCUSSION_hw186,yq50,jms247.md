@@ -17,6 +17,7 @@ Checklist Refactoring
 * Import specific classes instead of wild card generals.
 * Remove nested conditionals in WatorRule.
 * In Grid, remove this unused "myRoot" private field.
+* Remove unused import.
 
 Longest Method Refactoring
 --------------------------
