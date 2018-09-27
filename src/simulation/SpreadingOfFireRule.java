@@ -1,6 +1,7 @@
 package simulation;
 
-import java.util.*;
+
+import java.util.List;
 
 /**
  * @author Yunhao Qing
@@ -24,25 +25,36 @@ public class SpreadingOfFireRule extends Rule {
         MY_BURNING_COUNT = (int) Math.floor(extraParameters.get(2));
     }
     
-    /**
-     * @return neighbors a list that consists of direct neighbours (up, down,
-     * left, right) that are within the grid.
-     */
-    @Override
-    protected List<Cell> getNeighbors(int row, int col) {
-        Grid grid = this.getGrid();
-        List<Cell> neighbors = new ArrayList<Cell>();
-        List<int[]> cells  = new ArrayList<>();
-        cells.add(new int[]{row+1,col});
-        cells.add(new int[]{row-1,col});
-        cells.add(new int[]{row,col+1});
-        cells.add(new int[]{row,col-1});
-        for (int[] cell : cells){
-            if (!grid.isOutOfBounds(cell[0], cell[1])) {
-                neighbors.add(grid.item(cell[0], cell[1]));
+    public void determineNextStatesBurning(SpreadingOfFireCell cell) {
+        cell.setBurningTime(cell.getBurningTime() + 1);
+        if (cell.getBurningTime() == MY_BURNING_COUNT) {
+            cell.setBurningTime(0);
+            cell.setNextState(SpreadingOfFireCell.EMPTY);
+        } else {
+            cell.setNextState(cell.getState());
+        }
+    }
+    
+    public void determineNextStatesNormal(Cell cell, List<Cell> neighbors){
+        boolean check = false;
+        for (Cell neighbor : neighbors) {
+            if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING) {
+                check = true;
             }
         }
-        return neighbors;
+        if (check && rand.nextDouble() < PROB_CATCH) {
+            cell.setNextState(SpreadingOfFireCell.BURNING);
+        } else {
+            cell.setNextState(cell.getState());
+        }
+    }
+    
+    public void determineNextStatesEmpty(SpreadingOfFireCell cell) {
+        if (rand.nextDouble() < PROB_GROWTH){
+            cell.setNextState(SpreadingOfFireCell.NORMAL);
+        } else {
+            cell.setNextState(cell.getState());
+        }
     }
     
     /**
@@ -53,38 +65,15 @@ public class SpreadingOfFireRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 SpreadingOfFireCell cell = (SpreadingOfFireCell) this.getGrid().item(i, j);
-
                 if (cell.getState() == SpreadingOfFireCell.BURNING) {
-                    cell.setBurningTime(cell.getBurningTime() + 1);
-                    if (cell.getBurningTime() == MY_BURNING_COUNT) {
-                        cell.setBurningTime(0);
-                        cell.setNextState(SpreadingOfFireCell.EMPTY);
-                    } else {
-                        cell.setNextState(cell.getState());
-                    }
+                    determineNextStatesBurning(cell);
                 }
-                
                 else if (cell.getState() == SpreadingOfFireCell.NORMAL) {
-                    boolean check = false;
-                    List<Cell> neighbors = this.getNeighbors(i, j);
-                    for (Cell neighbor : neighbors) {
-                        if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING) {
-                            check = true;
-                        }
-                    }
-                    if (check && rand.nextDouble() < PROB_CATCH) {
-                        cell.setNextState(SpreadingOfFireCell.BURNING);
-                    } else {
-                        cell.setNextState(cell.getState());
-                    }
+                    List<Cell> neighbors = this.getNeighborsFour(i, j);
+                    determineNextStatesNormal(cell, neighbors);
                 }
-                
                 else if (cell.getState() == SpreadingOfFireCell.EMPTY) {
-                    if (rand.nextDouble() < PROB_GROWTH){
-                        cell.setNextState(SpreadingOfFireCell.NORMAL);
-                    } else {
-                        cell.setNextState(cell.getState());
-                    }
+                    determineNextStatesEmpty(cell);
                 }
             }
         }
