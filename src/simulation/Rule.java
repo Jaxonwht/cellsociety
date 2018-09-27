@@ -75,7 +75,7 @@ public abstract class Rule {
      * left, right) that are within the grid.
      */
     protected  List<Cell> getNeighborsFour(int row, int col) {
-        List<Cell> neighbors = new ArrayList<Cell>();
+        List<Cell> neighbors = new ArrayList<>();
         List<int[]> cells  = new ArrayList<>();
         cells.add(new int[]{row+1,col});
         cells.add(new int[]{row-1,col});
