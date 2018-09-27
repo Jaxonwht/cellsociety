@@ -29,6 +29,7 @@ public class UIManager {
     private final static int SPLASH_SIZE = 300;
     private final static int PANEL_WIDTH = 175;
     private final static int LAYOUT_SPACING = 20;
+    private final static int USER_PANEL_ITEM_SPACING = 20;
 
     // button text
     private ResourceBundle myResources;
@@ -99,7 +100,9 @@ public class UIManager {
 
         // update generation count
         myGenerationCount += 1;
-        if (myGenerationCount > MAX_GENERATION) { myAnimation.stop(); }
+        if (myGenerationCount > MAX_GENERATION) {
+            myAnimation.stop();
+        }
         myGenerationsDisplay.setText(myResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
@@ -180,7 +183,7 @@ public class UIManager {
         var border = new BorderPane();
 
         // user panel
-        var userPanel = new VBox(20);
+        var userPanel = new VBox(USER_PANEL_ITEM_SPACING);
         userPanel.setPrefSize(PANEL_WIDTH,height);
         userPanel.setAlignment(Pos.CENTER);
 

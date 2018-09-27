@@ -22,27 +22,6 @@ public class WatorRule extends Rule {
         REPRODUCTION_SHARK = (int) Math.floor(extraParameters.get(1));
     }
     
-    /**
-     * @return neighbors a list that consists of direct neighbours (up, down,
-     * left, right) that are within the grid.
-     */
-    @Override
-    protected List<Cell> getNeighbors(int row, int col) {
-        Grid grid = this.getGrid();
-        List<Cell> neighbors = new ArrayList<Cell>();
-        List<int[]> cells = new ArrayList<>();
-        cells.add(new int[]{row + 1, col});
-        cells.add(new int[]{row - 1, col});
-        cells.add(new int[]{row, col + 1});
-        cells.add(new int[]{row, col - 1});
-        for (int[] cell : cells) {
-            if (!grid.isOutOfBounds(cell[0], cell[1])) {
-                neighbors.add(grid.item(cell[0], cell[1]));
-            }
-        }
-        return neighbors;
-    }
-    
     /** 
      * This method move a fish/shark to a random neighbor if possible.
      * It returns true if the fish/shark has moved and return false if there is
@@ -130,12 +109,18 @@ public class WatorRule extends Rule {
      */
     @Override
     public void determineNextStates() {
+        sharkAction();
+        fishAction();
+        emptyAction();
+    }
+
+    private void sharkAction() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
                 if (cell.getState() == WatorCell.SHARK) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
-                    List<Cell> neighbors = this.getNeighbors(i, j);
+                    List<Cell> neighbors = this.getNeighborsFour(i, j);
                     if (!reprobCell(cell,neighbors)) {
                         if (!eatCell(neighbors)) {
                             moveCell(cell,neighbors);
@@ -144,18 +129,24 @@ public class WatorRule extends Rule {
                 }
             }
         }
+    }
+
+    private void fishAction() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
                 if (cell.getState() == WatorCell.FISH && cell.getNextState() == Cell.UNINITIALIZED) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
-                    List<Cell> neighbors = this.getNeighbors(i, j);
+                    List<Cell> neighbors = this.getNeighborsFour(i, j);
                     if (!reprobCell(cell,neighbors)) {
-                            moveCell(cell,neighbors);
+                        moveCell(cell,neighbors);
                     }
                 }
             }
         }
+    }
+
+    private void emptyAction() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
