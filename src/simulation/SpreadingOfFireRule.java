@@ -45,6 +45,39 @@ public class SpreadingOfFireRule extends Rule {
         return neighbors;
     }
     
+    
+    public void determineNextStatesBurning(Cell cell){
+        cell.setBurningTime(cell.getBurningTime() + 1);
+        if (cell.getBurningTime() == MY_BURNING_COUNT) {
+            cell.setBurningTime(0);
+            cell.setNextState(SpreadingOfFireCell.EMPTY);
+        } else {
+            cell.setNextState(cell.getState());
+        }
+    }
+    
+    public void determineNextStatesNormal(Cell cell, List<Cell> neighbors){
+        boolean check = false;
+        for (Cell neighbor : neighbors) {
+            if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING) {
+                check = true;
+            }
+        }
+        if (check && rand.nextDouble() < PROB_CATCH) {
+            cell.setNextState(SpreadingOfFireCell.BURNING);
+        } else {
+            cell.setNextState(cell.getState());
+        }
+    }
+    
+    public void determineNextStatesEmpty(){
+        if (rand.nextDouble() < PROB_GROWTH){
+            cell.setNextState(SpreadingOfFireCell.NORMAL);
+        } else {
+            cell.setNextState(cell.getState());
+        }
+    }
+    
     /**
      * Transver the grid and determine the next state for each cell.
      */
@@ -53,38 +86,15 @@ public class SpreadingOfFireRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 SpreadingOfFireCell cell = (SpreadingOfFireCell) this.getGrid().item(i, j);
-
                 if (cell.getState() == SpreadingOfFireCell.BURNING) {
-                    cell.setBurningTime(cell.getBurningTime() + 1);
-                    if (cell.getBurningTime() == MY_BURNING_COUNT) {
-                        cell.setBurningTime(0);
-                        cell.setNextState(SpreadingOfFireCell.EMPTY);
-                    } else {
-                        cell.setNextState(cell.getState());
-                    }
+                    determineNextStatesBurning(cell);
                 }
-                
                 else if (cell.getState() == SpreadingOfFireCell.NORMAL) {
-                    boolean check = false;
                     List<Cell> neighbors = this.getNeighbors(i, j);
-                    for (Cell neighbor : neighbors) {
-                        if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING) {
-                            check = true;
-                        }
-                    }
-                    if (check && rand.nextDouble() < PROB_CATCH) {
-                        cell.setNextState(SpreadingOfFireCell.BURNING);
-                    } else {
-                        cell.setNextState(cell.getState());
-                    }
+                    determineNextStatesBurning(cell,neighbors);
                 }
-                
                 else if (cell.getState() == SpreadingOfFireCell.EMPTY) {
-                    if (rand.nextDouble() < PROB_GROWTH){
-                        cell.setNextState(SpreadingOfFireCell.NORMAL);
-                    } else {
-                        cell.setNextState(cell.getState());
-                    }
+                    determineNextStatesEmpty(cell);
                 }
             }
         }
