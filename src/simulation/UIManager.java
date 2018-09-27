@@ -209,7 +209,7 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-        var grid = new Grid(root, reader);
+        var grid = new Grid(reader);
         grid.populateCells();
         var gridNodes = grid.getAllShape();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());

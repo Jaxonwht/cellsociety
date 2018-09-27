@@ -17,10 +17,8 @@ public class Grid {
     private double myWidth;
     private double myHeight;
     private ReadXML myReader;
-    private Group myRoot;
 
-    public Grid(Group root, ReadXML reader) {
-        myRoot = root;
+    public Grid(ReadXML reader) {
         myReader = reader;
 
         this.myNumRow = reader.getRow();

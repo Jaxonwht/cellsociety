@@ -16,7 +16,7 @@ Checklist Refactoring
 * In Rule, replace the type specification in this constructor call with the diamond operator ("<>").
 * Import specific classes instead of wild card generals.
 * Remove nested conditionals in WatorRule.
-
+* In Grid, remove this unused "myRoot" private field.
 
 Longest Method Refactoring
 --------------------------
