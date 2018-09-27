@@ -121,10 +121,8 @@ public class WatorRule extends Rule {
                 if (cell.getState() == WatorCell.SHARK) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
                     List<Cell> neighbors = this.getNeighborsFour(i, j);
-                    if (!reprobCell(cell,neighbors)) {
-                        if (!eatCell(neighbors)) {
-                            moveCell(cell,neighbors);
-                        }
+                    if (!reprobCell(cell,neighbors) && !eatCell(neighbors)) {
+                        moveCell(cell,neighbors);
                     }
                 }
             }
@@ -150,8 +148,9 @@ public class WatorRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
-                if (cell.getNextState() == Cell.UNINITIALIZED)
+                if (cell.getNextState() == Cell.UNINITIALIZED) {
                     cell.setNextState(cell.getState());
+                }
             }
         }
     }
