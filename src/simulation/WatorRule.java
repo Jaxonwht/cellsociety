@@ -121,10 +121,8 @@ public class WatorRule extends Rule {
                 if (cell.getState() == WatorCell.SHARK) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
                     List<Cell> neighbors = this.getNeighborsFour(i, j);
-                    if (!reprobCell(cell,neighbors)) {
-                        if (!eatCell(neighbors)) {
-                            moveCell(cell,neighbors);
-                        }
+                    if (!reprobCell(cell,neighbors) && !eatCell(neighbors)) {
+                        moveCell(cell,neighbors);
                     }
                 }
             }

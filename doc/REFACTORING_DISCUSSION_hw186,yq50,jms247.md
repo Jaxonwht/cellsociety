@@ -15,6 +15,7 @@ Checklist Refactoring
 * Bring multiple statements in one line to several lines.
 * In Rule, replace the type specification in this constructor call with the diamond operator ("<>").
 * Import specific classes instead of wild card generals.
+* Remove nested conditionals in WatorRule.
 
 
 Longest Method Refactoring
