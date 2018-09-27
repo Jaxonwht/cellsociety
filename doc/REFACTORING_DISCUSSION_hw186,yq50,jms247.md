@@ -12,6 +12,7 @@ Duplication Refactoring
 Checklist Refactoring
 ---------------------
 * Added a USER_PANEL_ITEM_SPACING to replace the magic value that represents the spacing between user panel children.
+* Bring multiple statements in one line to several lines.
 
 
 Longest Method Refactoring

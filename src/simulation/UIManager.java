@@ -100,7 +100,9 @@ public class UIManager {
 
         // update generation count
         myGenerationCount += 1;
-        if (myGenerationCount > MAX_GENERATION) { myAnimation.stop(); }
+        if (myGenerationCount > MAX_GENERATION) {
+            myAnimation.stop();
+        }
         myGenerationsDisplay.setText(myResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
