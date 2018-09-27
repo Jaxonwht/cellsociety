@@ -22,7 +22,7 @@ public class GameOfLifeRule extends Rule {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
                 List<Cell> neighbors = this.getNeighbors(i, j);
-                checkCell(cell, neighbours);
+                checkCell(cell, neighbors);
             }
         }
     }

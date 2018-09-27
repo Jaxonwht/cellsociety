@@ -7,3 +7,9 @@ Julia Saveliff jms247
 
 Duplication Refactoring
 -----------------------
+*
+
+
+Longest Method Refactoring
+--------------------------
+* In RuleOfLife, break determineNextStates to smaller methods.
