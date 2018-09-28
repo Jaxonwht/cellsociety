@@ -64,11 +64,12 @@ public class ReadXML {
         }
         else if (dataType.equals("ratio")){
             NodeList nodeList = document.getElementsByTagName("state");
-            int[] myStateRatio = new int[nodeList.getLength()];
+            double[] myStateRatio = new double[nodeList.getLength()];
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 int stateNumber = Integer.parseInt(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
-                int stateRatio = Integer.parseInt(node.getTextContent());
+                String temp = node.getTextContent();
+                double stateRatio = Double.parseDouble(temp);
                 if (stateNumber == 0){
                     myStateRatio[stateNumber] = stateRatio;
                 }
@@ -77,7 +78,6 @@ public class ReadXML {
                 }
             }
 
-            
             for (int i = 0 ; i < row; i++){
                 for (int j = 0; j < column; j++){
                     double randNum  = rand.nextDouble();
