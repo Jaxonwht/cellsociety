@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cellSociety>
+	<simulation>
+		<name>Wator</name>
+		<title>wator_1</title>
+		<author>Team13</author>
+		<extraParameters>reproductionFish reproductionShark</extraParameters>
+	</simulation>
+	<params>
+		<reproductionFish>5.0</reproductionFish>
+		<reproductionShark>7.0</reproductionShark>
+	</params>
+	<dimConfig>
+		<grid>
+			<row>5</row>
+			<col>5</col>
+			<width>500</width>
+			<height>500</height>
+		</grid>
+		<cellState dataType = "ratio">
+			<state stateNumber = "0" stateName = "empty">0.3</state>
+			<state stateNumber = "1" stateName = "fish">0.5</state>
+			<state stateNumber = "2" stateName = "shark">0.2</state>
+		</cellState>
+	</dimConfig>
+</cellSociety>
