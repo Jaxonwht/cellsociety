@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author Julia Saveliff
+ * @author Julia Saveliff, Haotian Wang
  */
 public class Grid {
     private Cell[][] myCells;
@@ -17,12 +17,13 @@ public class Grid {
     // private double myHeight;
     private ReadXML myReader;
 
-    public Grid(ReadXML reader) {
+    public Grid(ReadXML reader, String gridShape) {
         myReader = reader;
 
         this.myNumRow = reader.getRow();
         this.myNumCol = reader.getColumn();
         this.myCells = new Cell[myNumRow][myNumCol];
+        populateCells();
 
         // this.myWidth = reader.getWidth();
         // this.myHeight = reader.getHeight();
@@ -39,7 +40,7 @@ public class Grid {
                 int state = states[i][j];
                 try {
                     Class<?> clazz = Class.forName("simulation."+type+"Cell");
-                    Constructor<?> constructor = clazz.getConstructor(double.class, double.class, double.class, double.class, int.class);
+                    Constructor<?> constructor = clazz.getConstructor(int.class);
                     Object instance = constructor.newInstance(state);
                     myCells[i][j] = (Cell) instance;
                 } catch (ClassNotFoundException e){
@@ -57,6 +58,10 @@ public class Grid {
 
             }
         }
+    }
+
+    public getNeighbors(int row, int col) {
+
     }
 
     public int getNumRow() { return myNumRow; }

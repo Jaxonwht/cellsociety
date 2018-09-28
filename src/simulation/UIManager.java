@@ -61,6 +61,7 @@ public class UIManager {
     private int myGenerationCount=1;
     private Text myGenerationsDisplay;
     private Text myErrorDisplay;
+    private GridUI myGridUI;
 
     // file read components
     private File myFile;
@@ -215,7 +216,7 @@ public class UIManager {
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
         var grid = new Grid(reader);
-        grid.populateCells();
+        myGridUI = new GridUI(grid, width, height, gridShape, cellShape);
         var gridNodes = grid.getAllShape();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 

@@ -27,7 +27,6 @@ public abstract class Rule {
     public void updateGrid() {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
-                this.getGrid().item(i, j).updateShape(Cell.STATE_TO_PAINT_MAP);
                 this.getGrid().item(i, j).updateToNextState();
                 this.getGrid().item(i, j).setNextState(Cell.UNINITIALIZED);
             }
