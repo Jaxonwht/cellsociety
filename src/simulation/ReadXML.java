@@ -48,8 +48,8 @@ public class ReadXML {
      * Read in initial state for each cell and update the 2D array cellState.
      */
     private void readState() {
-        NodeList nodeList = document.getElementsByTagName("cellState");
-        String dataType = nodeList.item(0).getAttributes().getNamedItem("dataType").getNodeValue();
+        NodeList typeList = document.getElementsByTagName("cellState");
+        String dataType = typeList.item(0).getAttributes().getNamedItem("dataType").getNodeValue();
         if (dataType.equals("list")){
             NodeList nodeList = document.getElementsByTagName("state");
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -63,6 +63,7 @@ public class ReadXML {
             }
         }
         else if (dataType.equals("ratio")){
+            NodeList nodeList = document.getElementsByTagName("state");
             int[] myStateRatio = new int[nodeList.getLength()];
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
@@ -77,12 +78,12 @@ public class ReadXML {
             }
 
             
-            for (int i == 0 ; i < row; i++){
-                for (int j == 0; j < column; j++){
-                    int randNum  = rand.nextDouble();
-                    for (int k = 0; k < myStateRato.length; k++){
-                        if (randNum <= myStateRatio[stateNumber]){
-                            cellState[i][j] = stateNumber;
+            for (int i = 0 ; i < row; i++){
+                for (int j = 0; j < column; j++){
+                    double randNum  = rand.nextDouble();
+                    for (int k = 0; k < myStateRatio.length; k++){
+                        if (randNum <= myStateRatio[k]){
+                            cellState[i][j] = k;
                             break;
                         }
                     }
