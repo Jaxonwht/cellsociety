@@ -19,8 +19,8 @@ public class ReadXML {
     private String name;
     private int row;
     private int column;
-    private int width;
-    private int height;
+    // private int width;
+    // private int height;
     private int[][] cellState;
     private List<Double> extraParameters;
     Document document;
@@ -75,8 +75,8 @@ public class ReadXML {
      */
 
     private void readGrid(){
-        width = returnInt("width");
-        height = returnInt("height");
+        // width = returnInt("width");
+        // height = returnInt("height");
         row = returnInt("row");
         column = returnInt("col");
         cellState = new int[row][column];
@@ -104,9 +104,9 @@ public class ReadXML {
 
     public int getColumn(){return column;}
 
-    public int getWidth(){return width;}
+    // public int getWidth(){return width;}
 
-    public int getHeight(){return height;}
+    // public int getHeight(){return height;}
 
     public int[][] getCellState(){return cellState;}
 }

@@ -35,8 +35,12 @@ public class UIManager {
     private final static int USER_PANEL_ITEM_SPACING = 20;
 
     // button text
-    private ResourceBundle myResources;
-    private final static String DEFAULT_RESOURCE_FILE = "simulation/UI_text";
+    private ResourceBundle myTextResources;
+    private final static String DEFAULT_TEXT_RESOURCE_FILE = "simulation/UI_text";
+
+    // graphic components
+    private ResourceBundle myGraphicResources;
+    private final static String DEFAULT_GRAPHIC_RESOURCE_FILE = "simulation/UI_graphic";
 
     // animation constants
     private static final int FRAMES_PER_SECOND = 3;
@@ -70,9 +74,10 @@ public class UIManager {
      * @param stage: A JavaFx Stage object.
      */
     public UIManager(Stage stage) {
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_FILE);
+        myTextResources = ResourceBundle.getBundle(DEFAULT_TEXT_RESOURCE_FILE);
+        myGraphicResources = ResourceBundle.getBundle(DEFAULT_GRAPHIC_RESOURCE_FILE);
         myStage = stage;
-        myStage.setTitle(myResources.getString("Title"));
+        myStage.setTitle(myTextResources.getString("Title"));
     }
 
     /**
@@ -106,7 +111,7 @@ public class UIManager {
         if (myGenerationCount > MAX_GENERATION) {
             myAnimation.stop();
         }
-        myGenerationsDisplay.setText(myResources.getString("GenerationText")+myGenerationCount);
+        myGenerationsDisplay.setText(myTextResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
         myRule.determineNextStates();
@@ -128,7 +133,7 @@ public class UIManager {
         layout.setAlignment(Pos.CENTER);
 
         var chooseFileButton = makeButton("ChooseFileText");
-        var selectedFile = new Text(myResources.getString("SelectedText"));
+        var selectedFile = new Text(myTextResources.getString("SelectedText"));
         myFileText = new Text();
         splashToSimButton = makeButton("StartText");
 
@@ -148,7 +153,7 @@ public class UIManager {
      * @return Button displaying desired text value
      */
     private Button makeButton(String text) {
-        return new Button(myResources.getString(text));
+        return new Button(myTextResources.getString(text));
     }
 
     /**
@@ -164,10 +169,10 @@ public class UIManager {
             try {
                 handleReader(new ReadXML(myFile));
             } catch (Exception e) {
-                myFileText.setText(myResources.getString("FileErrorText"));
+                myFileText.setText(myTextResources.getString("FileErrorText"));
             }
         } else {
-            myFileText.setText(myResources.getString("FileErrorText"));
+            myFileText.setText(myTextResources.getString("FileErrorText"));
         }
     }
 
@@ -178,8 +183,8 @@ public class UIManager {
      */
     private Group setupSimulation(ReadXML reader) {
         // set up layout of scene
-        var width = reader.getWidth();
-        var height = reader.getHeight();
+        var width = Double.parseDouble(myGraphicResources.getString("WidthOfSimulation"));
+        var height = Double.parseDouble(myGraphicResources.getString("HeightOfSimulation"));
 
         var root = new Group();
         var scene = new Scene(root, width+PANEL_WIDTH, height);
@@ -192,7 +197,7 @@ public class UIManager {
 
         // user controls
         myErrorDisplay = new Text();
-        myGenerationsDisplay = new Text(myResources.getString("GenerationText")+myGenerationCount);
+        myGenerationsDisplay = new Text(myTextResources.getString("GenerationText")+myGenerationCount);
         simToSplashButton = makeButton("LoadText");
         var playButton = makeButton("PlayText");
         playButton.setOnAction( event -> handlePlay() );
@@ -200,7 +205,7 @@ public class UIManager {
         pauseButton.setOnAction( event -> handlePause() );
         var stepButton = makeButton("StepText");
         stepButton.setOnAction( event -> handleStep() );
-        var speedText = new Text(myResources.getString("SpeedText"));
+        var speedText = new Text(myTextResources.getString("SpeedText"));
         mySpeedSlider = new Slider();
         mySpeedSlider.setMin(MIN_RATE);
         mySpeedSlider.setMax(MAX_RATE);
@@ -246,7 +251,7 @@ public class UIManager {
             Object instance = constructor.newInstance(grid, simulationParameters);
             return (Rule) instance;
         } catch (Exception e) {
-            myErrorDisplay.setText(myResources.getString("InterpretErrorText"));
+            myErrorDisplay.setText(myTextResources.getString("InterpretErrorText"));
             return null;
         }
     }

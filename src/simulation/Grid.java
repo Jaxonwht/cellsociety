@@ -13,8 +13,8 @@ public class Grid {
     private Cell[][] myCells;
     private int myNumRow;
     private int myNumCol;
-    private double myWidth;
-    private double myHeight;
+    // private double myWidth;
+    // private double myHeight;
     private ReadXML myReader;
 
     public Grid(ReadXML reader) {
@@ -24,15 +24,15 @@ public class Grid {
         this.myNumCol = reader.getColumn();
         this.myCells = new Cell[myNumRow][myNumCol];
 
-        this.myWidth = reader.getWidth();
-        this.myHeight = reader.getHeight();
+        // this.myWidth = reader.getWidth();
+        // this.myHeight = reader.getHeight();
 
     }
 
     public void populateCells() {
         String type = myReader.getName();
-        double w = myWidth / myNumCol;
-        double h = myHeight / myNumRow;
+        // double w = myWidth / myNumCol;
+        // double h = myHeight / myNumRow;
         int[][] states = myReader.getCellState();
         for (int i=0; i<myNumRow; i++) {
             for (int j=0; j<myNumCol; j++) {
@@ -40,7 +40,7 @@ public class Grid {
                 try {
                     Class<?> clazz = Class.forName("simulation."+type+"Cell");
                     Constructor<?> constructor = clazz.getConstructor(double.class, double.class, double.class, double.class, int.class);
-                    Object instance = constructor.newInstance(j*w, i*h, w, h, state);
+                    Object instance = constructor.newInstance(state);
                     myCells[i][j] = (Cell) instance;
                 } catch (ClassNotFoundException e){
                     // TODO: catch exception
@@ -57,16 +57,6 @@ public class Grid {
 
             }
         }
-    }
-
-    public Collection<Shape> getAllShape() {
-        Collection<Shape> allShape = new ArrayList<>();
-        for (int i=0; i<myNumRow; i++) {
-            for (int j=0; j<myNumCol; j++) {
-                allShape.add(this.item(i,j).getShape());
-            }
-        }
-        return allShape;
     }
 
     public int getNumRow() { return myNumRow; }
