@@ -17,8 +17,9 @@ public class Grid {
     private static final int[][] HEXAGON_EVEN = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}};
     private static final int[][] HEXAGON_ODD = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, -1}, {1, 1}};
     private static final int[][] TRIANGLE_DIRECT_EVEN = new int[][] {{0, -1}, {0, 1}, {-1, 0}};
-    private static final int[][] TRIANGLE_DIRECT_ODD = new int[][] {{0, -1}, {0, 1}, {-1, 0}};
-    private static final int[][] TRIANGLE_ALL = new int[4][2];
+    private static final int[][] TRIANGLE_DIRECT_ODD = new int[][] {{0, -1}, {0, 1}, {1, 0}};
+    private static final int[][] TRIANGLE_ALL_EVEN = new int[][] {{-1, -1}, {-1, 0}, {-1, 1}, {0, -2}, {0, -1}, {0, 1}, {0, 2}, {1, -2}, {1, -1}, {1, 0}, {1, 1}, {1, 2}};
+    private static final int[][] TRIANGLE_ALL_ODD = new int[][] {{-1, -2}, {-1, -1}, {-1, 0}, {-1, 1}, {-1, 2}, {0, -2}, {0, -1}, {0, 1}, {0, 2}, {1, -1}, {1, 0}, {1, 1}};
 
     private Cell[][] myCells;
     private int myNumRow;
@@ -65,6 +66,23 @@ public class Grid {
         }
     }
 
+    /**
+     * A method used to find the neighbors of a cell in a grid.
+     * @param row: the row number of the cell whose neighbors are to be found.
+     * @param col: the column number of the cell whose neighbors are to be found.
+     * @return A List of Cell that contains the neighbors of the cell passed as parameter.+     */
+    public List<Cell> getAllNeighbors(int row, int col) {
+        return callGetNeighborsByType("All", row, col);
+    }
+
+    /**
+     * @return neighbors a list that consists of direct neighbours (up, down,
+     * left, right) that are within the grid.
+     */
+    public List<Cell> getDirectNeighbors(int row, int col) {
+        return callGetNeighborsByType("Direct", row, col);
+    }
+
     private List<Cell> callGetNeighborsByType(String neighborType, int row, int col) {
         try {
             Method method = getClass().getMethod("get" + neighborType +"Neighbors" + myCellshape, int.class, int.class);
@@ -85,55 +103,15 @@ public class Grid {
         return null;
     }
 
-    /**
-     * A method used to find the neighbors of a cell in a grid.
-     * @param row: the row number of the cell whose neighbors are to be found.
-     * @param col: the column number of the cell whose neighbors are to be found.
-     * @return A List of Cell that contains the neighbors of the cell passed as parameter.+     */
-    public List<Cell> getAllNeighbors(int row, int col) {
-        return callGetNeighborsByType("All", row, col);
-    }
-
-    /**
-     * @return neighbors a list that consists of direct neighbours (up, down,
-     * left, right) that are within the grid.
-     */
-    public List<Cell> getDirectNeighbors(int row, int col) {
-        return callGetNeighborsByType("Direct", row, col);
-    }
-
-    private List<Cell> getAllNeighborsSquare(int row, int col) {
+    private List<Cell> getNeighborsByDirection(int row, int col, int[][] Direction) {
         List<Cell> neighbors = new ArrayList<>();
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                if (!(i == row && j == col)) {
-                    if (myGridType.equals("Finite")) {
-                        if (!isOutOfBounds(i, j)) { neighbors.add(myCells[i][j]); }
-                    }
-                    else if (myGridType.equals("Infinite")) {
-                        int[] wrapper = wrapAround(i, j);
-                        neighbors.add(myCells[wrapper[0]][wrapper[1]]);
-                    }
-                }
-            }
-        }
-        return neighbors;
-    }
-
-    private List<Cell> getDirectNeighborsSquare(int row, int col) {
-        List<Cell> neighbors = new ArrayList<>();
-        List<int[]> cells  = new ArrayList<>();
-        cells.add(new int[]{row+1,col});
-        cells.add(new int[]{row-1,col});
-        cells.add(new int[]{row,col+1});
-        cells.add(new int[]{row,col-1});
-        for (int[] cell : cells){
-            int i = cell[0];
-            int j = cell[1];
+        for (int[] vector : Direction) {
+            int i = vector[0] + row;
+            int j = vector[1] + col;
             if (myGridType.equals("Finite")) {
                 if (!isOutOfBounds(i, j)) { neighbors.add(myCells[i][j]); }
             }
-            else if (myGridType.equals("Infinite")) {
+            else if (myGridType.equals("Toroidal")) {
                 int[] wrapper = wrapAround(i, j);
                 neighbors.add(myCells[wrapper[0]][wrapper[1]]);
             }
@@ -141,14 +119,31 @@ public class Grid {
         return neighbors;
     }
 
-    private List<Cell> getAllNeighborsHexagon(int row, int col) {
-        List<Cell> neighbors = new ArrayList<>();
-
+    private List<Cell> getAllNeighborsSquare(int row, int col) {
+        return getNeighborsByDirection(row, col, SQUARE_ALL);
     }
 
-    private
+    private List<Cell> getDirectNeighborsSquare(int row, int col) {
+        return getNeighborsByDirection(row, col, SQUARE_DIRECT);
+    }
 
-    public int getNumRow() { return myNumRow; }
+    private List<Cell> getAllNeighborsHexagon(int row, int col) {
+        if (col % 2 == 0) { return getNeighborsByDirection(row, col, HEXAGON_EVEN); }
+        else {return getNeighborsByDirection(row, col, HEXAGON_ODD); }
+    }
+
+    private List<Cell> getAllNeighborsTriangle(int row, int col) {
+        if ((row + col) % 2 == 0) { return getNeighborsByDirection(row, col, TRIANGLE_ALL_EVEN); }
+        else { return getNeighborsByDirection(row, col, TRIANGLE_ALL_ODD); }
+    }
+
+    private List<Cell> getDirectNeighborsTriangle(int row, int col) {
+        if ((row + col) % 2 == 0) { return getNeighborsByDirection(row, col, TRIANGLE_DIRECT_EVEN); }
+        else { return getNeighborsByDirection(row, col, TRIANGLE_DIRECT_ODD); }
+    }
+
+
+    private int getNumRow() { return myNumRow; }
 
     public int getNumCol() { return myNumCol; }
 
