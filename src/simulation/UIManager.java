@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -19,6 +20,7 @@ import javafx.scene.control.ComboBox;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -249,7 +251,7 @@ public class UIManager {
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
         var grid = new Grid(reader, myGridType, myCellShape);
-        myGridUI = new GridUI(grid, width, height, myCellShape);
+        myGridUI = new GridUI(grid, myCellShape);
         var gridNodes = grid.getAllShape();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 

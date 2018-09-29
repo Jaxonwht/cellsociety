@@ -46,8 +46,8 @@ public class Grid {
                 int state = states[i][j];
                 try {
                     Class<?> clazz = Class.forName("simulation."+type+"Cell");
-                    Constructor<?> constructor = clazz.getConstructor(int.class);
-                    Object instance = constructor.newInstance(state);
+                    Constructor<?> constructor = clazz.getConstructor(int.class, int.class, int.class);
+                    Object instance = constructor.newInstance(state, i, j);
                     myCells[i][j] = (Cell) instance;
                 } catch (ClassNotFoundException e){
                     // TODO: catch exception

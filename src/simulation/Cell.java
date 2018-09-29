@@ -22,16 +22,20 @@ public abstract class Cell {
     private double myWidth;
     private double myHeight;
     */
+    private int rowIndex;
+    private int colIndex;
     private int myState;
     private int myNextState;
 
-    public Cell(int state) {
+    public Cell(int state, int i, int j) {
         /*
         this.myXPos = x;
         this.myYPos = y;
         this.myWidth = width;
         this.myHeight = height;
         */
+        this.rowIndex = i;
+        this.colIndex = j;
         this.myState = state;
         this.myNextState = UNINITIALIZED;
     }
@@ -50,5 +54,8 @@ public abstract class Cell {
 
     protected void updateToNextState() { myState = myNextState; }
 
+    public int getRowIndex() { return rowIndex; }
+
+    public int getColIndex() { return colIndex; }
 }
 

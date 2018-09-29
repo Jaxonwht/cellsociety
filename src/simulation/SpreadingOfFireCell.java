@@ -26,8 +26,8 @@ public class SpreadingOfFireCell extends Cell {
     /**
      * Constructor for SpreadingOfFireCell.
      */
-    public SpreadingOfFireCell(int state) {
-        super(state);
+    public SpreadingOfFireCell(int state, int i, int j) {
+        super(state, i, j);
         this.myBurningTime = 0;
     }
 

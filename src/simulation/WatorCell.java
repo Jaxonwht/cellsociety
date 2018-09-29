@@ -24,8 +24,8 @@ public class WatorCell extends Cell {
     /**
      * Constructor for WatorCell.
      */
-    public WatorCell(int state) {
-        super(state);
+    public WatorCell(int state, int i, int j) {
+        super(state, i, j);
         this.mySurviveTime = 0;
     }
     

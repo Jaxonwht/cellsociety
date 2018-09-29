@@ -16,7 +16,7 @@ public class SegregationCell extends Cell{
     public static final int EMPTY = 2;
 
 
-    public SegregationCell(int state) {
-        super(state);
+    public SegregationCell(int state, int i, int j) {
+        super(state, i, j);
     }
 }
