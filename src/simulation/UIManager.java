@@ -18,7 +18,6 @@ import javafx.util.Duration;
 import javafx.scene.control.ComboBox;
 
 import java.io.File;
-import java.io.SyncFailedException;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -58,8 +57,8 @@ public class UIManager {
     private Group mySplashRoot;
     private Button splashToSimButton;
     private Button simToSplashButton;
-    private ComboBox<String> GridType;
-    private ComboBox<String> CellShape;
+    private ComboBox<String> gridTypeButton;
+    private ComboBox<String> cellShapeButton;
     private Slider mySpeedSlider;
     private Rule myRule;
     private int myGenerationCount=1;
@@ -70,8 +69,8 @@ public class UIManager {
     // file read components
     private File myFile;
     private Text myFileText;
-    private String gridType;
-    private String cellShape;
+    private String myGridType;
+    private String myCellShape;
 
     // animation components
     private Timeline myAnimation;
@@ -147,30 +146,30 @@ public class UIManager {
         myFileText = new Text();
         splashToSimButton = makeButton("StartText");
 
-        var selectGridType = new Text(myResources.getString("SelectGridType"));
-        GridType = new ComboBox<String>();
-        GridType.getItems().addAll("finite","infinite","toroidal");
-        GridType.setEditable(true);
+        var selectGridType = new Text(myTextResources.getString("SelectGridType"));
+        gridTypeButton = new ComboBox<>();
+        gridTypeButton.getItems().addAll("Finite","Infinite","Toroidal");
+        gridTypeButton.setEditable(true);
 
 
-        GridType.setOnAction(event -> {
-            gridType =  GridType.getSelectionModel().getSelectedItem();
+        gridTypeButton.setOnAction(event -> {
+            myGridType =  gridTypeButton.getSelectionModel().getSelectedItem();
         });
 
 
-        var selectCellShape = new Text(myResources.getString("SelectCellShape"));
-        CellShape = new ComboBox<String>();
-        CellShape.getItems().addAll("square","hexagon","triangular");
-        CellShape.setEditable(true);
+        var selectCellShape = new Text(myTextResources.getString("SelectCellShape"));
+        cellShapeButton = new ComboBox<>();
+        cellShapeButton.getItems().addAll("Square","Hexagon","Triangular");
+        cellShapeButton.setEditable(true);
 
-        CellShape.setOnAction( event -> {
-            cellShape =  CellShape.getSelectionModel().getSelectedItem();
+        cellShapeButton.setOnAction(event -> {
+            myCellShape =  cellShapeButton.getSelectionModel().getSelectedItem();
         });
 
 
 
         layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton, selectGridType,
-                GridType,selectCellShape, CellShape);
+                gridTypeButton,selectCellShape, cellShapeButton);
         root.getChildren().add(layout);
 
         var fileChooser = new FileChooser();
@@ -249,8 +248,8 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-        var grid = new Grid(reader);
-        myGridUI = new GridUI(grid, width, height, gridShape, cellShape);
+        var grid = new Grid(reader, myGridType, myCellShape);
+        myGridUI = new GridUI(grid, width, height, myCellShape);
         var gridNodes = grid.getAllShape();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 

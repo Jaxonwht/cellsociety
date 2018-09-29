@@ -3,37 +3,34 @@ package simulation;
 import javafx.scene.shape.Shape;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
- * @author Julia Saveliff, Haotian Wang
+ * @author Haotian Wang, Julia Saveliff
  */
 public class Grid {
     private Cell[][] myCells;
     private int myNumRow;
     private int myNumCol;
-    // private double myWidth;
-    // private double myHeight;
     private ReadXML myReader;
+    private String myGridShape;
+    private String myCellshape;
 
-    public Grid(ReadXML reader, String gridShape) {
+    public Grid(ReadXML reader, String gridShape, String cellShape) {
         myReader = reader;
-
         this.myNumRow = reader.getRow();
         this.myNumCol = reader.getColumn();
         this.myCells = new Cell[myNumRow][myNumCol];
+        myGridShape = gridShape;
+        myCellshape = cellShape;
         populateCells();
-
-        // this.myWidth = reader.getWidth();
-        // this.myHeight = reader.getHeight();
-
     }
 
     public void populateCells() {
         String type = myReader.getName();
-        // double w = myWidth / myNumCol;
-        // double h = myHeight / myNumRow;
         int[][] states = myReader.getCellState();
         for (int i=0; i<myNumRow; i++) {
             for (int j=0; j<myNumCol; j++) {
@@ -60,7 +57,56 @@ public class Grid {
         }
     }
 
-    public getNeighbors(int row, int col) {
+    private List<Cell> callGetNeighborsByType(String neighborType, int row, int col) {
+        try {
+            Method method = getClass().getMethod(neighborType + myCellshape, int.class, int.class);
+            Object ret = method.invoke(this, row, col);
+            return (List<Cell>) ret;
+        } catch (SecurityException e) {
+            // TODO: exception handling
+            System.out.println("Exception 1 caught: "+e.getMessage());
+        } catch (NoSuchMethodException e) {
+            System.out.println("Exception 1 caught: "+e.getMessage());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+
+        }
+        return null;
+    }
+
+    /**
+     * A method used to find the neighbors of a cell in a grid.
+     * @param row: the row number of the cell whose neighbors are to be found.
+     * @param col: the column number of the cell whose neighbors are to be found.
+     * @return A List of Cell that contains the neighbors of the cell passed as parameter.+     */
+    public List<Cell> getAllNeighbors(int row, int col) {
+        return callGetNeighborsByType("getAllNeighbors", row, col);
+    }
+
+    /**
+     * @return neighbors a list that consists of direct neighbours (up, down,
+     * left, right) that are within the grid.
+     */
+    public List<Cell> getDirectNeighbors(int row, int col) {
+        return callGetNeighborsByType("getDirectNeighbors", row, col);
+    }
+
+    private List<Cell> getAllNeighborsSquare(int row, int col) {
+        List<Cell> neighbors = new ArrayList<>();
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (!(i == row && j == col || isOutOfBounds(i, j))) {
+                    neighbors.add(myCells[i][j]);
+                }
+            }
+        }
+        return neighbors;
+    }
+
+    private List<Cell> getDirectNeighborsSquare(int row, int col) {
 
     }
 
@@ -70,7 +116,7 @@ public class Grid {
 
     public Cell item(int i, int j) { return myCells[i][j]; }
 
-    public boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
+    private boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
 
     public void printAllStates() {
         for (int i=0; i<myNumRow; i++) {

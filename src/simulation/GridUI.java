@@ -10,7 +10,7 @@ public class GridUI {
     private ResourceBundle myCellResources;
     private final static String DEFAULT_CELL_RESOURCE_FILE = "simulation/UI_graphic";
 
-    public GridUI(Grid grid, double width, double height, String gridShape, String cellShape) {
+    public GridUI(Grid grid, double width, double height, String cellShape) {
 
     }
 }
