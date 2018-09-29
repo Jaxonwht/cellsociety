@@ -143,7 +143,7 @@ public class Grid {
     }
 
 
-    private int getNumRow() { return myNumRow; }
+    public int getNumRow() { return myNumRow; }
 
     public int getNumCol() { return myNumCol; }
 

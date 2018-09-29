@@ -23,7 +23,7 @@ public class SegregationRule extends Rule {
                 if (cell.getState() == SegregationCell.TYPE_A || cell.getState() == SegregationCell.TYPE_B) {
                     // If Type A or Type B...
                     int numSameType = 0;
-                    List<Cell> neighbors = this.getNeighbors(i, j);
+                    List<Cell> neighbors = getGrid().getAllNeighbors(i, j);
                     for (Cell neighbor : neighbors) {
                         if (cell.getState() == neighbor.getState()) {
                             numSameType++;
