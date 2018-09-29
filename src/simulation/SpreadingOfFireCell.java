@@ -1,13 +1,20 @@
 package simulation;
 
-import javafx.scene.Group;
+
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Yunhao Qing
+ * This is a class specific for SpreadingOfFireCell, cell behaviours are set 
+ * based on http://nifty.stanford.edu/2011/scott-wator-world/.
+ * The SpreadingOfFireCell can have 3 states, being empty, a normal tree or 
+ * a burning tree.
+
  */
 public class SpreadingOfFireCell extends Cell {
     public static final int EMPTY = 0;
@@ -31,6 +38,9 @@ public class SpreadingOfFireCell extends Cell {
         return Collections.unmodifiableMap(map);
     }
 
+    /**
+     * Constructor for SpreadingOfFireCell.
+     */
     public SpreadingOfFireCell(double x, double y, double width, double height, int state) {
         super(x, y, width, height, state);
         this.setRectangle(STATE_TO_PAINT_MAP.get(state));
@@ -45,10 +55,16 @@ public class SpreadingOfFireCell extends Cell {
         super.updateShape(SpreadingOfFireCell.STATE_TO_PAINT_MAP);
     }
     
+    /**
+     * @return mySurviveTime how long a burning tree has been burning.
+     */
     public int getBurningTime() {
         return myBurningTime;
     }
 
+    /**
+     * @param time the new time that the burning tree has been burning.
+     */
     public void setBurningTime(int time) {
         myBurningTime = time;
     }

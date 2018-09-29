@@ -3,10 +3,16 @@ package simulation;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * @author Yunhao Qing
+ * This is a class specific for WatorCell, cell behaviours are set based on
+ * http://nifty.stanford.edu/2011/scott-wator-world/.
+ * The WatorCell can have 3 states, being empty, a fish or a shark.
  */
 public class WatorCell extends Cell {
     public static final int EMPTY = 0;
@@ -29,7 +35,10 @@ public class WatorCell extends Cell {
         map.put(SHARK, SHARK_COLOR);
         return Collections.unmodifiableMap(map);
     }
-
+    
+    /**
+     * Constructor for WatorCell.
+     */
     public WatorCell(double x, double y, double width, double height, int state) {
         super(x, y, width, height, state);
         this.setRectangle(STATE_TO_PAINT_MAP.get(state));
@@ -43,11 +52,19 @@ public class WatorCell extends Cell {
     protected void updateShape(Map<Integer, Paint> map) {
         super.updateShape(WatorCell.STATE_TO_PAINT_MAP);
     }
-
+    
+    /**
+     * @return mySurviveTime how long the fish/shark has survived from last
+     * reproduction.
+     */
     public int getSurviveTime() {
         return mySurviveTime;
     }
-
+    
+    /**
+     * @param time the new time that the fish/shark has survived from last
+     * reproduction.
+     */
     public void setSurviveTime(int time) {
         mySurviveTime = time;
     }

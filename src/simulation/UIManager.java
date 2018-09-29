@@ -1,5 +1,6 @@
 package simulation;
 
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -7,13 +8,17 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.ComboBox;
 
 import java.io.File;
+import java.io.SyncFailedException;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,6 +34,7 @@ public class UIManager {
     private final static int SPLASH_SIZE = 300;
     private final static int PANEL_WIDTH = 175;
     private final static int LAYOUT_SPACING = 20;
+    private final static int USER_PANEL_ITEM_SPACING = 20;
 
     // button text
     private ResourceBundle myResources;
@@ -48,6 +54,8 @@ public class UIManager {
     private Group mySplashRoot;
     private Button splashToSimButton;
     private Button simToSplashButton;
+    private ComboBox<String> GridType;
+    private ComboBox<String> CellShape;
     private Slider mySpeedSlider;
     private Rule myRule;
     private int myGenerationCount=1;
@@ -57,6 +65,8 @@ public class UIManager {
     // file read components
     private File myFile;
     private Text myFileText;
+    private String gridType;
+    private String cellShape;
 
     // animation components
     private Timeline myAnimation;
@@ -76,6 +86,8 @@ public class UIManager {
      */
     public void create() {
         mySplashRoot = setupSplash();
+
+
         myStage.setScene(mySplashRoot.getScene());
     }
 
@@ -99,7 +111,9 @@ public class UIManager {
 
         // update generation count
         myGenerationCount += 1;
-        if (myGenerationCount > MAX_GENERATION) { myAnimation.stop(); }
+        if (myGenerationCount > MAX_GENERATION) {
+            myAnimation.stop();
+        }
         myGenerationsDisplay.setText(myResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
@@ -107,6 +121,7 @@ public class UIManager {
         myRule.updateGrid();
 
     }
+
 
     /**
      * Create all components for splash screen.
@@ -126,11 +141,36 @@ public class UIManager {
         myFileText = new Text();
         splashToSimButton = makeButton("StartText");
 
-        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton);
+        var selectGridType = new Text(myResources.getString("SelectGridType"));
+        GridType = new ComboBox<String>();
+        GridType.getItems().addAll("finite","infinite","toroidal");
+        GridType.setEditable(true);
+
+
+        GridType.setOnAction(event -> {
+            gridType =  GridType.getSelectionModel().getSelectedItem();
+        });
+
+
+        var selectCellShape = new Text(myResources.getString("SelectCellShape"));
+        CellShape = new ComboBox<String>();
+        CellShape.getItems().addAll("square","hexagon","triangular");
+        CellShape.setEditable(true);
+
+        CellShape.setOnAction( event -> {
+            cellShape =  CellShape.getSelectionModel().getSelectedItem();
+        });
+
+
+
+        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton, selectGridType,
+                GridType,selectCellShape, CellShape);
         root.getChildren().add(layout);
 
         var fileChooser = new FileChooser();
         chooseFileButton.setOnAction( event -> handleFile(fileChooser.showOpenDialog(myStage)) );
+
+
 
         return root;
 
@@ -180,7 +220,7 @@ public class UIManager {
         var border = new BorderPane();
 
         // user panel
-        var userPanel = new VBox(20);
+        var userPanel = new VBox(USER_PANEL_ITEM_SPACING);
         userPanel.setPrefSize(PANEL_WIDTH,height);
         userPanel.setAlignment(Pos.CENTER);
 
@@ -203,13 +243,14 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-        var grid = new Grid(root, reader);
+        var grid = new Grid(reader);
         grid.populateCells();
         var gridNodes = grid.getAllShape();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 
         // add elements to each region
-        userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton, pauseButton, stepButton, speedText, mySpeedSlider);
+        userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
+                pauseButton, stepButton, speedText, mySpeedSlider);
         gridRegion.getChildren().addAll(gridNodes);
 
         // set layout regions
