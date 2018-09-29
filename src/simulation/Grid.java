@@ -12,19 +12,27 @@ import java.util.List;
  * @author Haotian Wang, Julia Saveliff
  */
 public class Grid {
+    private static final int[][] SQUARE_DIRECT = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    private static final int[][] SQUARE_ALL = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1,-1}};
+    private static final int[][] HEXAGON_EVEN = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}};
+    private static final int[][] HEXAGON_ODD = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {1, -1}, {1, 1}};
+    private static final int[][] TRIANGLE_DIRECT_EVEN = new int[][] {{0, -1}, {0, 1}, {-1, 0}};
+    private static final int[][] TRIANGLE_DIRECT_ODD = new int[][] {{0, -1}, {0, 1}, {-1, 0}};
+    private static final int[][] TRIANGLE_ALL = new int[4][2];
+
     private Cell[][] myCells;
     private int myNumRow;
     private int myNumCol;
     private ReadXML myReader;
-    private String myGridShape;
+    private String myGridType;
     private String myCellshape;
 
-    public Grid(ReadXML reader, String gridShape, String cellShape) {
+    public Grid(ReadXML reader, String gridType, String cellShape) {
         myReader = reader;
         this.myNumRow = reader.getRow();
         this.myNumCol = reader.getColumn();
         this.myCells = new Cell[myNumRow][myNumCol];
-        myGridShape = gridShape;
+        myGridType = gridType;
         myCellshape = cellShape;
         populateCells();
     }
@@ -59,7 +67,7 @@ public class Grid {
 
     private List<Cell> callGetNeighborsByType(String neighborType, int row, int col) {
         try {
-            Method method = getClass().getMethod(neighborType + myCellshape, int.class, int.class);
+            Method method = getClass().getMethod("get" + neighborType +"Neighbors" + myCellshape, int.class, int.class);
             Object ret = method.invoke(this, row, col);
             return (List<Cell>) ret;
         } catch (SecurityException e) {
@@ -83,7 +91,7 @@ public class Grid {
      * @param col: the column number of the cell whose neighbors are to be found.
      * @return A List of Cell that contains the neighbors of the cell passed as parameter.+     */
     public List<Cell> getAllNeighbors(int row, int col) {
-        return callGetNeighborsByType("getAllNeighbors", row, col);
+        return callGetNeighborsByType("All", row, col);
     }
 
     /**
@@ -91,15 +99,21 @@ public class Grid {
      * left, right) that are within the grid.
      */
     public List<Cell> getDirectNeighbors(int row, int col) {
-        return callGetNeighborsByType("getDirectNeighbors", row, col);
+        return callGetNeighborsByType("Direct", row, col);
     }
 
     private List<Cell> getAllNeighborsSquare(int row, int col) {
         List<Cell> neighbors = new ArrayList<>();
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = col - 1; j <= col + 1; j++) {
-                if (!(i == row && j == col || isOutOfBounds(i, j))) {
-                    neighbors.add(myCells[i][j]);
+                if (!(i == row && j == col)) {
+                    if (myGridType.equals("Finite")) {
+                        if (!isOutOfBounds(i, j)) { neighbors.add(myCells[i][j]); }
+                    }
+                    else if (myGridType.equals("Infinite")) {
+                        int[] wrapper = wrapAround(i, j);
+                        neighbors.add(myCells[wrapper[0]][wrapper[1]]);
+                    }
                 }
             }
         }
@@ -107,8 +121,32 @@ public class Grid {
     }
 
     private List<Cell> getDirectNeighborsSquare(int row, int col) {
+        List<Cell> neighbors = new ArrayList<>();
+        List<int[]> cells  = new ArrayList<>();
+        cells.add(new int[]{row+1,col});
+        cells.add(new int[]{row-1,col});
+        cells.add(new int[]{row,col+1});
+        cells.add(new int[]{row,col-1});
+        for (int[] cell : cells){
+            int i = cell[0];
+            int j = cell[1];
+            if (myGridType.equals("Finite")) {
+                if (!isOutOfBounds(i, j)) { neighbors.add(myCells[i][j]); }
+            }
+            else if (myGridType.equals("Infinite")) {
+                int[] wrapper = wrapAround(i, j);
+                neighbors.add(myCells[wrapper[0]][wrapper[1]]);
+            }
+        }
+        return neighbors;
+    }
+
+    private List<Cell> getAllNeighborsHexagon(int row, int col) {
+        List<Cell> neighbors = new ArrayList<>();
 
     }
+
+    private
 
     public int getNumRow() { return myNumRow; }
 
@@ -117,6 +155,18 @@ public class Grid {
     public Cell item(int i, int j) { return myCells[i][j]; }
 
     private boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
+
+    private int[] wrapAround(int i, int j) {
+        if (!isOutOfBounds(i, j)) { return new int[]{i, j}; }
+        else {
+            int[] ans = new int[2];
+            if (i < 0) { ans[0] = myNumRow + i; }
+            else if (i >= myNumRow) { ans[0] = i - myNumRow; }
+            if (j < 0) { ans[1] = myNumCol + j; }
+            else if (j >= myNumCol) { ans[1] = j - myNumCol; }
+            return ans;
+        }
+    }
 
     public void printAllStates() {
         for (int i=0; i<myNumRow; i++) {
@@ -137,3 +187,5 @@ public class Grid {
     }
 
 }
+
+

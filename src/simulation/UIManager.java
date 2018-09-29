@@ -159,7 +159,7 @@ public class UIManager {
 
         var selectCellShape = new Text(myTextResources.getString("SelectCellShape"));
         cellShapeButton = new ComboBox<>();
-        cellShapeButton.getItems().addAll("Square","Hexagon","Triangular");
+        cellShapeButton.getItems().addAll("Square","Hexagon","Triangle");
         cellShapeButton.setEditable(true);
 
         cellShapeButton.setOnAction(event -> {
