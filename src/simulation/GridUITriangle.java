@@ -4,26 +4,43 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
 
+/**
+ * @author Haotian Wang
+ */
 public class GridUITriangle extends GridUI{
     public GridUITriangle(Grid grid) { super(grid); }
 
     @Override
     protected void addShape(int i, int j, int state) {
         Node temp = new Polygon();
-        double sideLength = getSimulationWidth() / (getMyGrid().getNumCol() / 2);
+        double sideLength = getSimulationWidth() / (getMyGrid().getNumCol() * 0.5 + 0.5);
         double height = getSimulationHeight() / getMyGrid().getNumRow();
-        if ((i + j) % 2 == 0) {
+        if (i % 2 == 0 && j % 2 == 0) {
             ((Polygon) temp).getPoints().addAll(new Double[] {
-                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0), i * height,
-                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0) + sideLength, i * height,
-                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0) + sideLength / 2, i * height + height,
+                    j / 2 * sideLength, i * height,
+                    j / 2 * sideLength + sideLength, i * height,
+                    j / 2 * sideLength + sideLength / 2, i * height + height,
             });
         }
-        else {
+        else if (i % 2 == 0 && j % 2 == 1) {
             ((Polygon) temp).getPoints().addAll(new Double[] {
-                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0), i * height + height,
-                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0) + sideLength, i * height + height,
-                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0) + sideLength / 2, i * height,
+                    0.5 * sideLength + j / 2 * sideLength, height + i * height,
+                    1.5 * sideLength + j / 2 * sideLength, height + i * height,
+                    sideLength + j / 2 * sideLength, i * height,
+            });
+        }
+        else if (i % 2 == 1 && j % 2 == 0) {
+            ((Polygon) temp).getPoints().addAll(new Double[] {
+                    j / 2 * sideLength, i * height + height,
+                    j / 2 * sideLength + sideLength, i * height + height,
+                    j / 2 * sideLength + sideLength / 2, i * height,
+            });
+        }
+        else if (i % 2 == 1 && j % 2 == 1) {
+            ((Polygon) temp).getPoints().addAll(new Double[] {
+                    0.5 * sideLength + j / 2 * sideLength, i * height,
+                    1.5 * sideLength + j / 2 * sideLength, i * height,
+                    sideLength + j / 2 * sideLength, i * height + height,
             });
         }
         ((Polygon) temp).setFill(getIntToPaintMap().get(state));
