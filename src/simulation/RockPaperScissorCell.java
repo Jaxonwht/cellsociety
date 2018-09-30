@@ -33,15 +33,15 @@ public class RockPaperScissorCell extends Cell {
         return Collections.unmodifiableMap(map);
     }
 
-    public RockPaperScissorCell(double x, double y, double width, double height, int state) {
-        super(x, y, width, height, state);
+    public RockPaperScissorCell(int state, int i, int j) {
+        super(state,i,j);
         myGradient = 0;
     }
 
-    @Override
-    protected void updateShape(Map<Integer, Paint> map) {
-        super.updateShape(RockPaperScissorCell.STATE_TO_PAINT_MAP, myGradient);
-    }
+//    @Override
+//    protected void updateShape(Map<Integer, Paint> map) {
+//        //super.updateShape(RockPaperScissorCell.STATE_TO_PAINT_MAP, myGradient);
+//    }
 
     public boolean beats(Cell other) {
         return (this.getState() == ROCK && other.getState() == SCISSOR) ||

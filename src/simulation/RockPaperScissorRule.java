@@ -21,7 +21,7 @@ public class RockPaperScissorRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 ((RockPaperScissorCell)this.getGrid().item(i, j)).updateToNextGradient();
-                this.getGrid().item(i, j).updateShape(Cell.STATE_TO_PAINT_MAP);
+                //this.getGrid().item(i, j).updateShape(Cell.STATE_TO_PAINT_MAP);
                 this.getGrid().item(i, j).updateToNextState();
                 this.getGrid().item(i, j).setNextState(Cell.UNINITIALIZED);
             }
@@ -33,7 +33,7 @@ public class RockPaperScissorRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
-                List<Cell> neighbors = this.getNeighbors(i, j);
+                List<Cell> neighbors = this.getGrid().getDirectNeighbors(i, j);
                 Cell neighbor = neighbors.get(rand.nextInt(neighbors.size()));
                 if (cell.getState() == RockPaperScissorCell.EMPTY) {
                     if (neighbor.getState() != RockPaperScissorCell.EMPTY) {
