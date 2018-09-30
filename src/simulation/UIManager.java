@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -18,13 +19,14 @@ import javafx.util.Duration;
 import javafx.scene.control.ComboBox;
 
 import java.io.File;
-import java.io.SyncFailedException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * @author Julia Saveliff
+ * @author Julia Saveliff, Haotian Wang
  *
  * Handles and controls all user interface components. All UI functionality is handled
  * by calling the method public void create().
@@ -37,8 +39,12 @@ public class UIManager {
     private final static int USER_PANEL_ITEM_SPACING = 20;
 
     // button text
-    private ResourceBundle myResources;
-    private final static String DEFAULT_RESOURCE_FILE = "simulation/UI_text";
+    private ResourceBundle myTextResources;
+    private final static String DEFAULT_TEXT_RESOURCE_FILE = "simulation/UI_text";
+
+    // graphic components
+    private ResourceBundle myGraphicResources;
+    private final static String DEFAULT_GRAPHIC_RESOURCE_FILE = "simulation/UI_graphic";
 
     // animation constants
     private static final int FRAMES_PER_SECOND = 3;
@@ -54,19 +60,20 @@ public class UIManager {
     private Group mySplashRoot;
     private Button splashToSimButton;
     private Button simToSplashButton;
-    private ComboBox<String> GridType;
-    private ComboBox<String> CellShape;
+    private ComboBox<String> gridTypeButton;
+    private ComboBox<String> cellShapeButton;
     private Slider mySpeedSlider;
     private Rule myRule;
     private int myGenerationCount=1;
     private Text myGenerationsDisplay;
     private Text myErrorDisplay;
+    private GridUI myGridUI;
 
     // file read components
     private File myFile;
     private Text myFileText;
-    private String gridType;
-    private String cellShape;
+    private String myGridType;
+    private String myCellShape;
 
     // animation components
     private Timeline myAnimation;
@@ -76,9 +83,10 @@ public class UIManager {
      * @param stage: A JavaFx Stage object.
      */
     public UIManager(Stage stage) {
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_FILE);
+        myTextResources = ResourceBundle.getBundle(DEFAULT_TEXT_RESOURCE_FILE);
+        myGraphicResources = ResourceBundle.getBundle(DEFAULT_GRAPHIC_RESOURCE_FILE);
         myStage = stage;
-        myStage.setTitle(myResources.getString("Title"));
+        myStage.setTitle(myTextResources.getString("Title"));
     }
 
     /**
@@ -114,12 +122,12 @@ public class UIManager {
         if (myGenerationCount > MAX_GENERATION) {
             myAnimation.stop();
         }
-        myGenerationsDisplay.setText(myResources.getString("GenerationText")+myGenerationCount);
+        myGenerationsDisplay.setText(myTextResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
         myRule.determineNextStates();
         myRule.updateGrid();
-
+        myGridUI.updateAppearance();
     }
 
 
@@ -137,34 +145,34 @@ public class UIManager {
         layout.setAlignment(Pos.CENTER);
 
         var chooseFileButton = makeButton("ChooseFileText");
-        var selectedFile = new Text(myResources.getString("SelectedText"));
+        var selectedFile = new Text(myTextResources.getString("SelectedText"));
         myFileText = new Text();
         splashToSimButton = makeButton("StartText");
 
-        var selectGridType = new Text(myResources.getString("SelectGridType"));
-        GridType = new ComboBox<String>();
-        GridType.getItems().addAll("finite","infinite","toroidal");
-        GridType.setEditable(true);
+        var selectGridType = new Text(myTextResources.getString("SelectGridType"));
+        gridTypeButton = new ComboBox<>();
+        gridTypeButton.getItems().addAll("Finite","Toroidal");
+        gridTypeButton.setEditable(true);
 
 
-        GridType.setOnAction(event -> {
-            gridType =  GridType.getSelectionModel().getSelectedItem();
+        gridTypeButton.setOnAction(event -> {
+            myGridType =  gridTypeButton.getSelectionModel().getSelectedItem();
         });
 
 
-        var selectCellShape = new Text(myResources.getString("SelectCellShape"));
-        CellShape = new ComboBox<String>();
-        CellShape.getItems().addAll("square","hexagon","triangular");
-        CellShape.setEditable(true);
+        var selectCellShape = new Text(myTextResources.getString("SelectCellShape"));
+        cellShapeButton = new ComboBox<>();
+        cellShapeButton.getItems().addAll("Square","Hexagon","Triangle");
+        cellShapeButton.setEditable(true);
 
-        CellShape.setOnAction( event -> {
-            cellShape =  CellShape.getSelectionModel().getSelectedItem();
+        cellShapeButton.setOnAction(event -> {
+            myCellShape =  cellShapeButton.getSelectionModel().getSelectedItem();
         });
 
 
 
         layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton, selectGridType,
-                GridType,selectCellShape, CellShape);
+                gridTypeButton,selectCellShape, cellShapeButton);
         root.getChildren().add(layout);
 
         var fileChooser = new FileChooser();
@@ -182,7 +190,7 @@ public class UIManager {
      * @return Button displaying desired text value
      */
     private Button makeButton(String text) {
-        return new Button(myResources.getString(text));
+        return new Button(myTextResources.getString(text));
     }
 
     /**
@@ -198,10 +206,10 @@ public class UIManager {
             try {
                 handleReader(new ReadXML(myFile));
             } catch (Exception e) {
-                myFileText.setText(myResources.getString("FileErrorText"));
+                myFileText.setText(myTextResources.getString("FileErrorText"));
             }
         } else {
-            myFileText.setText(myResources.getString("FileErrorText"));
+            myFileText.setText(myTextResources.getString("FileErrorText"));
         }
     }
 
@@ -212,8 +220,8 @@ public class UIManager {
      */
     private Group setupSimulation(ReadXML reader) {
         // set up layout of scene
-        var width = reader.getWidth();
-        var height = reader.getHeight();
+        var width = Double.parseDouble(myGraphicResources.getString("WidthOfSimulation"));
+        var height = Double.parseDouble(myGraphicResources.getString("HeightOfSimulation"));
 
         var root = new Group();
         var scene = new Scene(root, width+PANEL_WIDTH, height);
@@ -226,7 +234,7 @@ public class UIManager {
 
         // user controls
         myErrorDisplay = new Text();
-        myGenerationsDisplay = new Text(myResources.getString("GenerationText")+myGenerationCount);
+        myGenerationsDisplay = new Text(myTextResources.getString("GenerationText")+myGenerationCount);
         simToSplashButton = makeButton("LoadText");
         var playButton = makeButton("PlayText");
         playButton.setOnAction( event -> handlePlay() );
@@ -234,7 +242,7 @@ public class UIManager {
         pauseButton.setOnAction( event -> handlePause() );
         var stepButton = makeButton("StepText");
         stepButton.setOnAction( event -> handleStep() );
-        var speedText = new Text(myResources.getString("SpeedText"));
+        var speedText = new Text(myTextResources.getString("SpeedText"));
         mySpeedSlider = new Slider();
         mySpeedSlider.setMin(MIN_RATE);
         mySpeedSlider.setMax(MAX_RATE);
@@ -243,9 +251,29 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-        var grid = new Grid(reader);
-        grid.populateCells();
-        var gridNodes = grid.getAllShape();
+        var grid = new Grid(reader, myGridType, myCellShape);
+        Class<?> clazz = null;
+        Constructor<?> constructor = null;
+        Object instance = null;
+        try {
+            clazz = Class.forName("simulation.GridUI" + myCellShape);
+            constructor = clazz.getConstructor(Grid.class);
+            instance = constructor.newInstance(grid);
+        } catch (ClassNotFoundException e) {
+            // TODO: error handling
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        myGridUI = (GridUI) instance;
+        var gridNodes = myGridUI.getMyNodes();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 
         // add elements to each region
@@ -281,7 +309,7 @@ public class UIManager {
             Object instance = constructor.newInstance(grid, simulationParameters);
             return (Rule) instance;
         } catch (Exception e) {
-            myErrorDisplay.setText(myResources.getString("InterpretErrorText"));
+            myErrorDisplay.setText(myTextResources.getString("InterpretErrorText"));
             return null;
         }
     }

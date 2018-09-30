@@ -59,7 +59,9 @@ Hours Spent:
 * [Oracle documentation on Random](https://docs.oracle.com/javase/7/docs/api/java/util/Random.html)
 * [Location-Independent Access to Resources
 ](https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html).
-
+* [How do I invoke a Java method when given the method name as a string?](https://stackoverflow.com/questions/160970/how-do-i-invoke-a-java-method-when-given-the-method-name-as-a-string)
+* [Oracle documentation on Shape](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Shape.html)
+* [Oracle documentation on InvocationTargetException](https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/InvocationTargetException.html)
 
 ### Running the Program
 

@@ -120,7 +120,7 @@ public class WatorRule extends Rule {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
                 if (cell.getState() == WatorCell.SHARK) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
-                    List<Cell> neighbors = this.getNeighborsFour(i, j);
+                    List<Cell> neighbors = getGrid().getDirectNeighbors(i, j);
                     if (!reprobCell(cell,neighbors) && !eatCell(neighbors)) {
                         moveCell(cell,neighbors);
                     }
@@ -135,7 +135,7 @@ public class WatorRule extends Rule {
                 WatorCell cell = (WatorCell) this.getGrid().item(i, j);
                 if (cell.getState() == WatorCell.FISH && cell.getNextState() == Cell.UNINITIALIZED) {
                     cell.setSurviveTime(cell.getSurviveTime() + 1);
-                    List<Cell> neighbors = this.getNeighborsFour(i, j);
+                    List<Cell> neighbors = getGrid().getDirectNeighbors(i, j);
                     if (!reprobCell(cell,neighbors)) {
                         moveCell(cell,neighbors);
                     }
