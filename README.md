@@ -58,7 +58,8 @@ Hours Spent:
 ](https://stackoverflow.com/questions/5404149/how-to-convert-double-to-int-directly)
 * [Oracle documentation on Random](https://docs.oracle.com/javase/7/docs/api/java/util/Random.html)
 * [Location-Independent Access to Resources
-](https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html).
+](https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html)
+* [SELF-REPRODUCTION IN SMALL CELLULAR AUTOMATA by John Byl](https://ac.els-cdn.com/016727898990242X/1-s2.0-016727898990242X-main.pdf?_tid=a8f00ee7-a6d2-49e6-94d9-e931442d8a5c&acdnat=1538317272_1705cdc2dd3eb1e5a0f714e843978538)
 
 
 ### Running the Program
