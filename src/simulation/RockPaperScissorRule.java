@@ -9,8 +9,12 @@ import java.util.Random;
 public class RockPaperScissorRule extends Rule {
     private Random rand = new Random();
 
+    private final double OPACITY_INCREMENT;
+
     public RockPaperScissorRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
+        OPACITY_INCREMENT = extraParameters.get(0);
+
     }
 
     @Override
@@ -31,13 +35,13 @@ public class RockPaperScissorRule extends Rule {
                             // eat
                             cell.setNextState(cell.getState());
                             if (cell.getOpacity()<1) {
-                                cell.setOpacity(cell.getOpacity()+RockPaperScissorCell.OPACITY_INCREMENT);
+                                cell.setOpacity(cell.getOpacity()+OPACITY_INCREMENT);
                             }
                         } else {
                             // get eaten
                             cell.setNextState(neighbor.getState());
                             if (cell.getOpacity()>0) {
-                                cell.setOpacity(cell.getOpacity()-RockPaperScissorCell.OPACITY_INCREMENT);
+                                cell.setOpacity(cell.getOpacity()-OPACITY_INCREMENT);
                             }
                         }
                     } else {
