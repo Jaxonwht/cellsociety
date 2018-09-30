@@ -87,10 +87,10 @@ public abstract class GridUI {
             for (int j = 0 ; j < myGrid.getNumCol(); j++) {
                 Node node = myNodes.get(i * myGrid.getNumCol() + j);
                 int state = myGrid.item(i, j).getState();
-                if (intToPaintMap.containsKey(state)) {
+                if (node instanceof Shape) {
                     ((Shape) node).setFill(intToPaintMap.get(state));
                 }
-                else if (intToImageMap.containsKey(state)) {
+                else if (node instanceof ImageView) {
                     ((ImageView) node).setImage(intToImageMap.get(state));
                 }
             }
