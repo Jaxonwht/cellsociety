@@ -4,9 +4,11 @@
 		<name>GameOfLife</name>
 		<title>gameOfLife_1</title>
 		<author>Team13</author>
-		<extraParameters></extraParameters>
+		<extraParameters>underThreshold overThreshold</extraParameters>
 	</simulation>
 	<params>
+		<underThreshold>2</underThreshold>
+		<overThreshold>3</overThreshold>
 	</params>
 	<dimConfig>
 		<grid>

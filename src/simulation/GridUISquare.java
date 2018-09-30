@@ -19,6 +19,7 @@ public class GridUISquare extends GridUI{
 
     @Override
     protected void addShape(int i, int j, int state) {
+        System.out.println(cellHeight);
         Node temp = new Rectangle();
         ((Rectangle) temp).setWidth(cellWidth);
         ((Rectangle) temp).setHeight(cellHeight);
