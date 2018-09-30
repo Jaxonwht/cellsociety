@@ -21,8 +21,7 @@ public class RockPaperScissorCell extends Cell {
     private static final Paint SCISSOR_COLOR = Color.GREEN;
     private static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
-    private int myGradient;
-    private int myNextGradient;
+    public static final double OPACITY_INCREMENT = 0.25; // TODO: Read in from XML file
 
     private static Map<Integer, Paint> initMap() {
         Map<Integer, Paint> map = new HashMap<>();
@@ -35,29 +34,12 @@ public class RockPaperScissorCell extends Cell {
 
     public RockPaperScissorCell(int state, int i, int j) {
         super(state,i,j);
-        myGradient = 0;
     }
-
-//    @Override
-//    protected void updateShape(Map<Integer, Paint> map) {
-//        //super.updateShape(RockPaperScissorCell.STATE_TO_PAINT_MAP, myGradient);
-//    }
 
     public boolean beats(Cell other) {
         return (this.getState() == ROCK && other.getState() == SCISSOR) ||
                 (this.getState() == SCISSOR && other.getState() == PAPER) ||
                 (this.getState() == PAPER && other.getState() == ROCK);
     }
-
-    public int getGradient() { return myGradient; }
-
-    public void setGradient(int gradient) { myGradient = gradient; }
-
-    public int getNextGradient() { return myNextGradient; }
-
-    public void setNextGradient(int gradient) { myNextGradient = gradient; }
-
-    public void updateToNextGradient() { myGradient = myNextGradient; }
-    // TODO: call this from grid class
 
 }

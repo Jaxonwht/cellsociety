@@ -23,6 +23,7 @@ public abstract class Cell {
     private int colIndex;
     private int myState;
     private int myNextState;
+    private double myOpacity; // NEW CODE
 
     public Cell(int state, int i, int j) {
         /*
@@ -35,18 +36,8 @@ public abstract class Cell {
         this.colIndex = j;
         this.myState = state;
         this.myNextState = UNINITIALIZED;
+        this.myOpacity = 1.0;
     }
-
-
-    /**
-     * Update the color of the shape of the cell to its corresponding next state.
-     */
-//    protected void updateShape(Map<Integer, Paint> map, int gradient) {
-//        if (this.getState() != this.getNextState()) {
-//            this.getShape().setFill(map.get(this.getNextState()));
-//        }
-//        this.getShape().setOpacity((10.0-gradient) / 10.0);
-//    }
 
     // Getter and setter methods for all instance variables
     protected int getNextState() {
@@ -64,5 +55,9 @@ public abstract class Cell {
     public int getRowIndex() { return rowIndex; }
 
     public int getColIndex() { return colIndex; }
+
+    protected double getOpacity() { return myOpacity; } // NEW CODE
+
+    protected void setOpacity(double value) { myOpacity = value; } // NEW CODE
 }
 
