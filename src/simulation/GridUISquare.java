@@ -7,8 +7,8 @@ import javafx.scene.shape.Rectangle;
 /**
  * @author Haotian Wang
  */
-public class SquareGridUI extends GridUI{
-    public SquareGridUI (Grid grid) { super(grid); }
+public class GridUISquare extends GridUI{
+    public GridUISquare(Grid grid) { super(grid); }
 
     @Override
     protected void addShape(int i, int j, int state) {
@@ -26,8 +26,8 @@ public class SquareGridUI extends GridUI{
         Node temp = new ImageView(getIntToImageMap().get(state));
         ((ImageView) temp).setFitWidth(getSimulationWidth() / getMyGrid().getNumCol());
         ((ImageView) temp).setFitHeight(getSimulationHeight() / getMyGrid().getNumRow());
-        ((ImageView) temp).setX(j * ((Rectangle) temp).getWidth());
-        ((ImageView) temp).setY(i * ((Rectangle) temp).getHeight());
+        ((ImageView) temp).setX(j * ((ImageView) temp).getFitWidth());
+        ((ImageView) temp).setY(i * ((ImageView) temp).getFitHeight());
         getMyNodes().add(temp);
     }
 }

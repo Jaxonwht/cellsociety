@@ -92,7 +92,7 @@ public class Grid {
             // TODO: exception handling
             System.out.println("Exception 1 caught: "+e.getMessage());
         } catch (NoSuchMethodException e) {
-            System.out.println("Exception 1 caught: "+e.getMessage());
+            System.out.println("Exception 2 caught: "+e.getMessage());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -119,25 +119,29 @@ public class Grid {
         return neighbors;
     }
 
-    private List<Cell> getAllNeighborsSquare(int row, int col) {
+    public List<Cell> getAllNeighborsSquare(int row, int col) {
         return getNeighborsByDirection(row, col, SQUARE_ALL);
     }
 
-    private List<Cell> getDirectNeighborsSquare(int row, int col) {
+    public List<Cell> getDirectNeighborsSquare(int row, int col) {
         return getNeighborsByDirection(row, col, SQUARE_DIRECT);
     }
 
-    private List<Cell> getAllNeighborsHexagon(int row, int col) {
+    public List<Cell> getAllNeighborsHexagon(int row, int col) {
         if (col % 2 == 0) { return getNeighborsByDirection(row, col, HEXAGON_EVEN); }
         else {return getNeighborsByDirection(row, col, HEXAGON_ODD); }
     }
 
-    private List<Cell> getAllNeighborsTriangle(int row, int col) {
+    public List<Cell> getDirectNeighborsHexagon(int row, int col) {
+        return getAllNeighborsHexagon(row, col);
+    }
+
+    public List<Cell> getAllNeighborsTriangle(int row, int col) {
         if ((row + col) % 2 == 0) { return getNeighborsByDirection(row, col, TRIANGLE_ALL_EVEN); }
         else { return getNeighborsByDirection(row, col, TRIANGLE_ALL_ODD); }
     }
 
-    private List<Cell> getDirectNeighborsTriangle(int row, int col) {
+    public List<Cell> getDirectNeighborsTriangle(int row, int col) {
         if ((row + col) % 2 == 0) { return getNeighborsByDirection(row, col, TRIANGLE_DIRECT_EVEN); }
         else { return getNeighborsByDirection(row, col, TRIANGLE_DIRECT_ODD); }
     }

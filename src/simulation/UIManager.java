@@ -20,12 +20,13 @@ import javafx.scene.control.ComboBox;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * @author Julia Saveliff
+ * @author Julia Saveliff, Haotian Wang
  *
  * Handles and controls all user interface components. All UI functionality is handled
  * by calling the method public void create().
@@ -126,7 +127,7 @@ public class UIManager {
         // update cells
         myRule.determineNextStates();
         myRule.updateGrid();
-
+        myGridUI.updateAppearance();
     }
 
 
@@ -150,7 +151,7 @@ public class UIManager {
 
         var selectGridType = new Text(myTextResources.getString("SelectGridType"));
         gridTypeButton = new ComboBox<>();
-        gridTypeButton.getItems().addAll("Finite","Infinite","Toroidal");
+        gridTypeButton.getItems().addAll("Finite","Toroidal");
         gridTypeButton.setEditable(true);
 
 
@@ -251,8 +252,28 @@ public class UIManager {
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
         var grid = new Grid(reader, myGridType, myCellShape);
-        myGridUI = new GridUI(grid);
-        var gridNodes = grid.getAllShape();
+        Class<?> clazz = null;
+        Constructor<?> constructor = null;
+        Object instance = null;
+        try {
+            clazz = Class.forName("simulation.GridUI" + myCellShape);
+            constructor = clazz.getConstructor(Grid.class);
+            instance = constructor.newInstance(grid);
+        } catch (ClassNotFoundException e) {
+            // TODO: error handling
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        myGridUI = (GridUI) instance;
+        var gridNodes = myGridUI.getMyNodes();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 
         // add elements to each region

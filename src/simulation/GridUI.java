@@ -2,10 +2,12 @@ package simulation;
 
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.*;
 
@@ -24,6 +26,7 @@ public abstract class GridUI {
         aMap.put("Red", Color.RED);
         aMap.put("Green", Color.GREEN);
         aMap.put("Yellow", Color.YELLOW);
+        aMap.put("Black", Color.BLACK);
         stringToPaintMap = Collections.unmodifiableMap(aMap);
     }
 
@@ -58,7 +61,7 @@ public abstract class GridUI {
                 else {
                     // TODO: error handling
                     String appearance = myCellResources.getString("State" + state);
-                    if (!appearance.startsWith("Image") && stringToPaintMap.containsKey(appearance)) {
+                    if (!appearance.startsWith("Image")) {
                         intToPaintMap.put(state, stringToPaintMap.get(appearance));
                         addShape(i, j, state);
                     }
@@ -71,41 +74,24 @@ public abstract class GridUI {
         }
     }
 
+    public void updateAppearance() {
+        for (int i = 0; i < myGrid.getNumRow(); i++) {
+            for (int j = 0 ; j < myGrid.getNumCol(); j++) {
+                Node node = myNodes.get(i * myGrid.getNumCol() + j);
+                int state = myGrid.item(i, j).getState();
+                if (intToPaintMap.containsKey(state)) {
+                    ((Shape) node).setFill(intToPaintMap.get(state));
+                }
+                else if (intToImageMap.containsKey(state)) {
+                    ((ImageView) node).setImage(intToImageMap.get(state));
+                }
+            }
+        }
+    }
+
     protected abstract void addShape(int i, int j, int state);
 
     protected abstract void addImageView(int i, int j, int state);
-
-    private Node createRectangle(int i, int j, int state) {
-        Node temp = new Rectangle();
-        ((Rectangle) temp).setWidth(simulationWidth / myGrid.getNumCol());
-        ((Rectangle) temp).setHeight(simulationHeight / myGrid.getNumRow());
-        ((Rectangle) temp).setX(j * ((Rectangle) temp).getWidth());
-        ((Rectangle) temp).setY(i * ((Rectangle) temp).getHeight());
-        ((Rectangle) temp).setFill(intToPaintMap.get(state));
-        return temp;
-    }
-
-    private Node createTriangle(int i, int j, int state) {
-        Node temp = new Polygon();
-        double sideLength = simulationWidth / (myGrid.getNumCol() / 2);
-        double height = simulationHeight / myGrid.getNumRow();
-        if ((i + j) % 2 == 0) {
-            ((Polygon) temp).getPoints().addAll(new Double[] {
-                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0), i * height,
-                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0) + sideLength, i * height,
-                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0) + sideLength / 2, i * height + height,
-            });
-        }
-        else {
-            ((Polygon) temp).getPoints().addAll(new Double[] {
-                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0), i * height + height,
-                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0) + sideLength, i * height + height,
-                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0) + sideLength / 2, i * height,
-            });
-        }
-        ((Polygon) temp).setFill(intToPaintMap.get(state));
-        return temp;
-    }
 
     protected double getSimulationWidth() { return simulationWidth; }
 
@@ -117,5 +103,5 @@ public abstract class GridUI {
 
     protected Grid getMyGrid() { return myGrid; }
 
-    protected List<Node> getMyNodes() { return myNodes; }
+    public List<Node> getMyNodes() { return myNodes; }
 }

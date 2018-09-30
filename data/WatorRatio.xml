@@ -12,8 +12,8 @@
 	</params>
 	<dimConfig>
 		<grid>
-			<row>5</row>
-			<col>5</col>
+			<row>10</row>
+			<col>10</col>
 			<width>500</width>
 			<height>500</height>
 		</grid>
