@@ -21,7 +21,7 @@ public class RockPaperScissorCell extends Cell {
     private static final Paint SCISSOR_COLOR = Color.GREEN;
     private static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
-    public static final double OPACITY_INCREMENT = 0.25; // TODO: Read in from XML file
+    public static final double OPACITY_INCREMENT = 0.5; // TODO: Read in from XML file
 
     private static Map<Integer, Paint> initMap() {
         Map<Integer, Paint> map = new HashMap<>();
