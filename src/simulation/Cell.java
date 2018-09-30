@@ -38,6 +38,16 @@ public abstract class Cell {
     }
 
 
+    /**
+     * Update the color of the shape of the cell to its corresponding next state.
+     */
+    protected void updateShape(Map<Integer, Paint> map, int gradient) {
+        if (this.getState() != this.getNextState()) {
+            this.getShape().setFill(map.get(this.getNextState()));
+        }
+        this.getShape().setOpacity((10.0-gradient) / 10.0);
+    }
+
     // Getter and setter methods for all instance variables
     protected int getNextState() {
         return myNextState;
