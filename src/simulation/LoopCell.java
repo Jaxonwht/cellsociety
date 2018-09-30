@@ -47,20 +47,20 @@ public class LoopCell extends Cell {
         return Collections.unmodifiableMap(map);
     }
 
-    public LoopCell(double x, double y, double width, double height, int state) {
-        super(x, y, width, height, state);
-        this.setRectangle(STATE_TO_PAINT_MAP.get(state));
+    public LoopCell(int state, int i, int j) {
+        super(state,i,j);
+        //this.setRectangle(STATE_TO_PAINT_MAP.get(state));
         myDirection = UP;
 
     }
 
-    /**
-     * Update the color of the shape of the cell to its corresponding next state.
-     */
-    @Override
-    protected void updateShape(Map<Integer, Paint> map) {
-        super.updateShape(LoopCell.STATE_TO_PAINT_MAP);
-    }
+//    /**
+//     * Update the color of the shape of the cell to its corresponding next state.
+//     */
+//    @Override
+//    protected void updateShape(Map<Integer, Paint> map) {
+//        super.updateShape(LoopCell.STATE_TO_PAINT_MAP);
+//    }
 
     public void setDirection(int dir) { myDirection = dir; }
 

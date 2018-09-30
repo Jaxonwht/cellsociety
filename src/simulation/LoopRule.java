@@ -16,7 +16,7 @@ public class LoopRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell C = this.getGrid().item(i, j);
-                List<Cell> neighbors = this.getNeighborsFour(i, j);
+                List<Cell> neighbors = this.getGrid().getDirectNeighbors(i, j);
 
                 if (i == 0 || i == this.getGrid().getNumRow() - 1 || j == 0 || j == this.getGrid().getNumCol() - 1) {
                     C.setNextState(0);
