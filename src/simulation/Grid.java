@@ -1,11 +1,9 @@
 package simulation;
 
-import javafx.scene.shape.Shape;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

@@ -13,6 +13,10 @@ public class GridUISquare extends GridUI{
 
     public GridUISquare(Grid grid) {
         super(grid);
+    }
+
+    @Override
+    protected void calculateLengths() {
         cellHeight = getSimulationHeight() / getMyGrid().getNumRow();
         cellWidth = getSimulationWidth() / getMyGrid().getNumCol();
     }
