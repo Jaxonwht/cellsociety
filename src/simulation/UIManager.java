@@ -251,7 +251,7 @@ public class UIManager {
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
         var grid = new Grid(reader, myGridType, myCellShape);
-        myGridUI = new GridUI(grid, myCellShape);
+        myGridUI = new GridUI(grid);
         var gridNodes = grid.getAllShape();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
 

@@ -13,7 +13,7 @@ import java.util.*;
  * @author Haotian Wang
  * This class handles the change of appearances of nodes
  */
-public class GridUI {
+public abstract class GridUI {
     private ResourceBundle myCellResources;
     private final static String DEFAULT_CELL_RESOURCE_FILE = "simulation/UI_graphic";
     private final static Map<String, Paint> stringToPaintMap;
@@ -27,7 +27,6 @@ public class GridUI {
         stringToPaintMap = Collections.unmodifiableMap(aMap);
     }
 
-    private String myCellShape;
     private Grid myGrid;
     private double simulationWidth;
     private double simulationHeight;
@@ -35,13 +34,12 @@ public class GridUI {
     private Map<Integer, Image> intToImageMap;
     private List<Node> myNodes;
 
-    public GridUI(Grid grid, String cellShape) {
+    public GridUI(Grid grid) {
         myCellResources = ResourceBundle.getBundle(DEFAULT_CELL_RESOURCE_FILE);
         simulationHeight = Double.parseDouble(myCellResources.getString("HeightOfSimulation"));
         simulationWidth = Double.parseDouble(myCellResources.getString("WidthOfSimulation"));
         myNodes = new ArrayList<>();
         myGrid = grid;
-        myCellShape = cellShape;
         intToImageMap = new HashMap<>();
         intToPaintMap = new HashMap<>();
         initializeNodes();
@@ -66,29 +64,58 @@ public class GridUI {
                     }
                     else {
                         intToImageMap.put(state, new Image(getClass().getClassLoader().getResourceAsStream(appearance.split("/")[1])));
-                        addImage(i, j, state);
+                        addImageView(i, j, state);
                     }
                 }
             }
         }
     }
 
-    private void addShape(int i, int j, int state) {
-        if (myCellShape.equals("Square")) {
-            Node temp = new Rectangle();
-            ((Rectangle) temp).setWidth(simulationWidth / myGrid.getNumCol());
-            ((Rectangle) temp).setHeight(simulationHeight / myGrid.getNumRow());
-            ((Rectangle) temp).setX((j - 1) * ((Rectangle) temp).getWidth());
-            ((Rectangle) temp).setY((i - 1) * ((Rectangle) temp).getHeight());
-            ((Rectangle) temp).setFill(intToPaintMap.get(state));
-            myNodes.add(temp);
-        }
-        else if (myCellShape.equals("Triangle")) {
-            Node temp = new Polygon();
-            double sideLength = simul
-            if ((i + j) % 2 == 0) {
+    protected abstract void addShape(int i, int j, int state);
 
-            }
-        }
+    protected abstract void addImageView(int i, int j, int state);
+
+    private Node createRectangle(int i, int j, int state) {
+        Node temp = new Rectangle();
+        ((Rectangle) temp).setWidth(simulationWidth / myGrid.getNumCol());
+        ((Rectangle) temp).setHeight(simulationHeight / myGrid.getNumRow());
+        ((Rectangle) temp).setX(j * ((Rectangle) temp).getWidth());
+        ((Rectangle) temp).setY(i * ((Rectangle) temp).getHeight());
+        ((Rectangle) temp).setFill(intToPaintMap.get(state));
+        return temp;
     }
+
+    private Node createTriangle(int i, int j, int state) {
+        Node temp = new Polygon();
+        double sideLength = simulationWidth / (myGrid.getNumCol() / 2);
+        double height = simulationHeight / myGrid.getNumRow();
+        if ((i + j) % 2 == 0) {
+            ((Polygon) temp).getPoints().addAll(new Double[] {
+                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0), i * height,
+                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0) + sideLength, i * height,
+                    j / 2 * sideLength + ((i % 2 == 1) ? 0.5 * sideLength : 0) + sideLength / 2, i * height + height,
+            });
+        }
+        else {
+            ((Polygon) temp).getPoints().addAll(new Double[] {
+                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0), i * height + height,
+                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0) + sideLength, i * height + height,
+                    j / 2 * sideLength + ((i % 2 == 0) ? 0.5 * sideLength : 0) + sideLength / 2, i * height,
+            });
+        }
+        ((Polygon) temp).setFill(intToPaintMap.get(state));
+        return temp;
+    }
+
+    protected double getSimulationWidth() { return simulationWidth; }
+
+    protected double getSimulationHeight() { return simulationWidth; }
+
+    protected Map<Integer, Paint> getIntToPaintMap() { return intToPaintMap; }
+
+    protected  Map<Integer, Image> getIntToImageMap() { return intToImageMap; }
+
+    protected Grid getMyGrid() { return myGrid; }
+
+    protected List<Node> getMyNodes() { return myNodes; }
 }
