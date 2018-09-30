@@ -62,6 +62,8 @@ Hours Spent:
 * [How do I invoke a Java method when given the method name as a string?](https://stackoverflow.com/questions/160970/how-do-i-invoke-a-java-method-when-given-the-method-name-as-a-string)
 * [Oracle documentation on Shape](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Shape.html)
 * [Oracle documentation on InvocationTargetException](https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/InvocationTargetException.html)
+* [Oracle documentation on JavaFx Color](https://docs.oracle.com/javafx/2/api/javafx/scene/paint/Color.html)
+* [The Java ternary operator examples](https://alvinalexander.com/java/edu/pj/pj010018)
 
 ### Running the Program
 

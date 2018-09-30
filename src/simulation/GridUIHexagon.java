@@ -8,32 +8,39 @@ import javafx.scene.shape.Polygon;
  * @author Haotian Wang
  */
 public class GridUIHexagon extends GridUI {
-    public GridUIHexagon(Grid grid) { super(grid); }
+    private double cellWidth;
+    private double cellHeight;
+    private double edge;
+
+    public GridUIHexagon(Grid grid) {
+        super(grid);
+        cellHeight = getSimulationHeight() / (getMyGrid().getNumRow() + 1);
+        edge = cellHeight / 2 / Math.sqrt(3);
+        cellWidth = getSimulationWidth() / getMyGrid().getNumCol() - edge;
+    }
 
     @Override
     protected void addShape(int i, int j, int state) {
         Node temp = new Polygon();
-        double height = getSimulationHeight() / (getMyGrid().getNumRow() + 1);
-        double edge = height / 2 / Math.sqrt(3);
-        double width = getSimulationWidth() / getMyGrid().getNumCol() - edge;
+
         if (j % 2 == 0) {
             ((Polygon) temp).getPoints().addAll(new Double[] {
-                    edge + j * (width + edge), i * height,
-                    edge + j * (width + edge) + width, i * height,
-                    edge + j * (width + edge) + width + edge, i * height + height / 2,
-                    edge + j * (width + edge) + width, i * height + height,
-                    edge + j * (width + edge), i * height + height,
-                    edge + j * (width + edge) - edge, i * height + height / 2,
+                    edge + j * (cellWidth + edge), i * cellHeight,
+                    edge + j * (cellWidth + edge) + cellWidth, i * cellHeight,
+                    edge + j * (cellWidth + edge) + cellWidth + edge, i * cellHeight + cellHeight / 2,
+                    edge + j * (cellWidth + edge) + cellWidth, i * cellHeight + cellHeight,
+                    edge + j * (cellWidth + edge), i * cellHeight + cellHeight,
+                    edge + j * (cellWidth + edge) - edge, i * cellHeight + cellHeight / 2,
             });
         }
         else if (j % 2 == 1) {
             ((Polygon) temp).getPoints().addAll(new Double[] {
-                    edge + j * (width + edge), i * height + height / 2,
-                    edge + j * (width + edge) + width, i * height + height / 2,
-                    edge + j * (width + edge) + width + edge, i * height + height,
-                    edge + j * (width + edge) + width, i * height + height * 3 / 2,
-                    edge + j * (width + edge), i * height + height * 3 / 2,
-                    edge + j * (width + edge) - edge, i * height + height,
+                    edge + j * (cellWidth + edge), i * cellHeight + cellHeight / 2,
+                    edge + j * (cellWidth + edge) + cellWidth, i * cellHeight + cellHeight / 2,
+                    edge + j * (cellWidth + edge) + cellWidth + edge, i * cellHeight + cellHeight,
+                    edge + j * (cellWidth + edge) + cellWidth, i * cellHeight + cellHeight * 3 / 2,
+                    edge + j * (cellWidth + edge), i * cellHeight + cellHeight * 3 / 2,
+                    edge + j * (cellWidth + edge) - edge, i * cellHeight + cellHeight,
             });
         }
         ((Polygon) temp).setFill(getIntToPaintMap().get(state));
@@ -43,18 +50,15 @@ public class GridUIHexagon extends GridUI {
     @Override
     protected void addImageView(int i, int j, int state) {
         Node temp = new ImageView(getIntToImageMap().get(state));
-        double height = getSimulationHeight() / getMyGrid().getNumRow();
-        double edge = height / 2 / Math.sqrt(3);
-        double width = getSimulationWidth() / getMyGrid().getNumCol() - edge;
-        ((ImageView) temp).setX(edge + j * (width + edge));
+        ((ImageView) temp).setX(0.5 * edge + j * (cellWidth + edge));
         if (j % 2 == 0) {
-            ((ImageView) temp).setY(i * height);
+            ((ImageView) temp).setY(i * cellHeight + cellHeight / 4);
         }
         else if (j % 2 == 1) {
-            ((ImageView) temp).setY(i * height + height / 2);
+            ((ImageView) temp).setY(i * cellHeight + 0.75 * cellHeight);
         }
-        ((ImageView) temp).setFitWidth(width + edge);
-        ((ImageView) temp).setFitHeight(height);
+        ((ImageView) temp).setFitWidth(cellHeight + edge);
+        ((ImageView) temp).setFitHeight(0.5 * cellHeight);
         getMyNodes().add(temp);
     }
 }

@@ -8,15 +8,22 @@ import javafx.scene.shape.Rectangle;
  * @author Haotian Wang
  */
 public class GridUISquare extends GridUI{
-    public GridUISquare(Grid grid) { super(grid); }
+    private double cellWidth;
+    private double cellHeight;
+
+    public GridUISquare(Grid grid) {
+        super(grid);
+        cellHeight = getSimulationHeight() / getMyGrid().getNumRow();
+        cellWidth = getSimulationWidth() / getMyGrid().getNumCol();
+    }
 
     @Override
     protected void addShape(int i, int j, int state) {
         Node temp = new Rectangle();
-        ((Rectangle) temp).setWidth(getSimulationWidth() / getMyGrid().getNumCol());
-        ((Rectangle) temp).setHeight(getSimulationHeight() / getMyGrid().getNumRow());
-        ((Rectangle) temp).setX(j * ((Rectangle) temp).getWidth());
-        ((Rectangle) temp).setY(i * ((Rectangle) temp).getHeight());
+        ((Rectangle) temp).setWidth(cellWidth);
+        ((Rectangle) temp).setHeight(cellHeight);
+        ((Rectangle) temp).setX(j * cellWidth);
+        ((Rectangle) temp).setY(i * cellHeight);
         ((Rectangle) temp).setFill(getIntToPaintMap().get(state));
         getMyNodes().add(temp);
     }
@@ -24,10 +31,10 @@ public class GridUISquare extends GridUI{
     @Override
     protected void addImageView(int i, int j, int state) {
         Node temp = new ImageView(getIntToImageMap().get(state));
-        ((ImageView) temp).setFitWidth(getSimulationWidth() / getMyGrid().getNumCol());
-        ((ImageView) temp).setFitHeight(getSimulationHeight() / getMyGrid().getNumRow());
-        ((ImageView) temp).setX(j * ((ImageView) temp).getFitWidth());
-        ((ImageView) temp).setY(i * ((ImageView) temp).getFitHeight());
+        ((ImageView) temp).setFitWidth(cellWidth);
+        ((ImageView) temp).setFitHeight(cellHeight);
+        ((ImageView) temp).setX(j * cellWidth);
+        ((ImageView) temp).setY(i * cellHeight);
         getMyNodes().add(temp);
     }
 }
