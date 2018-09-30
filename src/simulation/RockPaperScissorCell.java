@@ -1,6 +1,5 @@
 package simulation;
 
-import javafx.print.Paper;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -8,6 +7,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Julia Saveliff
+ */
 public class RockPaperScissorCell extends Cell {
     public static final int EMPTY = 0;
     public static final int ROCK = 1;
@@ -38,8 +40,7 @@ public class RockPaperScissorCell extends Cell {
 
     @Override
     protected void updateShape(Map<Integer, Paint> map) {
-        super.updateShape(RockPaperScissorCell.STATE_TO_PAINT_MAP);
-        // also set gradient here
+        super.updateShape(RockPaperScissorCell.STATE_TO_PAINT_MAP, myGradient);
     }
 
     public boolean beats(Cell other) {
@@ -57,5 +58,6 @@ public class RockPaperScissorCell extends Cell {
     public void setNextGradient(int gradient) { myNextGradient = gradient; }
 
     public void updateToNextGradient() { myGradient = myNextGradient; }
+    // TODO: call this from grid class
 
 }
