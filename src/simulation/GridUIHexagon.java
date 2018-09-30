@@ -14,6 +14,10 @@ public class GridUIHexagon extends GridUI {
 
     public GridUIHexagon(Grid grid) {
         super(grid);
+    }
+
+    @Override
+    protected void calculateLengths() {
         cellHeight = getSimulationHeight() / (getMyGrid().getNumRow() + 1);
         edge = cellHeight / 2 / Math.sqrt(3);
         cellWidth = getSimulationWidth() / getMyGrid().getNumCol() - edge;

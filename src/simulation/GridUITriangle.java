@@ -16,6 +16,10 @@ public class GridUITriangle extends GridUI{
 
     public GridUITriangle(Grid grid) {
         super(grid);
+    }
+
+    @Override
+    protected void calculateLengths() {
         sideLength = getSimulationWidth() / (getMyGrid().getNumCol() * 0.5 + 0.5);
         cellHeight = getSimulationHeight() / getMyGrid().getNumRow();
         edge = sideLength / 4;

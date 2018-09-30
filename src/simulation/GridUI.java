@@ -5,11 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-
 import java.util.*;
+
 
 /**
  * @author Haotian Wang
@@ -33,6 +31,7 @@ public abstract class GridUI {
         aMap.put("Lime", Color.LIME);
         aMap.put("Magenta", Color.MAGENTA);
         aMap.put("Pink", Color.PINK);
+        aMap.put("Black", Color.BLACK);
         stringToPaintMap = Collections.unmodifiableMap(aMap);
     }
 
@@ -51,8 +50,11 @@ public abstract class GridUI {
         myGrid = grid;
         intToImageMap = new HashMap<>();
         intToPaintMap = new HashMap<>();
+        calculateLengths();
         initializeNodes();
     }
+
+    protected abstract void calculateLengths();
 
     private void initializeNodes() {
         for (int i = 0; i < myGrid.getNumRow(); i++) {
