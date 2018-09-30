@@ -4,9 +4,10 @@
         <name>RockPaperScissor</name>
         <title>rockPaperScissor_1</title>
         <author>Team13</author>
-        <extraParameters></extraParameters>
+        <extraParameters>opacityIncrement</extraParameters>
     </simulation>
     <params>
+        <opacityIncrement>0.25</opacityIncrement>
     </params>
     <dimConfig>
         <grid>

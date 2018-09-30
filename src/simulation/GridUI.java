@@ -86,11 +86,11 @@ public abstract class GridUI {
         for (int i = 0; i < myGrid.getNumRow(); i++) {
             for (int j = 0 ; j < myGrid.getNumCol(); j++) {
                 Node node = myNodes.get(i * myGrid.getNumCol() + j);
-                double opacity = myGrid.item(i, j).getOpacity(); // NEW CODE
+                double opacity = myGrid.item(i, j).getOpacity();
                 int state = myGrid.item(i, j).getState();
                 if (node instanceof Shape) {
                     ((Shape) node).setFill(intToPaintMap.get(state));
-                    node.setOpacity(opacity); // NEW CODE
+                    node.setOpacity(opacity);
                 }
                 else if (node instanceof ImageView) {
                     ((ImageView) node).setImage(intToImageMap.get(state));
