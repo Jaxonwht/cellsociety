@@ -26,7 +26,13 @@ public abstract class GridUI {
         aMap.put("Red", Color.RED);
         aMap.put("Green", Color.GREEN);
         aMap.put("Yellow", Color.YELLOW);
-        aMap.put("Black", Color.BLACK);
+        aMap.put("Azure", Color.AZURE);
+        aMap.put("Gold", Color.GOLD);
+        aMap.put("Cyan", Color.CYAN);
+        aMap.put("Gray", Color.GRAY);
+        aMap.put("Lime", Color.LIME);
+        aMap.put("Magenta", Color.MAGENTA);
+        aMap.put("Pink", Color.PINK);
         stringToPaintMap = Collections.unmodifiableMap(aMap);
     }
 
