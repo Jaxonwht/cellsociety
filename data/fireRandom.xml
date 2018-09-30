@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cellSociety>
+    <simulation>
+        <name>Wator</name>
+        <title>wator_1</title>
+        <author>Team13</author>
+        <extraParameters>reproductionFish reproductionShark</extraParameters>
+    </simulation>
+    <params>
+        <reproductionFish>5.0</reproductionFish>
+        <reproductionShark>7.0</reproductionShark>
+    </params>
+    <dimConfig>
+        <grid>
+            <row>100</row>
+            <col>100</col>
+        </grid>
+        <cellState dataType = "random">
+            <state stateNumber = "0" stateName = "empty"></state>
+            <state stateNumber = "1" stateName = "X"></state>
+            <state stateNumber = "2" stateName = "O"></state>
+        </cellState>
+    </dimConfig>
+</cellSociety>
