@@ -12,15 +12,15 @@
 	</params>
 	<dimConfig>
 		<grid>
-			<row>10</row>
-			<col>10</col>
+			<row>100</row>
+			<col>100</col>
 			<width>500</width>
 			<height>500</height>
 		</grid>
 		<cellState dataType = "ratio">
-			<state stateNumber = "0" stateName = "empty">0.3</state>
-			<state stateNumber = "1" stateName = "fish">0.5</state>
-			<state stateNumber = "2" stateName = "shark">0.2</state>
+			<state stateNumber = "0" stateName = "empty">0.1</state>
+			<state stateNumber = "1" stateName = "fish">0.85</state>
+			<state stateNumber = "2" stateName = "shark">0.05</state>
 		</cellState>
 	</dimConfig>
 </cellSociety>
