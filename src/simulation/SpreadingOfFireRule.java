@@ -69,7 +69,7 @@ public class SpreadingOfFireRule extends Rule {
                     determineNextStatesBurning(cell);
                 }
                 else if (cell.getState() == SpreadingOfFireCell.NORMAL) {
-                    List<Cell> neighbors = this.getNeighborsFour(i, j);
+                    List<Cell> neighbors = getGrid().getDirectNeighbors(i, j);
                     determineNextStatesNormal(cell, neighbors);
                 }
                 else if (cell.getState() == SpreadingOfFireCell.EMPTY) {

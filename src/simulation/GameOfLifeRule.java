@@ -8,12 +8,14 @@ import java.util.List;
  */
 public class GameOfLifeRule extends Rule {
     // If number of neighbors < UNDERPOPULATION_THRESHOLD, underpopulation happens.
-    private static final int UNDERPOPULATION_THRESHOLD = 2;
+    private final int UNDERPOPULATION_THRESHOLD;
     // If number of neighbors > OVERPOPULATION_THRESHOLD, overpopulation happens.
-    private static final int OVERPOPULATION_THRESHOLD = 3;
+    private final int OVERPOPULATION_THRESHOLD;
 
     public GameOfLifeRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
+        UNDERPOPULATION_THRESHOLD = (int) Math.floor(extraParameters.get(0));
+        OVERPOPULATION_THRESHOLD = (int) Math.floor(extraParameters.get(1));
     }
 
     @Override
@@ -21,7 +23,7 @@ public class GameOfLifeRule extends Rule {
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 Cell cell = this.getGrid().item(i, j);
-                List<Cell> neighbors = this.getNeighbors(i, j);
+                List<Cell> neighbors = getGrid().getAllNeighbors(i, j);
                 checkCell(cell, neighbors);
             }
         }
