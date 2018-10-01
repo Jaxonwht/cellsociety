@@ -1,24 +1,12 @@
 package cell;
 
-import javafx.scene.paint.Paint;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Haotian Wang
+ * An abstract class for a cell that has the properties of a cell in a simulation, and also its row and column index in the grid class.
  */
 public abstract class Cell {
-    public static final Map<Integer, Paint> STATE_TO_PAINT_MAP = new HashMap<>();
     public static final int UNINITIALIZED = -1;
 
-    /*
-    private Shape myShape;
-    private double myXPos;
-    private double myYPos;
-    private double myWidth;
-    private double myHeight;
-    */
     private int rowIndex;
     private int colIndex;
     private int myState;
@@ -26,12 +14,6 @@ public abstract class Cell {
     private double myOpacity; // NEW CODE
 
     public Cell(int state, int i, int j) {
-        /*
-        this.myXPos = x;
-        this.myYPos = y;
-        this.myWidth = width;
-        this.myHeight = height;
-        */
         this.rowIndex = i;
         this.colIndex = j;
         this.myState = state;

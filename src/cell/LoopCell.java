@@ -1,7 +1,5 @@
 package cell;
 
-import cell.Cell;
-
 /**
  * @author Julia Saveliff
  */

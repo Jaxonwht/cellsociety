@@ -16,7 +16,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.ComboBox;
-import rule.AntRule;
 import simulation.Grid;
 import simulation.ReadXML;
 import rule.Rule;

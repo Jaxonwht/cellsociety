@@ -1,6 +1,5 @@
 package UI;
 
-import UI.GridUI;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
@@ -10,6 +9,7 @@ import java.util.ResourceBundle;
 
 /**
  * @author Haotian Wang
+ * A GridUI subclass that implements a grid of triangular cells.
  */
 public class GridUITriangle extends GridUI {
     private double sideLength;
