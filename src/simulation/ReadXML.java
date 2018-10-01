@@ -213,7 +213,7 @@ public class ReadXML {
     }
     public int[][] getCellState(){return cellState;}
 
-    public String getMyParameters() { return myParameters.toString().substring(1, myParameters.size()); }
+    public String getMyParameters() { return "The extra parameters are " + myParameters.toString(); }
 }
 
 

@@ -3,6 +3,7 @@ package UI;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -40,11 +41,14 @@ import java.util.ResourceBundle;
  */
 public class UIManager {
     // constant screen dimensions
-    private final static int SPLASH_SIZE = 300;
-    private final static int PANEL_WIDTH = 175;
-    private final static int CHART_HEIGHT = 200;
-    private final static int LAYOUT_SPACING = 20;
-    private final static int USER_PANEL_ITEM_SPACING = 20;
+    private final int SPLASH_SIZE;
+    private final int PANEL_WIDTH;
+    private final int LAYOUT_SPACING;
+    private final int USER_PANEL_ITEM_SPACING;
+    private final int PADDING;
+    private final int SIMULATION_WIDTH;
+    private final int SIMULATION_HEIGHT;
+    private final int CHART_HEIGHT;
 
     // button text
     private ResourceBundle myTextResources;
@@ -72,6 +76,9 @@ public class UIManager {
     private ComboBox<String> cellShapeButton;
     private Slider mySpeedSlider;
     private Rule myRule;
+    private Text myAuthor;
+    private Text myDescription;
+    private Text myParameters;
     private int myGenerationCount=0;
     private Text myGenerationsDisplay;
     private Text myErrorDisplay;
@@ -98,6 +105,15 @@ public class UIManager {
         myGraphicResources = ResourceBundle.getBundle(DEFAULT_GRAPHIC_RESOURCE_FILE);
         myStage = stage;
         myStage.setTitle(myTextResources.getString("Title"));
+
+        SPLASH_SIZE = Integer.parseInt(myGraphicResources.getString("SplashSize"));
+        PANEL_WIDTH = Integer.parseInt(myGraphicResources.getString("PanelWidth"));
+        LAYOUT_SPACING = Integer.parseInt(myGraphicResources.getString("LayoutSpacing"));
+        USER_PANEL_ITEM_SPACING = Integer.parseInt(myGraphicResources.getString("UserPanelItemSpacing"));
+        PADDING = Integer.parseInt(myGraphicResources.getString("Padding"));
+        SIMULATION_WIDTH =Integer.parseInt(myGraphicResources.getString("SimulationWidth"));
+        SIMULATION_HEIGHT =Integer.parseInt(myGraphicResources.getString("SimulationHeight"));
+        CHART_HEIGHT = Integer.parseInt(myGraphicResources.getString("ChartHeight"));
     }
 
     /**
@@ -239,19 +255,24 @@ public class UIManager {
      */
     private Group setupSimulation(ReadXML reader) {
         // set up layout of scene
-        var width = Double.parseDouble(myGraphicResources.getString("WidthOfSimulation"));
-        var height = Double.parseDouble(myGraphicResources.getString("HeightOfSimulation"));
 
         var root = new Group();
-        var scene = new Scene(root, width+PANEL_WIDTH, height+CHART_HEIGHT);
+        var scene = new Scene(root, SIMULATION_WIDTH+PANEL_WIDTH, SIMULATION_HEIGHT+CHART_HEIGHT);
         var border = new BorderPane();
 
         // user panel
         var userPanel = new VBox(USER_PANEL_ITEM_SPACING);
-        userPanel.setPrefSize(PANEL_WIDTH,height);
+        userPanel.setPadding(new Insets(PADDING, PADDING, PADDING, PADDING));
+        userPanel.setPrefSize(PANEL_WIDTH,SIMULATION_HEIGHT);
         userPanel.setAlignment(Pos.CENTER);
 
         // user controls
+        myAuthor = new Text(reader.getAuthor());
+        myAuthor.setWrappingWidth(PANEL_WIDTH);
+        myDescription = new Text(reader.getDescription());
+        myDescription.setWrappingWidth(PANEL_WIDTH);
+        myParameters = new Text(reader.getMyParameters());
+        myParameters.setWrappingWidth(PANEL_WIDTH);
         myErrorDisplay = new Text();
         myGenerationsDisplay = new Text(myTextResources.getString("GenerationText")+myGenerationCount);
         simToSplashButton = makeButton("LoadText");
@@ -269,7 +290,7 @@ public class UIManager {
 
         // grid region
         var gridRegion = new Pane();
-        gridRegion.setPrefSize(width, height);
+        gridRegion.setPrefSize(SIMULATION_WIDTH, SIMULATION_HEIGHT);
         myGrid = new Grid(reader, myGridType, myCellShape);
         Class<?> clazz = null;
         Constructor<?> constructor = null;
@@ -297,7 +318,7 @@ public class UIManager {
 
         // chart region
         var chartRegion = new HBox();
-        chartRegion.setPrefSize(width, CHART_HEIGHT);
+        chartRegion.setPrefSize(SIMULATION_WIDTH, CHART_HEIGHT);
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Generation");
@@ -319,7 +340,7 @@ public class UIManager {
         myLineChart.getData().addAll(mySeriesArray);
 
         // add elements to each region
-        userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
+        userPanel.getChildren().addAll(myAuthor, myDescription, myParameters, myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
                 pauseButton, stepButton, speedText, mySpeedSlider);
         gridRegion.getChildren().addAll(gridNodes);
         chartRegion.getChildren().add(myLineChart);
