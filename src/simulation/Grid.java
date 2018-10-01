@@ -1,5 +1,7 @@
 package simulation;
 
+import cell.Cell;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -43,7 +45,7 @@ public class Grid {
             for (int j=0; j<myNumCol; j++) {
                 int state = states[i][j];
                 try {
-                    Class<?> clazz = Class.forName("simulation."+type+"Cell");
+                    Class<?> clazz = Class.forName("cell."+type+"Cell");
                     Constructor<?> constructor = clazz.getConstructor(int.class, int.class, int.class);
                     Object instance = constructor.newInstance(state, i, j);
                     myCells[i][j] = (Cell) instance;

@@ -1,8 +1,12 @@
-package simulation;
+package UI;
 
+import UI.GridUI;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
+import simulation.Grid;
+
+import java.util.ResourceBundle;
 
 /**
  * @author Haotian Wang
@@ -12,8 +16,8 @@ public class GridUIHexagon extends GridUI {
     private double cellHeight;
     private double edge;
 
-    public GridUIHexagon(Grid grid) {
-        super(grid);
+    public GridUIHexagon(Grid grid, ResourceBundle resource) {
+        super(grid, resource);
     }
 
     @Override

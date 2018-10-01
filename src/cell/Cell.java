@@ -1,4 +1,4 @@
-package simulation;
+package cell;
 
 import javafx.scene.paint.Paint;
 
@@ -40,24 +40,24 @@ public abstract class Cell {
     }
 
     // Getter and setter methods for all instance variables
-    protected int getNextState() {
+    public int getNextState() {
         return myNextState;
     }
 
-    protected void setNextState(int state) { myNextState = state; }
+    public void setNextState(int state) { myNextState = state; }
 
-    protected int getState() { return myState; }
+    public int getState() { return myState; }
 
-    protected void setState(int state) { myState = state; }
+    public void setState(int state) { myState = state; }
 
-    protected void updateToNextState() { myState = myNextState; }
+    public void updateToNextState() { myState = myNextState; }
 
     public int getRowIndex() { return rowIndex; }
 
     public int getColIndex() { return colIndex; }
 
-    protected double getOpacity() { return myOpacity; } // NEW CODE
+    public double getOpacity() { return myOpacity; } // NEW CODE
 
-    protected void setOpacity(double value) { myOpacity = value; } // NEW CODE
+    public void setOpacity(double value) { myOpacity = value; } // NEW CODE
 }
 

@@ -1,4 +1,8 @@
-package simulation;
+package rule;
+
+import cell.Cell;
+import cell.GameOfLifeCell;
+import simulation.Grid;
 
 import java.util.List;
 

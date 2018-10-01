@@ -1,4 +1,4 @@
-package simulation;
+package UI;
 
 
 import javafx.animation.KeyFrame;
@@ -16,6 +16,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.ComboBox;
+import simulation.Grid;
+import simulation.ReadXML;
+import rule.Rule;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -37,11 +41,11 @@ public class UIManager {
 
     // button text
     private ResourceBundle myTextResources;
-    private final static String DEFAULT_TEXT_RESOURCE_FILE = "simulation/UI_text";
+    private final static String DEFAULT_TEXT_RESOURCE_FILE = "UI/UI_text";
 
     // graphic components
     private ResourceBundle myGraphicResources;
-    private final static String DEFAULT_GRAPHIC_RESOURCE_FILE = "simulation/UI_graphic";
+    private final static String DEFAULT_GRAPHIC_RESOURCE_FILE = "UI/UI_graphic";
 
     // animation constants
     private static final int FRAMES_PER_SECOND = 3;
@@ -253,9 +257,9 @@ public class UIManager {
         Constructor<?> constructor = null;
         Object instance = null;
         try {
-            clazz = Class.forName("simulation.GridUI" + myCellShape);
-            constructor = clazz.getConstructor(Grid.class);
-            instance = constructor.newInstance(grid);
+            clazz = Class.forName("UI.GridUI" + myCellShape);
+            constructor = clazz.getConstructor(Grid.class, ResourceBundle.class);
+            instance = constructor.newInstance(grid, myGraphicResources);
         } catch (ClassNotFoundException e) {
             // TODO: error handling
             e.printStackTrace();
@@ -299,7 +303,7 @@ public class UIManager {
      */
     private Rule makeRuleByReflection(Grid grid, String simulationType, List<Double> simulationParameters) {
         try {
-            var packageName = "simulation.";
+            var packageName = "rule.";
             var className = "Rule";
             Class<?> clazz = Class.forName(packageName + simulationType + className);
             Constructor<?> constructor = clazz.getConstructor(Grid.class, List.class);

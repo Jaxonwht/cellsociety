@@ -1,21 +1,25 @@
-package simulation;
+package UI;
 
+import UI.GridUI;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
+import simulation.Grid;
+
+import java.util.ResourceBundle;
 
 /**
  * @author Haotian Wang
  */
-public class GridUITriangle extends GridUI{
+public class GridUITriangle extends GridUI {
     private double sideLength;
     private double cellHeight;
     private double edge;
     private double imageWidth;
     private double imageHeight;
 
-    public GridUITriangle(Grid grid) {
-        super(grid);
+    public GridUITriangle(Grid grid, ResourceBundle resource) {
+        super(grid, resource);
     }
 
     @Override
