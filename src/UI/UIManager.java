@@ -331,7 +331,6 @@ public class UIManager {
 
         // add layout to root
         root.getChildren().add(border);
-
         return root;
 
     }
