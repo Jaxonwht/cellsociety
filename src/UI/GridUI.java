@@ -62,6 +62,10 @@ public abstract class GridUI {
         for (int i = 0; i < myGrid.getNumRow(); i++) {
             for (int j = 0 ; j < myGrid.getNumCol(); j++) {
                 int state = myGrid.item(i, j).getState();
+                if (!intToPaintMap.isEmpty() && !intToImageMap.isEmpty()) {
+                    UIManager.showWarningPopup(myTextResources.getString("ShapeImageText"));
+                    return;
+                }
                 if (intToPaintMap.containsKey(state)) {
                     addShape(i, j, state);
                 }
