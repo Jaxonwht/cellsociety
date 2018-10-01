@@ -4,19 +4,21 @@
         <name>RockPaperScissor</name>
         <title>rockPaperScissor_1</title>
         <author>Team13</author>
-        <extraParameters></extraParameters>
+        <extraParameters>opacityIncrement</extraParameters>
     </simulation>
     <params>
+        <opacityIncrement>0.3</opacityIncrement>
     </params>
     <dimConfig>
         <grid>
-            <row>100</row>
-            <col>100</col>
+            <row>500</row>
+            <col>500</col>
         </grid>
         <cellState dataType = "random">
             <state stateNumber = "0" stateName = "empty"></state>
             <state stateNumber = "1" stateName = "rock"></state>
             <state stateNumber = "2" stateName = "paper"></state>
+            <state stateNumber = "3" stateName = "scissor"></state>
         </cellState>
     </dimConfig>
 </cellSociety>

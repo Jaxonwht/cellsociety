@@ -7,7 +7,7 @@
         <extraParameters>opacityIncrement</extraParameters>
     </simulation>
     <params>
-        <opacityIncrement>0.25</opacityIncrement>
+        <opacityIncrement>0.5</opacityIncrement>
     </params>
     <dimConfig>
         <grid>

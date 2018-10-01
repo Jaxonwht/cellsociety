@@ -17,13 +17,6 @@ public class LoopCell extends Cell {
     private static final int LEADER = 3;
     private static final int TURNER = 4;
     private static final int DISCONNECT = 5;
-    private static final Paint COLOR_0 = Color.BLACK;
-    private static final Paint COLOR_1 = Color.BLUE;
-    private static final Paint COLOR_2 = Color.RED;
-    private static final Paint COLOR_3 = Color.GREEN;
-    private static final Paint COLOR_4 = Color.HOTPINK;
-    private static final Paint COLOR_5 = Color.YELLOW;
-    private static final Map<Integer, Paint> STATE_TO_PAINT_MAP = initMap();
 
     public static final int UP = -1;
     public static final int DOWN = 1;
@@ -32,35 +25,11 @@ public class LoopCell extends Cell {
 
     private int myDirection;
 
-    /**
-     * A static method that creates an unmodifiable map for GameOfLife, relating the state int to the String representing image file name.
-     * @return An unmodifiable map.
-     */
-    private static Map<Integer, Paint> initMap() {
-        Map<Integer, Paint> map = new HashMap<>();
-        map.put(EMPTY, COLOR_0);
-        map.put(DATA, COLOR_1);
-        map.put(WALL, COLOR_2);
-        map.put(LEADER, COLOR_3);
-        map.put(TURNER, COLOR_4);
-        map.put(DISCONNECT, COLOR_5);
-        return Collections.unmodifiableMap(map);
-    }
-
     public LoopCell(int state, int i, int j) {
         super(state,i,j);
-        //this.setRectangle(STATE_TO_PAINT_MAP.get(state));
         myDirection = UP;
 
     }
-
-//    /**
-//     * Update the color of the shape of the cell to its corresponding next state.
-//     */
-//    @Override
-//    protected void updateShape(Map<Integer, Paint> map) {
-//        super.updateShape(LoopCell.STATE_TO_PAINT_MAP);
-//    }
 
     public void setDirection(int dir) { myDirection = dir; }
 
