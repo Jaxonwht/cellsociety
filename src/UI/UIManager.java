@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.ComboBox;
+import rule.AntRule;
 import simulation.Grid;
 import simulation.ReadXML;
 import rule.Rule;
@@ -126,7 +127,6 @@ public class UIManager {
         myGenerationsDisplay.setText(myTextResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
-        System.out.print(myRule.getClass().getName());
         myRule.determineNextStates();
         myRule.updateGrid();
         myGridUI.updateAppearance();
@@ -278,7 +278,6 @@ public class UIManager {
         myGridUI = (GridUI) instance;
         var gridNodes = myGridUI.getMyNodes();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
-
         // add elements to each region
         userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
                 pauseButton, stepButton, speedText, mySpeedSlider);
