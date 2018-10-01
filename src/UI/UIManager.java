@@ -126,6 +126,7 @@ public class UIManager {
         myGenerationsDisplay.setText(myTextResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
+        System.out.print(myRule.getClass().getName());
         myRule.determineNextStates();
         myRule.updateGrid();
         myGridUI.updateAppearance();
@@ -207,6 +208,7 @@ public class UIManager {
             try {
                 handleReader(new ReadXML(myFile));
             } catch (Exception e) {
+                e.printStackTrace();
                 myFileText.setText(myTextResources.getString("FileErrorText"));
             }
         } else {
