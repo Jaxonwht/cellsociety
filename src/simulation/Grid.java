@@ -153,7 +153,7 @@ public class Grid {
 
     public Cell item(int i, int j) { return myCells[i][j]; }
 
-    private boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
+    public boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
 
     private int[] wrapAround(int i, int j) {
         if (!isOutOfBounds(i, j)) { return new int[]{i, j}; }

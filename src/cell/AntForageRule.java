@@ -1,10 +1,14 @@
-package simulation;
+package cell;
 
+
+import cell.AntForageAnt;
+import cell.AntForageCell;
+import rule.Rule;
+import simulation.Grid;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.DoubleBinaryOperator;
 
 /**
  * @author Yunhao Qing
