@@ -119,7 +119,7 @@ public abstract class GridUI {
 
     protected double getSimulationWidth() { return simulationWidth; }
 
-    protected double getSimulationHeight() { return simulationWidth; }
+    protected double getSimulationHeight() { return simulationHeight; }
 
     protected Map<Integer, Paint> getIntToPaintMap() { return intToPaintMap; }
 
