@@ -50,44 +50,64 @@ public class ReadXML {
     private void readState() {
         NodeList typeList = document.getElementsByTagName("cellState");
         String dataType = typeList.item(0).getAttributes().getNamedItem("dataType").getNodeValue();
-        if (dataType.equals("list")){
-            NodeList nodeList = document.getElementsByTagName("state");
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                int stateNumber = Integer.parseInt(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
-                String temp = node.getTextContent();
-                for (String s : temp.split(" ")){
-                    int index = Integer.parseInt(s);
-                    cellState[index/column][index%column] = stateNumber;
+        if (dataType.equals("list")) {
+            readStateList();
+        }
+        else if (dataType.equals("ratio")) {
+            readStateRatio();
+        }
+        else if (dataType.equals("random")) {
+            readStateRandom();
+        }
+    }
+
+    private void readStateList() {
+        NodeList nodeList = document.getElementsByTagName("state");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            int stateNumber = Integer.parseInt(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
+            String temp = node.getTextContent();
+            for (String s : temp.split(" ")){
+                int index = Integer.parseInt(s);
+                cellState[index/column][index%column] = stateNumber;
+            }
+        }
+    }
+
+    private void readStateRatio() {
+        NodeList nodeList = document.getElementsByTagName("state");
+        double[] myStateRatio = new double[nodeList.getLength()];
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            int stateNumber = Integer.parseInt(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
+            String temp = node.getTextContent();
+            double stateRatio = Double.parseDouble(temp);
+            if (stateNumber == 0){
+                myStateRatio[stateNumber] = stateRatio;
+            }
+            else{
+                myStateRatio[stateNumber] = stateRatio + myStateRatio[stateNumber - 1];
+            }
+        }
+
+        for (int i = 0 ; i < row; i++){
+            for (int j = 0; j < column; j++){
+                double randNum  = rand.nextDouble();
+                for (int k = 0; k < myStateRatio.length; k++){
+                    if (randNum <= myStateRatio[k]){
+                        cellState[i][j] = k;
+                        break;
+                    }
                 }
             }
         }
-        else if (dataType.equals("ratio")){
-            NodeList nodeList = document.getElementsByTagName("state");
-            double[] myStateRatio = new double[nodeList.getLength()];
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                int stateNumber = Integer.parseInt(node.getAttributes().getNamedItem("stateNumber").getNodeValue());
-                String temp = node.getTextContent();
-                double stateRatio = Double.parseDouble(temp);
-                if (stateNumber == 0){
-                    myStateRatio[stateNumber] = stateRatio;
-                }
-                else{
-                    myStateRatio[stateNumber] = stateRatio + myStateRatio[stateNumber - 1];
-                }
-            }
+    }
 
-            for (int i = 0 ; i < row; i++){
-                for (int j = 0; j < column; j++){
-                    double randNum  = rand.nextDouble();
-                    for (int k = 0; k < myStateRatio.length; k++){
-                        if (randNum <= myStateRatio[k]){
-                            cellState[i][j] = k;
-                            break;
-                        }
-                    }
-                }
+    private void readStateRandom() {
+        NodeList nodeList = document.getElementsByTagName("state");
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                cellState[i][j] = rand.nextInt(nodeList.getLength());
             }
         }
     }

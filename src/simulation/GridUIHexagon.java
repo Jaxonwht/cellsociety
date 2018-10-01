@@ -20,7 +20,7 @@ public class GridUIHexagon extends GridUI {
     protected void calculateLengths() {
         cellHeight = getSimulationHeight() / (getMyGrid().getNumRow() + 1);
         edge = cellHeight / 2 / Math.sqrt(3);
-        cellWidth = getSimulationWidth() / getMyGrid().getNumCol() - edge;
+        cellWidth = (getSimulationWidth() - edge) / getMyGrid().getNumCol() - edge;
     }
 
     @Override

@@ -14,8 +14,6 @@
 		<grid>
 			<row>100</row>
 			<col>100</col>
-			<width>500</width>
-			<height>500</height>
 		</grid>
 		<cellState dataType = "ratio">
 			<state stateNumber = "0" stateName = "empty">0.1</state>

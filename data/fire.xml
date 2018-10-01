@@ -15,8 +15,6 @@
 		<grid>
 			<row>5</row>
 			<col>5</col>
-			<width>500</width>
-			<height>500</height>
 		</grid>
 		<cellState dataType = "list">
 		    <state stateNumber = "0" stateName = "empty">12 13 14 15 16</state>
