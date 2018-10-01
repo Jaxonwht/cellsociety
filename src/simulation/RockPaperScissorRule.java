@@ -55,7 +55,7 @@ public class RockPaperScissorRule extends Rule {
                         if (neighbor.getOpacity()>0) {
                             // selected neighbor can still reproduce
                             cell.setNextState(neighbor.getState());
-                            cell.setOpacity(cell.getOpacity()-RockPaperScissorCell.OPACITY_INCREMENT);
+                            cell.setOpacity(cell.getOpacity()-OPACITY_INCREMENT);
                         } else {
                             // selected neighbor can no longer reproduce
                             cell.setNextState(cell.getState());
