@@ -1,8 +1,9 @@
-package cell;
+package rule;
 
 
 import cell.AntForageAnt;
-import cell.AntForageCell;
+import cell.AntCell;
+import cell.Cell;
 import rule.Rule;
 import simulation.Grid;
 
@@ -15,7 +16,7 @@ import java.util.Random;
  * A specific Rule class for Ant Forage game,
  * adapting rules from https://cs.gmu.edu/~eclab/projects/mason/publications/alife04ant.pdf.
  */
-public class AntForageRule extends Rule {
+public class AntRule extends Rule {
     private final double ANT_RATIO;
     private final double MAX_PHEROMONE;
     private final double EVAPORATION;
@@ -30,10 +31,10 @@ public class AntForageRule extends Rule {
      * @param grid the grid with states number in each cell
      * @param extraParameters MY_BURNING_COUNT, PROB_GROWTH and PROB_CATCH
      */
-    public AntForageRule(Grid grid, List<Double> extraParameters) {
+    public AntRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         ANT_RATIO = extraParameters.get(0);
-        MAX_PHEROMONE = extraParameters.get(1);;
+        MAX_PHEROMONE = extraParameters.get(1);
         EVAPORATION = extraParameters.get(2);
         DIFFUSION = extraParameters.get(3);
         K = extraParameters.get(4);
@@ -45,8 +46,8 @@ public class AntForageRule extends Rule {
         Ants = new ArrayList<>();
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
-                AntForageCell cell = (AntForageCell) this.getGrid().item(i, j);
-                if (cell.getState() == AntForageCell.EMPTY && r.nextDouble() < ANT_RATIO) {
+                AntCell cell = (AntCell) this.getGrid().item(i, j);
+                if (cell.getState() == AntCell.EMPTY && r.nextDouble() < ANT_RATIO) {
                     Ants.add(new AntForageAnt(i,j));
                 }
             }
@@ -72,14 +73,14 @@ public class AntForageRule extends Rule {
     }
 
     public void antReturnToNest(AntForageAnt ant){
-        AntForageCell currentCell = (AntForageCell)this.getGrid().item(ant.getrowIndex(), ant.getcolIndex());
+        AntCell currentCell = (AntCell)this.getGrid().item(ant.getrowIndex(), ant.getcolIndex());
         List<Cell> neighbors = this.getGrid().getAllNeighbors(ant.getrowIndex(), ant.getcolIndex());
         dropFoodPheromones(currentCell,neighbors);
         if (!forwardLocations(ant).isEmpty()) neighbors = forwardLocations(ant);
         Cell moveToCell = this.getGrid().item(ant.getrowIndex()+1, ant.getcolIndex());
         double maxPhero = 0;
         for (Cell c : neighbors){
-            AntForageCell antcell = (AntForageCell)c;
+            AntCell antcell = (AntCell) c;
             if (antcell.getNestPheromones()>=maxPhero){
                 moveToCell = c;
                 maxPhero = antcell.getNestPheromones();
@@ -88,18 +89,18 @@ public class AntForageRule extends Rule {
         ant.setOrientation(determineNewOrientation(moveToCell,ant));
         ant.setcolIndex(moveToCell.getColIndex());
         ant.setrowIndex(moveToCell.getRowIndex());
-        if (moveToCell.getState() == AntForageCell.NEST){
+        if (moveToCell.getState() == AntCell.NEST){
             ant.changeHaveFood();
         }
     }
 
-    public void dropHomePheromones(AntForageCell currentCell,List<Cell> neighbors){
-        if (currentCell.getState()== AntForageCell.NEST)
+    public void dropHomePheromones(AntCell currentCell,List<Cell> neighbors){
+        if (currentCell.getState()== AntCell.NEST)
             currentCell.setNestPheromones(MAX_PHEROMONE);
         else{
             double maxPhero = 0;
             for (Cell cell : neighbors){
-                AntForageCell thisCell = (AntForageCell)cell;
+                AntCell thisCell = (AntCell)cell;
                 maxPhero = Math.max(maxPhero,thisCell.getNestPheromones());
             }
             if (maxPhero - 2 - currentCell.getNestPheromones()>0)
@@ -107,13 +108,13 @@ public class AntForageRule extends Rule {
         }
     }
 
-    public void dropFoodPheromones(AntForageCell currentCell,List<Cell> neighbors){
-        if (currentCell.getState()== AntForageCell.FOOD)
+    public void dropFoodPheromones(AntCell currentCell, List<Cell> neighbors){
+        if (currentCell.getState()== AntCell.FOOD)
             currentCell.setNestPheromones(MAX_PHEROMONE);
         else{
             double maxPhero = 0;
             for (Cell cell : neighbors){
-                AntForageCell thisCell = (AntForageCell)cell;
+                AntCell thisCell = (AntCell)cell;
                 maxPhero = Math.max(maxPhero,thisCell.getFoodPheromones());
             }
             if (maxPhero - 2 - currentCell.getFoodPheromones()>0)
@@ -161,14 +162,14 @@ public class AntForageRule extends Rule {
     }
 
     public void antFindFoodSource(AntForageAnt ant){
-        AntForageCell currentCell = (AntForageCell)this.getGrid().item(ant.getrowIndex(), ant.getcolIndex());
+        AntCell currentCell = (AntCell)this.getGrid().item(ant.getrowIndex(), ant.getcolIndex());
         List<Cell> neighbors = this.getGrid().getAllNeighbors(ant.getrowIndex(), ant.getcolIndex());
         dropHomePheromones(currentCell,neighbors);
         if (!forwardLocations(ant).isEmpty()) neighbors = forwardLocations(ant);
         Cell moveToCell = this.getGrid().item(ant.getrowIndex()+1, ant.getcolIndex());
         double maxPhero = 0;
         for (Cell c : neighbors){
-            AntForageCell antcell = (AntForageCell)c;
+            AntCell antcell = (AntCell)c;
             if (antcell.getFoodPheromones()>=maxPhero){
                 moveToCell = c;
                 maxPhero = antcell.getFoodPheromones();
@@ -177,7 +178,7 @@ public class AntForageRule extends Rule {
         ant.setOrientation(determineNewOrientation(moveToCell,ant));
         ant.setcolIndex(moveToCell.getColIndex());
         ant.setrowIndex(moveToCell.getRowIndex());
-        if (moveToCell.getState() == AntForageCell.FOOD){
+        if (moveToCell.getState() == AntCell.FOOD){
             ant.changeHaveFood();
             moveToCell.setNextState(2);
         }
@@ -186,7 +187,7 @@ public class AntForageRule extends Rule {
     public void pheromonesEvaporateAndDiffuse(){
         for (int i = 0; i < this.getGrid().getNumRow(); i++){
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
-                AntForageCell cell = (AntForageCell) this.getGrid().item(i, j);
+                AntCell cell = (AntCell) this.getGrid().item(i, j);
                 cell.setFoodPheromones(cell.getFoodPheromones()*(1-EVAPORATION));
                 //EVAPORATION
                 if(cell.getNextState()==-1)
