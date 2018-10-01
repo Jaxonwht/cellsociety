@@ -126,7 +126,6 @@ public class UIManager {
         myGenerationsDisplay.setText(myTextResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
-        System.out.print(myRule.getClass().getName());
         myRule.determineNextStates();
         myRule.updateGrid();
         myGridUI.updateAppearance();
