@@ -1,4 +1,4 @@
-package simulation;
+package UI;
 
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
+import simulation.Grid;
+
 import java.util.*;
 
 
@@ -15,7 +17,6 @@ import java.util.*;
  */
 public abstract class GridUI {
     private ResourceBundle myCellResources;
-    private final static String DEFAULT_CELL_RESOURCE_FILE = "simulation/UI_graphic";
     private final static Map<String, Paint> stringToPaintMap;
     static {
         Map<String, Paint> aMap = new HashMap<>();
@@ -42,8 +43,8 @@ public abstract class GridUI {
     private Map<Integer, Image> intToImageMap;
     private List<Node> myNodes;
 
-    public GridUI(Grid grid) {
-        myCellResources = ResourceBundle.getBundle(DEFAULT_CELL_RESOURCE_FILE);
+    public GridUI(Grid grid, ResourceBundle resource) {
+        myCellResources = resource;
         simulationHeight = Double.parseDouble(myCellResources.getString("HeightOfSimulation"));
         simulationWidth = Double.parseDouble(myCellResources.getString("WidthOfSimulation"));
         myNodes = new ArrayList<>();

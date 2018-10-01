@@ -1,4 +1,9 @@
-package simulation;
+package rule;
+
+import cell.Cell;
+import cell.SegregationCell;
+import rule.Rule;
+import simulation.Grid;
 
 import java.util.List;
 

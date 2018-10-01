@@ -1,5 +1,7 @@
-package simulation;
+package cell;
 
+
+import cell.Cell;
 
 /**
  * @author Yunhao Qing

@@ -1,4 +1,7 @@
-package simulation;
+package rule;
+
+import cell.Cell;
+import simulation.Grid;
 
 import java.util.List;
 import java.util.Random;
