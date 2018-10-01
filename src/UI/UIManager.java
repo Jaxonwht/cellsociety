@@ -91,10 +91,8 @@ public class UIManager {
     private Text myFileText;
     private String myGridType;
     private String myCellShape;
-
     private boolean gridTypeChosen;
     private boolean cellShapeChosen;
-    private final Text myInstruction = new Text("Please select grid type and cell shape first.");
 
     // animation components
     private Timeline myAnimation;
@@ -217,8 +215,8 @@ public class UIManager {
             myCellShape =  cellShapeButton.getSelectionModel().getSelectedItem();
         });
 
-        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton, selectGridType,
-                gridTypeButton,selectCellShape, cellShapeButton);
+        layout.getChildren().addAll(selectGridType, gridTypeButton,selectCellShape, cellShapeButton,
+                chooseFileButton, selectedFile, myFileText, splashToSimButton);
         root.getChildren().add(layout);
 
         var fileChooser = new FileChooser();
@@ -494,7 +492,6 @@ public class UIManager {
      * To be called when user pauses simulation.
      */
     private void handlePause() {
-        // pause animation
         myAnimation.pause();
     }
 
@@ -502,7 +499,6 @@ public class UIManager {
      * To be called when user starts simulation.
      */
     private void handlePlay() {
-        // resume animation
         myAnimation.play();
     }
 
@@ -510,7 +506,6 @@ public class UIManager {
      * To be called when user steps through simulation.
      */
     private void handleStep() {
-        // step through animation
         myAnimation.pause();
         step(SECOND_DELAY);
     }

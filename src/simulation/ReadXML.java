@@ -19,18 +19,18 @@ public class ReadXML {
     private int column;
     private int[][] cellState;
     private List<Double> extraParameters;
-    public final static Random rand = new Random();
-    Document document;
-    public final static String XMLFileOpenException = "The system is unable to open the file, the file may be damaged." +
+    private final static Random rand = new Random();
+    private Document document;
+    private final static String XMLFileOpenException = "The system is unable to open the file, the file may be damaged." +
             "Please select a valid XML file";
-    public final static String XMLFileSimException = "Invalid or no simulation type given.";
-    public final static String XMLFileGridException = "Grid Configuration not given or incorrectly formatted.";
-    public final static String XMLFileCellStateException = "The cell configuration in the XML is missing or " +
+    private final static String XMLFileSimException = "Invalid or no simulation type given.";
+    private final static String XMLFileGridException = "Grid Configuration not given or incorrectly formatted.";
+    private final static String XMLFileCellStateException = "The cell configuration in the XML is missing or " +
             "incorrect or not supported at this point of time.";
-    public final static String XMLFileParaException = "The extra parameters in the XML files are missing or incorrectly" +
+    private final static String XMLFileParaException = "The extra parameters in the XML files are missing or incorrectly" +
             "formatted.";
-    public final static String XMLFileAuthorException ="The author is not found or incorrectly formatted.";
-    public final static String XMLFileDescriptionException = "The description is not found or incorrectly formatted.";
+    private final static String XMLFileAuthorException ="The author is not found or incorrectly formatted.";
+    private final static String XMLFileDescriptionException = "The description is not found or incorrectly formatted.";
 
 
 
@@ -174,8 +174,6 @@ public class ReadXML {
      */
     private void readGrid() {
         try{
-        // width = returnInt("width");
-        // height = returnInt("height");
         row = returnInt("row");
         column = returnInt("col");
         cellState = new int[row][column];}
