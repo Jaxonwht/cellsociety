@@ -5,6 +5,7 @@
 		<title>gameOfLife_1</title>
 		<author>Team13</author>
 		<extraParameters>underThreshold overThreshold</extraParameters>
+		<description>This xml file is made for game of life simulation. This xml file is interesting as the states are in order according to numeral values of the stateNumber(like the other xml files). The successful running of this xml file show flexibility in our design of reading xml.</description>
 	</simulation>
 	<params>
 		<underThreshold>2</underThreshold>

@@ -5,6 +5,7 @@
         <title>gameOfLife_1</title>
         <author>Team13</author>
         <extraParameters>underThreshold overThreshold</extraParameters>
+        <description>This xml file is for game of life simulation testing. The grid is of medium size.</description>
     </simulation>
     <params>
         <underThreshold>2</underThreshold>

@@ -5,6 +5,7 @@
 		<title>wator_1</title>
 		<author>Team13</author>
 		<extraParameters>reproductionFish reproductionShark</extraParameters>
+		<description>This xml file is made for Wator simulation. It contains many fish and many shark in the initial setting. The grid is very big, hence we can use this simulation to check whether our code work for big grid. Besides, the dataType is 'ratio' in this simulation, i.e. this tests whether our read by ratio works or not.</description>
 	</simulation>
 	<params>
 		<reproductionFish>5.0</reproductionFish>
