@@ -74,8 +74,7 @@ Hours Spent:100+ hours for each person
 ](https://www.geeksforgeeks.org/split-string-java-examples/)
 * [Is there a way to instantiate a class by name in Java?
 ](https://stackoverflow.com/questions/9886266/is-there-a-way-to-instantiate-a-class-by-name-in-java)
-* [How to convert Double to int directly? [duplicate]
-](https://stackoverflow.com/questions/5404149/how-to-convert-double-to-int-directly)
+* [How to convert Double to int directly?](https://stackoverflow.com/questions/5404149/how-to-convert-double-to-int-directly)
 * [Oracle documentation on Random](https://docs.oracle.com/javase/7/docs/api/java/util/Random.html)
 * [Location-Independent Access to Resources
 ](https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html).
@@ -84,7 +83,15 @@ Hours Spent:100+ hours for each person
 * [Oracle documentation on InvocationTargetException](https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/InvocationTargetException.html)
 * [Oracle documentation on JavaFx Color](https://docs.oracle.com/javafx/2/api/javafx/scene/paint/Color.html)
 * [The Java ternary operator examples](https://alvinalexander.com/java/edu/pj/pj010018)
-
+* [Line Chart Documentation](https://docs.oracle.com/javafx/2/charts/line-chart.htm#CIHGBCFI)
+* [More on Self Replication CA](https://www.asa3.org/ASA/PSCF/1989/PSCF3-89Byl.html)
+* [More on Byl's CA](http://cafaq.com/apps/index.php)
+* [Langton's Loop](https://en.wikipedia.org/wiki/Langton's_loops)
+* [Byl's Loop](https://en.wikipedia.org/wiki/Byl%27s_loop)
+* [Self Replication CA](http://lslwww.epfl.ch/pages/embryonics/thesis/Chapter3.html)
+* [Rock, Paper, Scissor CA](https://www.gamedev.net/blogs/entry/2249737-another-cellular-automaton-video/)
+* [Line Chart Live Updates](https://stackoverflow.com/questions/22089022/line-chart-live-update)
+* [JavaFX Dialogs](https://code.makery.ch/blog/javafx-dialogs-official/)
 ### Running the Program
 
 Main class: CA
