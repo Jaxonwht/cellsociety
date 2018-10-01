@@ -3,7 +3,6 @@ package rule;
 
 import cell.Cell;
 import cell.SpreadingOfFireCell;
-import rule.Rule;
 import simulation.Grid;
 
 import java.util.List;

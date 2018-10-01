@@ -1,7 +1,6 @@
 package rule;
 
 import cell.Cell;
-import rule.Rule;
 import simulation.Grid;
 
 import java.util.List;

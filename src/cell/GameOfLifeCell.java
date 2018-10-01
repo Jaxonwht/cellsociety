@@ -1,9 +1,8 @@
 package cell;
 
-import cell.Cell;
-
 /**
  * @author Haotian Wang
+ * A cell class for Game of Life Simulation.
  */
 public class GameOfLifeCell extends Cell {
     public static final int DEAD = 0;

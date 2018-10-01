@@ -1,9 +1,8 @@
 package cell;
 
-import cell.Cell;
-
 /**
  * @author Haotian Wang
+ * A class for cell in the Segregation simulation.
  */
 public class SegregationCell extends Cell {
     public static final int TYPE_A = 0;

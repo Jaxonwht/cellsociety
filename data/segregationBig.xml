@@ -5,6 +5,7 @@
         <title>segregation_1</title>
         <author>Team13</author>
         <extraParameters>threshold</extraParameters>
+        <description>This xml file is made for Segregation simulation. The grid is of medium size and this xml file is used for testing and debugging.</description>
     </simulation>
     <params>
         <threshold>0.5</threshold>

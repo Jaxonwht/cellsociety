@@ -1,6 +1,5 @@
 package UI;
 
-import UI.GridUI;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -10,6 +9,7 @@ import java.util.ResourceBundle;
 
 /**
  * @author Haotian Wang
+ * A GridUI subclass that implements a grid of square cells.
  */
 public class GridUISquare extends GridUI {
     private double cellWidth;

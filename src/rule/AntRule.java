@@ -4,7 +4,6 @@ package rule;
 import cell.AntForageAnt;
 import cell.AntCell;
 import cell.Cell;
-import rule.Rule;
 import simulation.Grid;
 
 import java.util.ArrayList;

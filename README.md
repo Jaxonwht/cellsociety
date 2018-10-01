@@ -3,7 +3,7 @@ cell society
 
 This project implements a cellular automata simulator.
 
-Authors in alphabetical order: Julia Saveliff, Haotian Wang, Yunhao Qing
+Authors(in alphabetical order): Julia Saveliff, Haotian Wang, Yunhao Qing
 
 ### Timeline
 
@@ -11,24 +11,44 @@ Start Date: 09/15/2018
 
 Finish Date: 09/23/2018
 
-Hours Spent:
+Hours Spent:100+ hours for each person
 
 ### Primary Roles
-* CA: Julia Saveliff
-* UIManager: Julia Saveliff
-* Grid: Julia Saveliff
-* Cell: Haotian Wang
-    * GameOfLifeCell: Haotian Wang
-    * SegregationCell: Haotian Wang
-    * SpreadingOfFireCell: Yunhao Qing
-    * WartorCell: Yunhao Qing
-* Rule: Haotian Wang
-    * GameOfLifeRule: Haotian Wang
-    * SegregationRule: Haotian Wang, Julia Saveliff
-    * SpreadingOfFireRule: Yunhao Qing
-    * WatorRule: Yunhao Qing
+* cell
+    * Cell: Haotian Wang
+        * GameOfLifeCell: Haotian Wang
+        * LoopCell: Julia Saveliff
+        * RockPaperScissorCell: Julia Saveliff
+        * SegregationCell: Haotian Wang
+        * SpreadingOfFireCell: Yunhao Qing
+        * WatorCell: Yunhao Qing
+        * AntCell: Yunhao Qing
+            * AntForageAnt: Yunhao Qing
+* controller
+    * CA: Julia Saveliff, Haotian Wang
+* simulation
+    * Grid: Haotian Wang, Julia Saveliff
+* rule
+    * Rule: Haotian Wang
+        * GameOfLifeRule: Haotian Wang
+        * SegregationRule: Haotian Wang, Julia Saveliff
+        * SpreadingOfFireRule: Yunhao Qing
+        * WatorRule: Yunhao Qing
+        * AntRule: Yunhao Qing
+        * LoopRule: Julia Saveliff
+        * RockPaperScissorRule: Julia Saveliff
+* UI
+    * UIManager: Julia Saveliff, Haotian Wang
+    * GridUI: Haotian Wang
+        * GridUIHexagon: Haotian Wang
+        * GridUISquare: Haotian Wang
+        * GridUITriangle: Haotian Wang
+    * UI property files
+        * UI_graphic.properties: Haotian Wang
+        * UI_text.properties: Julia Saveliff
 * ReadXML: Julia Saveliff, Yunhao Qing, Haotian Wang
 * XML format: Yunhao Qing
+* Error Handling Check: Yunhao Qing
 
 ### Resources Used
 
@@ -115,6 +135,60 @@ Extra credit:
 
 ### Notes
 
+Simulation:
+
+* Allow different numbers and arrangements of neighbors instead of assuming it will always be the total possible neighbors. <br /><br />
+Achieved by writing different getNeighbour method for different cell shape in Grid Class and use the appropriate getNeighbour method
+for specific simuation with different requirements. One can also easiler overwrite the getNeigbour method in a new simulation if there is
+specific requirement. For example, in the ant simulation, there is forwared location cells and all cells. The specific getNieghbour method
+can be easily written as the row and column indexes of each cell is easily accessible. These features make our code extremely flexible and easy
+to implement new simulations.
+
+* Allow a variety of grid location shapes (here is a discussion of how these variations might work for the game of life). <br /><br />
+Yes, our code works for all 3 shapes - square, triangualr and hexagonal.
+
+* Allow a variety of grid edge types. <br /><br />
+Our code allows both finite and toroidal types.
+
+* Implement additional simulations (any simulations should work on any kinds of grid or neighborhood types) <br /><br />
+We successfully implement the Rock, Paper, Scissors Game and finished parts of Foraging Ants.
+
+Configuration:
+
+* Implement error checking for incorrect file data, such as (but not necessarily limited to)invalid or no simulation type given, invalid cell state values given, 
+cell locations given that are outside the bounds of the grid's size appropriate default values when parameter values are invalid or not given. <br /><br />
+Yes.We have 6 types of XML file error checking, and our XML reader throws the appropriate exception when there is an error.
+The 6 types of errors are XMLFileOpenException ("The system is unable to open the file, the file may be damaged.Please select a valid XML file"),
+    XMLFileSimException ("Invalid or no simulation type given."),
+    XMLFileGridException (Grid Configuration not given or incorrectly formatted."),
+    XMLFileCellStateException (The cell configuration in the XML is missing or incorrect or not supported at this point of time."),
+    XMLFileParaException (The extra parameters in the XML files are missing or incorrectly formatted."),
+    XMLFileAuthorException ("The author is not found or incorrectly formatted."),
+    XMLFileDescriptionException (The description is not found or incorrectly formatted.").
+
+
+* Allow simulations initial configuration to be set by list of specific locations and states, completely randomly based on a total number of 
+locations to occupy, randomly based on probability/concentration distributions. <br /><br />
+Yes.
+
+* Allow simulations to be "styled", such as (but not necessarily limited to):kind of grid to use, by shapes, neighbors, or edges with appropriate error checking
+(e.g., hexagonal grids do not have cardinal directions), size of each grid location (instead of it being calculated, requires that scrolling is implemented) 
+whether or not grid locations should be outlined (i.e., to be able to "see" the grid or not) color of cell or patch states (at least support empty to represent
+a water world or space world, etc.) shape of cells or patches within the grid's shape (i.e., circles, rectangles, or arbitrary images like sharks or fire). <br /><br />
+Yes.
+
+* Allow users to save the current state of the simulation as an XML configuration file <br /><br />
+
+Visualization
+
+* Display a graph of the populations of all of the "kinds" of cells over the time of the simulation. <br /><br />
+Yes, we include a graph that shows the the change of each population over time below the simulation grid.
+
+* Allow users to interact with the simulation dynamically to change the values of its parameters. <br /><br />
+
+* Allow users to interact with the simulation dynamically to create or change a state at a grid location. <br /><br />
+
+* Allow users to run multiple simulations at the same time so they can compare the results side by side (i.e., do not use tabs like a browser). <br /><br />
 
 ### Impressions
 
