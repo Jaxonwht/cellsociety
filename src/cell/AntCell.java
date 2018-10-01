@@ -16,7 +16,7 @@ import java.util.Map;
  * food.
 
  */
-public class AntForageCell extends Cell {
+public class AntCell extends Cell {
     public static final int EMPTY = 0;
     public static final int NEST = 1;
     public static final int FOOD = 2;
@@ -26,7 +26,7 @@ public class AntForageCell extends Cell {
     /**
      * Constructor for AntForageCell.
      */
-    public AntForageCell(int state, int i, int j) {
+    public AntCell(int state, int i, int j) {
         super(state, i, j);
         this.foodPheromones = 0.0;
         this.nestPheromones = 0.0;
