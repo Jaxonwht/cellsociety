@@ -9,12 +9,11 @@ import java.util.Random;
 public class RockPaperScissorRule extends Rule {
     private Random rand = new Random();
 
-    private final double OPACITY_INCREMENT;
+    private final double OPACITY_INCREMENT; // TODO: Read in from XML file
 
     public RockPaperScissorRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         OPACITY_INCREMENT = extraParameters.get(0);
-
     }
 
     @Override

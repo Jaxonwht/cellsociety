@@ -16,7 +16,6 @@ public class RockPaperScissorCell extends Cell {
     public static final int PAPER = 2;
     public static final int SCISSOR = 3;
 
-
     public RockPaperScissorCell(int state, int i, int j) {
         super(state,i,j);
     }
