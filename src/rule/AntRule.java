@@ -41,12 +41,16 @@ public class AntRule extends Rule {
      */
     public AntRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
+        r = new Random();
         ANT_RATIO = extraParameters.get(0);
         MAX_PHEROMONE = extraParameters.get(1);
         EVAPORATION = extraParameters.get(2);
         DIFFUSION = extraParameters.get(3);
         K = extraParameters.get(4);
         N = extraParameters.get(5);
+        this.getStateMap().put(AntCell.EMPTY, "EMPTY");
+        this.getStateMap().put(AntCell.NEST, "NEST");
+        this.getStateMap().put(AntCell.FOOD, "FOOD");
         initialiseAnts();
     }
     
@@ -59,9 +63,11 @@ public class AntRule extends Rule {
         Ants = new ArrayList<>();
         for (int i = 0; i < this.getGrid().getNumRow(); i++) {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
-                AntCell cell = (AntCell) this.getGrid().item(i, j);
-                if (cell.getState() == AntCell.EMPTY && r.nextDouble() < ANT_RATIO) {
-                    Ants.add(new AntForageAnt(i,j));
+                Cell cell = this.getGrid().item(i, j);
+                if ((cell.getState() == AntCell.EMPTY) && (r.nextDouble() < ANT_RATIO))
+                {
+                    AntForageAnt temp = new AntForageAnt(i,j);
+                    Ants.add(temp);
                 }
             }
         }
@@ -195,7 +201,7 @@ public class AntRule extends Rule {
         //6 here is calculated by 3*2. Three pairs of rol, col indiced are used
         //for the 3 forwared direction neighbours.
         for (int i = ant.getOrientation()*2; i < ant.getOrientation()*2+6;){
-            if (!grid.isOutOfBounds(i, i+1))neighbors.add(grid.item(i, i+1));
+            if (!grid.isOutOfBounds(index[i], index[i+1]))neighbors.add(grid.item(index[i], index[i+1]));
             i = i+2;
         }
         return neighbors;

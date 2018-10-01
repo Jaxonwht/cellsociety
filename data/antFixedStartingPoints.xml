@@ -9,7 +9,7 @@
 </simulation>
 <params>
     <antRatio>0.3</antRatio>
-    <maxPheromone>1000</maxPheromone>
+    <maxPheromone>1000.0</maxPheromone>
     <evaporation>0.001</evaporation>
     <diffusion>0.001</diffusion>>
     <K>0.001</K>>

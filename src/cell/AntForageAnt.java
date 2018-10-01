@@ -8,7 +8,6 @@ public class AntForageAnt{
     private int colIndex;
     private int orientation;//0 = N,1 = NE,2 = E,3 = SE,4 = S,5 = SW,6 = W,7 = NW
     private boolean haveFood;
-    private Random r;
     
     /**
      * This is a class for individual ant, ant behaviours are set based on
@@ -17,7 +16,8 @@ public class AntForageAnt{
     public AntForageAnt(int rowIndex, int colIndex){
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
-        this.orientation = r.nextInt(8);//get 1 of the 8 random orientation;
+        this.orientation = new Random().nextInt(8);//get 1 of the 8 random orientation;
+
         this.haveFood = false;
     }
 
