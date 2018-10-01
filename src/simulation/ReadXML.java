@@ -1,9 +1,7 @@
 package simulation;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -29,6 +27,14 @@ public class ReadXML {
             "incorrect or not supported at this point of time.";
     public final static String XMLFileParaException = "The extra parameters in the XML files are missing or incorrectly" +
             "formatted.";
+    public final static String XMLFileAuthorException ="The author is not found or incorrectly formatted.";
+    public final static String XMLFileDescriptionException = "The description is not found or incorrectly formatted.";
+
+
+
+    private String author;
+    private String description;
+    private Map<String, Double> myParameters;
 
 
 
@@ -56,6 +62,16 @@ public class ReadXML {
         readGrid();
         readState();
         readExtraParameters();
+        try{
+        author = returnString("author");}
+        catch (Exception e){
+            throw new Exception(XMLFileAuthorException);
+        }
+        try{
+        description = returnString("description"); }
+        catch(Exception e){
+            throw new Exception(XMLFileDescriptionException);
+        }
     }
     
     /**
@@ -72,7 +88,6 @@ public class ReadXML {
             } else if (dataType.equals("random")) {
                 readStateRandom();
             }
-            System.out.print(cellState[0].toString());
         }
         catch (Exception e){
             throw new Exception(XMLFileCellStateException);
@@ -137,11 +152,14 @@ public class ReadXML {
      */
     private void readExtraParameters() throws Exception{
         try {
+            myParameters = new HashMap<>();
             String parameters = returnString("extraParameters");
             if (!parameters.equals("")) {
                 String[] parameterList = parameters.split(" ");
                 for (String para : parameterList) {
-                    this.extraParameters.add(returnDouble(para));
+                    double value = returnDouble(para);
+                    this.extraParameters.add(value);
+                    myParameters.put(para, value);
                 }
             }
         }
@@ -152,7 +170,6 @@ public class ReadXML {
     /**
      * Read in the grid configuration and initialise the 2D array cellState.
      */
-
     private void readGrid() throws Exception{
         try{
         // width = returnInt("width");
@@ -164,7 +181,7 @@ public class ReadXML {
             throw new Exception(XMLFileGridException);
         }
     }
-    
+
     private int returnInt(String tag) {
         return Integer.parseInt(returnString(tag));
     }
@@ -187,8 +204,16 @@ public class ReadXML {
 
     public int getColumn(){return column;}
 
+    public String getAuthor() {
+        return author;
+    }
 
+    public String getDescription() {
+        return description;
+    }
     public int[][] getCellState(){return cellState;}
+
+    public String getMyParameters() { return myParameters.toString().substring(1, myParameters.size()); }
 }
 
 
