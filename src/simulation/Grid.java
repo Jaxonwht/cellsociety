@@ -1,5 +1,6 @@
 package simulation;
 
+import UI.UIManager;
 import cell.Cell;
 
 import java.lang.reflect.Constructor;
@@ -7,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * @author Haotian Wang, Julia Saveliff
@@ -28,6 +30,7 @@ public class Grid {
     private ReadXML myReader;
     private String myGridType;
     private String myCellshape;
+    private ResourceBundle myTextResources = ResourceBundle.getBundle("UI/UI_text");
 
     public Grid(ReadXML reader, String gridType, String cellShape) {
         myReader = reader;
@@ -39,7 +42,10 @@ public class Grid {
         populateCells();
     }
 
-    public void populateCells() {
+    /**
+     *
+     */
+    private void populateCells() {
         String type = myReader.getName();
         int[][] states = myReader.getCellState();
         for (int i=0; i<myNumRow; i++) {
@@ -50,17 +56,16 @@ public class Grid {
                     Constructor<?> constructor = clazz.getConstructor(int.class, int.class, int.class);
                     Object instance = constructor.newInstance(state, i, j);
                     myCells[i][j] = (Cell) instance;
-                } catch (ClassNotFoundException e){
-                    // TODO: catch exception
-                    System.out.println("Exception 1 caught: "+e.getMessage());
-                } catch (NoSuchMethodException ee){
-                    System.out.println("Exception 2 caught: "+ee.getMessage());
-                } catch (InstantiationException eee){
-                    System.out.println("Exception 3 caught: "+eee.getMessage());
-                } catch (IllegalAccessException eeee){
-                    System.out.println("Exception 4 caught: "+eeee.getMessage());
-                } catch (InvocationTargetException eeeee){
-                    System.out.println("Exception 5 caught: "+eeeee.getMessage());
+                } catch (ClassNotFoundException e) {
+                    UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("ClassNotFoundText"));
+                } catch (NoSuchMethodException e) {
+                    UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("NoSuchMethodText"));
+                } catch (InstantiationException e) {
+                    UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("InstantiationText"));
+                } catch (IllegalAccessException e) {
+                    UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("IllegalAccessText"));
+                } catch (InvocationTargetException e) {
+                    UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("InvocationTargetText"));
                 }
 
             }
@@ -84,26 +89,40 @@ public class Grid {
         return callGetNeighborsByType("Direct", row, col);
     }
 
+    /**
+     *
+     * @param neighborType
+     * @param row
+     * @param col
+     * @return
+     */
     private List<Cell> callGetNeighborsByType(String neighborType, int row, int col) {
         try {
             Method method = getClass().getMethod("get" + neighborType +"Neighbors" + myCellshape, int.class, int.class);
             Object ret = method.invoke(this, row, col);
             return (List<Cell>) ret;
         } catch (SecurityException e) {
-            // TODO: exception handling
-            System.out.println("Exception 1 caught: "+e.getMessage());
-        } catch (NoSuchMethodException e) {
-            System.out.println("Exception 2 caught: "+e.getMessage());
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("SecurityText"));
         } catch (IllegalArgumentException e) {
-
+            UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("IllegalArgumentText"));
+        } catch (NoSuchMethodException e) {
+            UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("NoSuchMethodText"));
+        } catch (IllegalAccessException e) {
+            UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("IllegalAccessText"));
+        } catch (InvocationTargetException e) {
+            UIManager.showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("InvocationTargetText"));
         }
+
         return null;
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @param Direction
+     * @return
+     */
     private List<Cell> getNeighborsByDirection(int row, int col, int[][] Direction) {
         List<Cell> neighbors = new ArrayList<>();
         for (int[] vector : Direction) {
@@ -120,28 +139,64 @@ public class Grid {
         return neighbors;
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
     public List<Cell> getAllNeighborsSquare(int row, int col) {
         return getNeighborsByDirection(row, col, SQUARE_ALL);
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
     public List<Cell> getDirectNeighborsSquare(int row, int col) {
         return getNeighborsByDirection(row, col, SQUARE_DIRECT);
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
     public List<Cell> getAllNeighborsHexagon(int row, int col) {
         if (col % 2 == 0) { return getNeighborsByDirection(row, col, HEXAGON_EVEN); }
         else {return getNeighborsByDirection(row, col, HEXAGON_ODD); }
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
     public List<Cell> getDirectNeighborsHexagon(int row, int col) {
         return getAllNeighborsHexagon(row, col);
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
     public List<Cell> getAllNeighborsTriangle(int row, int col) {
         if ((row + col) % 2 == 0) { return getNeighborsByDirection(row, col, TRIANGLE_ALL_EVEN); }
         else { return getNeighborsByDirection(row, col, TRIANGLE_ALL_ODD); }
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
     public List<Cell> getDirectNeighborsTriangle(int row, int col) {
         if ((row + col) % 2 == 0) { return getNeighborsByDirection(row, col, TRIANGLE_DIRECT_EVEN); }
         else { return getNeighborsByDirection(row, col, TRIANGLE_DIRECT_ODD); }
@@ -152,10 +207,28 @@ public class Grid {
 
     public int getNumCol() { return myNumCol; }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     public Cell item(int i, int j) { return myCells[i][j]; }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     public boolean isOutOfBounds(int i, int j) { return i < 0 || i >= myNumRow || j < 0 || j >= myNumRow; }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     private int[] wrapAround(int i, int j) {
         if (!isOutOfBounds(i, j)) { return new int[]{i, j}; }
         else {
@@ -168,24 +241,11 @@ public class Grid {
         }
     }
 
-    public void printAllStates() {
-        for (int i=0; i<myNumRow; i++) {
-            for (int j = 0; j < myNumCol; j++) {
-                System.out.print(this.item(i, j).getState());
-            }
-        }
-        System.out.print("\n");
-    }
-
-    public void printAllNextStates() {
-        for (int i=0; i<myNumRow; i++) {
-            for (int j = 0; j < myNumCol; j++) {
-                System.out.print(this.item(i, j).getNextState());
-            }
-        }
-        System.out.print("\n");
-    }
-
+    /**
+     *
+     * @param state
+     * @return
+     */
     public int getStateCount(int state) {
         int count = 0;
         for (int i = 0; i < myNumRow; i++) {

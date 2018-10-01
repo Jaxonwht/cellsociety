@@ -22,6 +22,7 @@ public class CA extends Application {
         myUI = new UIManager(primaryStage);
         myUI.create();
 
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 
