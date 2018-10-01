@@ -151,7 +151,7 @@ Yes, our code works for all 3 shapes - square, triangualr and hexagonal.
 Our code allows both finite and toroidal types.
 
 * Implement additional simulations (any simulations should work on any kinds of grid or neighborhood types) <br /><br />
-We successfully implement the Rock, Paper, Scissors Game and finished parts of Foraging Ants.
+We successfully implement the Rock, Paper, Scissors Game and finished most parts of Foraging Ants.
 
 Configuration:
 
@@ -169,7 +169,10 @@ The 6 types of errors are XMLFileOpenException ("The system is unable to open th
 
 * Allow simulations initial configuration to be set by list of specific locations and states, completely randomly based on a total number of 
 locations to occupy, randomly based on probability/concentration distributions. <br /><br />
-Yes.
+Yes.We are able to read in three types of data. First being list, we are given states of each cell and we just put in their state values in each cell.
+The second data type being ratio, we are given ratio of the states, in XML reader, we decide state for each cell based on the ratio and record the state
+accordingly.
+The third data type being completely random.In XML reader, we decide state for each cell randomly and record the states accordingly.
 
 * Allow simulations to be "styled", such as (but not necessarily limited to):kind of grid to use, by shapes, neighbors, or edges with appropriate error checking
 (e.g., hexagonal grids do not have cardinal directions), size of each grid location (instead of it being calculated, requires that scrolling is implemented) 
