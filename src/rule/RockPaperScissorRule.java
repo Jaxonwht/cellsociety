@@ -1,4 +1,9 @@
-package simulation;
+package rule;
+
+import cell.Cell;
+import cell.RockPaperScissorCell;
+import rule.Rule;
+import simulation.Grid;
 
 import java.util.List;
 import java.util.Random;

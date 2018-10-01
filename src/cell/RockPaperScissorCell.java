@@ -1,11 +1,6 @@
-package simulation;
+package cell;
 
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import cell.Cell;
 
 /**
  * @author Julia Saveliff

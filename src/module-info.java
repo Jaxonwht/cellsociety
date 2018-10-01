@@ -7,4 +7,8 @@ module cellsociety_team13 {
         requires javafx.fxml;
 
     exports simulation;
+    exports cell;
+    exports controller;
+    exports UI;
+    exports rule;
 }

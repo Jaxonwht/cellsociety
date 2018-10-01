@@ -1,4 +1,8 @@
-package simulation;
+package rule;
+
+import cell.Cell;
+import simulation.Grid;
+import cell.WatorCell;
 
 import java.util.ArrayList;
 import java.util.List;

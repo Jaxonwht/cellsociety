@@ -1,18 +1,22 @@
-package simulation;
+package UI;
 
+import UI.GridUI;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import simulation.Grid;
+
+import java.util.ResourceBundle;
 
 /**
  * @author Haotian Wang
  */
-public class GridUISquare extends GridUI{
+public class GridUISquare extends GridUI {
     private double cellWidth;
     private double cellHeight;
 
-    public GridUISquare(Grid grid) {
-        super(grid);
+    public GridUISquare(Grid grid, ResourceBundle resource) {
+        super(grid, resource);
     }
 
     @Override
