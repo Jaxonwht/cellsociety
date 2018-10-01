@@ -5,6 +5,7 @@
         <title>rockPaperScissor_1</title>
         <author>Team13</author>
         <extraParameters>opacityIncrement</extraParameters>
+        <description></description>
     </simulation>
     <params>
         <opacityIncrement>0.5</opacityIncrement>
