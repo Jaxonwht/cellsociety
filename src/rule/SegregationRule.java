@@ -17,6 +17,9 @@ public class SegregationRule extends Rule {
     public SegregationRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         SATISFACTION_THRESHOLD = extraParameters.get(0);
+        this.getStateMap().put(SegregationCell.EMPTY, "EMPTY");
+        this.getStateMap().put(SegregationCell.TYPE_A, "TYPE A");
+        this.getStateMap().put(SegregationCell.TYPE_B, "TYPE B");
     }
 
     @Override

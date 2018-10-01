@@ -28,6 +28,9 @@ public class SpreadingOfFireRule extends Rule {
         PROB_CATCH = extraParameters.get(0);
         PROB_GROWTH = extraParameters.get(1);
         MY_BURNING_COUNT = (int) Math.floor(extraParameters.get(2));
+        this.getStateMap().put(SpreadingOfFireCell.NORMAL, "NORMAL");
+        this.getStateMap().put(SpreadingOfFireCell.BURNING, "BURNING");
+        this.getStateMap().put(SpreadingOfFireCell.EMPTY, "EMPTY");
     }
     
     public void determineNextStatesBurning(SpreadingOfFireCell cell) {
