@@ -87,6 +87,7 @@ Hours Spent: 100+ hours for each person
 * [How to Handle Jave Exception](https://stackify.com/specify-handle-exceptions-java/)
 * [Designing with Interfaces](https://www.artima.com/designtechniques/interfaces.html)
 * [Designing with Exceptions](https://www.javaworld.com/article/2076721/core-java/designing-with-exceptions.html)
+* [OO in one Sentence](https://media.pragprog.com/articles/may_04_oo1.pdf)
 
 ### Running the Program
 
@@ -98,14 +99,24 @@ Data files needed:
 
 * XML files to run simulation with:
 
+    * `data/Wator.xml`
+    * `data/WatorBig.xml`
+    * `data/WatorLonelyShark.xml`
+    * `data/WatorRatio.xml`
+    * `data/antFixedStartingPoints.xml`
     * `data/fire.xml`
     * `data/fireNoRegrowth.xml`
+    * `data/fireRandom.xml`
     * `data/gameOfLife.xml`
     * `data/gameOfLifeBig.xml`
+    * `data/gameOfLifeFlicker.xml`
+    * `data/gameOfLifeReappear.xml`
+    * `data/loopTest.xml`
+    * `data/rockPaperScissor.xml`
+    * `data/rockPaperScissorBig.xml`
+    * `data/rockPaperScissorLargeProbability.xml`
     * `data/segregation.xml`
     * `data/segregationBig.xml`
-    * `data/Wator.xml`
-    * `data/Wator.xml`
 
 Interesting data files:
 
