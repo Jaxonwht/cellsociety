@@ -4,6 +4,7 @@ package UI;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -306,6 +307,7 @@ public class UIManager {
         myLineChart.setTitle("Cell Population by State Over Time");
         myLineChart.setCreateSymbols(false);
         myLineChart.setLegendVisible(true);
+        myLineChart.setLegendSide(Side.RIGHT);
         var stateMap = myRule.getStateMap();
         mySeriesArray = new XYChart.Series[stateMap.size()];
         for (int ind = 0; ind<stateMap.size(); ind++) {
