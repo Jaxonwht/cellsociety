@@ -61,6 +61,7 @@ public class UIManager {
     private final static int MAX_GENERATION = 500;
 
     // UI components
+    private Grid myGrid;
     private Stage myStage;
     private Group mySplashRoot;
     private Button splashToSimButton;
@@ -130,7 +131,11 @@ public class UIManager {
         myGenerationsDisplay.setText(myTextResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
-        System.out.print(myRule.getClass().getName());
+        List<Integer> states = myRule.getStateList();
+        for (int state : states) {
+            int currPop = myGrid.getStateCount(state);
+            series.getData().add(new XYChart.Data(myGenerationCount, currPop));
+        }
         myRule.determineNextStates();
         myRule.updateGrid();
         myGridUI.updateAppearance();
@@ -258,14 +263,14 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-        var grid = new Grid(reader, myGridType, myCellShape);
+        myGrid = new Grid(reader, myGridType, myCellShape);
         Class<?> clazz = null;
         Constructor<?> constructor = null;
         Object instance = null;
         try {
             clazz = Class.forName("UI.GridUI" + myCellShape);
             constructor = clazz.getConstructor(Grid.class, ResourceBundle.class);
-            instance = constructor.newInstance(grid, myGraphicResources);
+            instance = constructor.newInstance(myGrid, myGraphicResources);
         } catch (ClassNotFoundException e) {
             // TODO: error handling
             e.printStackTrace();
@@ -281,7 +286,7 @@ public class UIManager {
 
         myGridUI = (GridUI) instance;
         var gridNodes = myGridUI.getMyNodes();
-        myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
+        myRule = makeRuleByReflection(myGrid, reader.getName(), reader.getExtraParameters());
 
         //graph region
         var chartRegion = new VBox();
@@ -294,11 +299,6 @@ public class UIManager {
         final LineChart<Number,Number> lineChart = new LineChart<>(xAxis,yAxis);
         lineChart.setTitle("Cell Population by State Over Time");
         XYChart.Series series = new XYChart.Series();
-        List<Integer> states = myRule.getStateList();
-        for (int state : states) {
-            int currPop = grid.getStateCount(state);
-            series.getData().add(new XYChart.Data(myGenerationCount, currPop));
-        }
 
         // add elements to each region
         userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
