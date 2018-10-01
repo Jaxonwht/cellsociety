@@ -3,7 +3,7 @@ cell society
 
 This project implements a cellular automata simulator.
 
-Authors(in alphabetical order): Julia Saveliff, Haotian Wang, Yunhao Qing
+Authors (in alphabetical order): Julia Saveliff, Haotian Wang, Yunhao Qing
 
 ### Timeline
 
@@ -11,7 +11,7 @@ Start Date: 09/15/2018
 
 Finish Date: 09/23/2018
 
-Hours Spent:100+ hours for each person
+Hours Spent: 100+ hours for each person
 
 ### Primary Roles
 * cell
@@ -145,10 +145,13 @@ can be easily written as the row and column indexes of each cell is easily acces
 to implement new simulations.
 
 * Allow a variety of grid location shapes (here is a discussion of how these variations might work for the game of life). <br /><br />
-Yes, our code works for all 3 shapes - square, triangualr and hexagonal.
+Yes, our code works for all 3 shapes - square, triangualr and hexagonal. This is fone not by hard coding in many classes, but all set
+in the Grid clas. The specific simulation rule class works regardless of the grid location shape.
 
 * Allow a variety of grid edge types. <br /><br />
-Our code allows both finite and toroidal types.
+Our code allows both finite and toroidal types. Toroidal type is implemented by introducing a new funcion in the grid class that wraps the
+cells that are originally out of bounds. In the future, if new grid edge type is required, we can simply write new functions that apply
+wrapping accorrfingly.
 
 * Implement additional simulations (any simulations should work on any kinds of grid or neighborhood types) <br /><br />
 We successfully implement the Rock, Paper, Scissors Game and finished most parts of Foraging Ants.
@@ -180,18 +183,14 @@ whether or not grid locations should be outlined (i.e., to be able to "see" the 
 a water world or space world, etc.) shape of cells or patches within the grid's shape (i.e., circles, rectangles, or arbitrary images like sharks or fire). <br /><br />
 Yes.
 
-* Allow users to save the current state of the simulation as an XML configuration file <br /><br />
 
 Visualization
 
 * Display a graph of the populations of all of the "kinds" of cells over the time of the simulation. <br /><br />
-Yes, we include a graph that shows the the change of each population over time below the simulation grid.
+Yes, we include a graph that shows the the change of each population over time below the simulation grid. Each state has one specific line
+showing how its amount changes over time. The user can also do comparison between states easily.
 
-* Allow users to interact with the simulation dynamically to change the values of its parameters. <br /><br />
 
-* Allow users to interact with the simulation dynamically to create or change a state at a grid location. <br /><br />
-
-* Allow users to run multiple simulations at the same time so they can compare the results side by side (i.e., do not use tabs like a browser). <br /><br />
 
 ### Impressions
 
