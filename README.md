@@ -199,10 +199,7 @@ Haotian Wang
 
 Yunhao Qing
 
-* The project is very time-consuming. I get much more used to using Git as a part of a team through doing this project. 
-* I am responsible for mostly backend coding and I am very satisfied with working on backend.
-* I learn about how flexibility of codes is important as making changes on flexible codes is much easier and changing codes
-* is what we do all the time.
+* The project is very time-consuming. I get much more used to using Git as a part of a team through doing this project. I am responsible for mostly backend coding and I am very satisfied with working on backend.I learn about how flexibility of codes is important as making changes on flexible codes is much easier and changing codes is what we do all the time.
 
 
 Julia Saveliff
