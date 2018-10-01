@@ -130,8 +130,6 @@ of the grid's dimensions or if a cell goes unassigned
 * If during a simulation, the user presses the `Load new simulation` button, but then just
 presses `Start simulation` without loading a file, the simulation screen will not clear
 
-Extra credit:
-
 
 ### Notes
 
@@ -181,7 +179,8 @@ The third data type being completely random.In XML reader, we decide state for e
 (e.g., hexagonal grids do not have cardinal directions), size of each grid location (instead of it being calculated, requires that scrolling is implemented) 
 whether or not grid locations should be outlined (i.e., to be able to "see" the grid or not) color of cell or patch states (at least support empty to represent
 a water world or space world, etc.) shape of cells or patches within the grid's shape (i.e., circles, rectangles, or arbitrary images like sharks or fire). <br /><br />
-Yes.
+Yes.Our code is extremely flexible in this perspective. We spent a lot of time making the backend code and UI interface as separate as possible.
+The color, kind of grid, size of each grid location and shape of cell can all be altered as the user wants as they do not appear anywhere in the backend code.
 
 
 Visualization
