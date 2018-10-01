@@ -135,6 +135,51 @@ Extra credit:
 
 ### Notes
 
+Simulation:
+
+* Allow different numbers and arrangements of neighbors instead of assuming it will always be the total possible neighbors. <br />
+Achieved by writing different getNeighbour method for different cell shape in Grid Class and use the appropriate getNeighbour method
+for specific simuation with different requirements. One can also easiler overwrite the getNeigbour method in a new simulation if there is
+specific requirement. For example, in the ant simulation, there is forwared location cells and all cells. The specific getNieghbour method
+can be easily written as the row and column indexes of each cell is easily accessible. These features make our code extremely flexible and easy
+to implement new simulations.
+
+* Allow a variety of grid location shapes (here is a discussion of how these variations might work for the game of life). <br />
+Yes, our code works for all 3 shapes - square, triangualr and hexagonal.
+
+* Allow a variety of grid edge types. <br />
+Our code allows both finite and toroidal types.
+
+* Implement additional simulations (any simulations should work on any kinds of grid or neighborhood types) <br />
+We successfully implement the Rock, Paper, Scissors Game and finished parts of Foraging Ants.
+
+Configuration:
+
+* Implement error checking for incorrect file data, such as (but not necessarily limited to)invalid or no simulation type given, invalid cell state values given, 
+cell locations given that are outside the bounds of the grid's size appropriate default values when parameter values are invalid or not given. <br />
+Yes.
+
+* Allow simulations initial configuration to be set by list of specific locations and states, completely randomly based on a total number of 
+locations to occupy, randomly based on probability/concentration distributions. <br />
+Yes.
+
+* Allow simulations to be "styled", such as (but not necessarily limited to):kind of grid to use, by shapes, neighbors, or edges with appropriate error checking
+(e.g., hexagonal grids do not have cardinal directions), size of each grid location (instead of it being calculated, requires that scrolling is implemented) 
+whether or not grid locations should be outlined (i.e., to be able to "see" the grid or not) color of cell or patch states (at least support empty to represent
+a water world or space world, etc.) shape of cells or patches within the grid's shape (i.e., circles, rectangles, or arbitrary images like sharks or fire). <br />
+Yes.
+
+* Allow users to save the current state of the simulation as an XML configuration file <br />
+
+Visualization
+
+* Display a graph of the populations of all of the "kinds" of cells over the time of the simulation. <br />
+
+* Allow users to interact with the simulation dynamically to change the values of its parameters. <br />
+
+* Allow users to interact with the simulation dynamically to create or change a state at a grid location. <br />
+
+* Allow users to run multiple simulations at the same time so they can compare the results side by side (i.e., do not use tabs like a browser). <br />
 
 ### Impressions
 
