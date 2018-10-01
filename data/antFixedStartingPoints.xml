@@ -5,6 +5,7 @@
     <title>Any_1</title>
     <author>Team13</author>
     <extraParameters>antRatio maxPheromone evaporation diffusion K N</extraParameters>
+    <description>This xml file is for ants forage testing.</description>
 </simulation>
 <params>
     <antRatio>0.3</antRatio>
