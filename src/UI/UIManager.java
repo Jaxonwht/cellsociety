@@ -34,10 +34,13 @@ import java.util.ResourceBundle;
  */
 public class UIManager {
     // constant screen dimensions
-    private final static int SPLASH_SIZE = 300;
-    private final static int PANEL_WIDTH = 175;
-    private final static int LAYOUT_SPACING = 20;
-    private final static int USER_PANEL_ITEM_SPACING = 20;
+    private final int SPLASH_SIZE;
+    private final int PANEL_WIDTH;
+    private final int LAYOUT_SPACING;
+    private final int USER_PANEL_ITEM_SPACING;
+    private final int PADDING;
+    private final int SIMULATION_WIDTH;
+    private final int SIMULATION_HEIGHT;
 
     // button text
     private ResourceBundle myTextResources;
@@ -65,6 +68,9 @@ public class UIManager {
     private ComboBox<String> cellShapeButton;
     private Slider mySpeedSlider;
     private Rule myRule;
+    private Text myAuthor;
+    private Text myDescription;
+    private Text myParameters;
     private int myGenerationCount=1;
     private Text myGenerationsDisplay;
     private Text myErrorDisplay;
@@ -88,6 +94,14 @@ public class UIManager {
         myGraphicResources = ResourceBundle.getBundle(DEFAULT_GRAPHIC_RESOURCE_FILE);
         myStage = stage;
         myStage.setTitle(myTextResources.getString("Title"));
+
+        SPLASH_SIZE = Integer.parseInt(myGraphicResources.getString("SplashSize"));
+        PANEL_WIDTH = Integer.parseInt(myGraphicResources.getString("PanelWidth"));
+        LAYOUT_SPACING = Integer.parseInt(myGraphicResources.getString("LayoutSpacing"));
+        USER_PANEL_ITEM_SPACING = Integer.parseInt(myGraphicResources.getString("UserPanelItemSpacing"));
+        PADDING = Integer.parseInt(myGraphicResources.getString("Padding"));
+        SIMULATION_WIDTH =Integer.parseInt(myGraphicResources.getString("SimulationWidth"));
+        SIMULATION_HEIGHT =Integer.parseInt(myGraphicResources.getString("SimulationHeight"));
     }
 
     /**
@@ -222,11 +236,9 @@ public class UIManager {
      */
     private Group setupSimulation(ReadXML reader) {
         // set up layout of scene
-        var width = Double.parseDouble(myGraphicResources.getString("WidthOfSimulation"));
-        var height = Double.parseDouble(myGraphicResources.getString("HeightOfSimulation"));
 
         var root = new Group();
-        var scene = new Scene(root, width+PANEL_WIDTH, height);
+        var scene = new Scene(root, RATE+PANEL_WIDTH, height);
         var border = new BorderPane();
 
         // user panel
@@ -235,6 +247,12 @@ public class UIManager {
         userPanel.setAlignment(Pos.CENTER);
 
         // user controls
+        myAuthor = new Text(reader.getAuthor());
+        myAuthor.setWrappingWidth(PANEL_WIDTH * 0.6);
+        myDescription = new Text(reader.getDescription());
+        myDescription.setWrappingWidth(PANEL_WIDTH * 0.6);
+        myParameters = new Text(reader.getMyParameters());
+        myParameters.setWrappingWidth(PANEL_WIDTH * 0.6);
         myErrorDisplay = new Text();
         myGenerationsDisplay = new Text(myTextResources.getString("GenerationText")+myGenerationCount);
         simToSplashButton = makeButton("LoadText");
@@ -252,7 +270,7 @@ public class UIManager {
 
         // grid region
         var gridRegion = new Pane();
-        gridRegion.setPrefSize(width, height);
+        gridRegion.setPrefSize(RATE, height);
         var grid = new Grid(reader, myGridType, myCellShape);
         Class<?> clazz = null;
         Constructor<?> constructor = null;
@@ -278,7 +296,7 @@ public class UIManager {
         var gridNodes = myGridUI.getMyNodes();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
         // add elements to each region
-        userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
+        userPanel.getChildren().addAll(myAuthor, myDescription, myParameters, myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
                 pauseButton, stepButton, speedText, mySpeedSlider);
         gridRegion.getChildren().addAll(gridNodes);
 
