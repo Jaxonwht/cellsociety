@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import UI.UIManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -43,20 +45,20 @@ public class ReadXML {
      * It reads the type of simulation, grid and initial states configuration
      * and extra parameters for each specific simulation.
      */
-    public ReadXML (File file) throws Exception {
+    public ReadXML (File file) {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             document = documentBuilder.parse(file);
             document.getDocumentElement().normalize();
         } catch (Exception e ) {
-            throw new Exception(XMLFileOpenException);
+            UIManager.showWarningPopup(XMLFileOpenException);
         }
         try {
             this.name = returnString("name");
         }
         catch (Exception e ) {
-            throw new Exception(XMLFileSimException);
+            UIManager.showWarningPopup(XMLFileSimException);
         }
         this.extraParameters = new ArrayList<>();
         readGrid();
@@ -65,19 +67,19 @@ public class ReadXML {
         try{
         author = returnString("author");}
         catch (Exception e){
-            throw new Exception(XMLFileAuthorException);
+            UIManager.showWarningPopup(XMLFileAuthorException);
         }
         try{
         description = returnString("description"); }
         catch(Exception e){
-            throw new Exception(XMLFileDescriptionException);
+            UIManager.showWarningPopup(XMLFileDescriptionException);
         }
     }
     
     /**
      * Read in initial state for each cell and update the 2D array cellState.
      */
-    private void readState() throws Exception {
+    private void readState() {
         try {
             NodeList typeList = document.getElementsByTagName("cellState");
             String dataType = typeList.item(0).getAttributes().getNamedItem("dataType").getNodeValue();
@@ -90,7 +92,7 @@ public class ReadXML {
             }
         }
         catch (Exception e){
-            throw new Exception(XMLFileCellStateException);
+            UIManager.showWarningPopup(XMLFileCellStateException);
         }
 
     }
@@ -150,7 +152,7 @@ public class ReadXML {
     /**
      * Return the extra parameters specified in the XML file if there is any.
      */
-    private void readExtraParameters() throws Exception{
+    private void readExtraParameters() {
         try {
             myParameters = new HashMap<>();
             String parameters = returnString("extraParameters");
@@ -164,13 +166,13 @@ public class ReadXML {
             }
         }
         catch (Exception e){
-            throw new Exception(XMLFileParaException);
+            UIManager.showWarningPopup(XMLFileParaException);
         }
     }
     /**
      * Read in the grid configuration and initialise the 2D array cellState.
      */
-    private void readGrid() throws Exception{
+    private void readGrid() {
         try{
         // width = returnInt("width");
         // height = returnInt("height");
@@ -178,7 +180,7 @@ public class ReadXML {
         column = returnInt("col");
         cellState = new int[row][column];}
         catch (Exception e){
-            throw new Exception(XMLFileGridException);
+            UIManager.showWarningPopup(XMLFileGridException);
         }
     }
 
