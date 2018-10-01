@@ -57,8 +57,7 @@ Hours Spent: 100+ hours for each person
 * [dead.gif](https://commons.wikimedia.org/wiki/File:Solid_black.png)
 
 ###### Articles
-* [Schelling's Model of Segregation
-](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/)
+* [Schelling's Model of Segregation](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/)
 * [Oracle documentation on Circle](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Circle.html)
 * [Java: Self for static method calls within the same class](https://stackoverflow.com/questions/22700944/java-self-for-static-method-calls-within-the-same-class)
 * [Calling a subclass method from superclass](https://stackoverflow.com/questions/10021603/calling-a-subclass-method-from-superclass)
@@ -66,28 +65,32 @@ Hours Spent: 100+ hours for each person
 * [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules)
 * [Oracle documentation on Class](https://docs.oracle.com/javase/7/docs/api/java/lang/Class.html#getConstructor(java.lang.Class...))
 * [Initialize a static final field in the constructor](https://stackoverflow.com/questions/5093744/initialize-a-static-final-field-in-the-constructor)
-* [Integer.class vs int.class
-](https://l.messenger.com/l.php?u=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F22470985%2Finteger-class-vs-int-class&h=AT0oxh3T6S7cgm3CMzhRzM-bvukfJYa5z3dXlGkvSAJkB-cd-ucubCPXM4pLevC69Rc95Srq_DW-I0h1FdTZsHNwYd470REraRFeRU-z1YK_47OpJFGXvmkI6ulIDw)
-* [How to permanently remove few commits from remote branch
-](https://stackoverflow.com/questions/3293531/how-to-permanently-remove-few-commits-from-remote-branch)
-* [Split() String method in Java with examples
-](https://www.geeksforgeeks.org/split-string-java-examples/)
-* [Is there a way to instantiate a class by name in Java?
-](https://stackoverflow.com/questions/9886266/is-there-a-way-to-instantiate-a-class-by-name-in-java)
-* [How to convert Double to int directly? [duplicate]
-](https://stackoverflow.com/questions/5404149/how-to-convert-double-to-int-directly)
+* [Integer.class vs int.class](https://l.messenger.com/l.php?u=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F22470985%2Finteger-class-vs-int-class&h=AT0oxh3T6S7cgm3CMzhRzM-bvukfJYa5z3dXlGkvSAJkB-cd-ucubCPXM4pLevC69Rc95Srq_DW-I0h1FdTZsHNwYd470REraRFeRU-z1YK_47OpJFGXvmkI6ulIDw)
+* [How to permanently remove few commits from remote branch](https://stackoverflow.com/questions/3293531/how-to-permanently-remove-few-commits-from-remote-branch)
+* [Split() String method in Java with examples](https://www.geeksforgeeks.org/split-string-java-examples/)
+* [Is there a way to instantiate a class by name in Java?](https://stackoverflow.com/questions/9886266/is-there-a-way-to-instantiate-a-class-by-name-in-java)
+* [How to convert Double to int directly?](https://stackoverflow.com/questions/5404149/how-to-convert-double-to-int-directly)
 * [Oracle documentation on Random](https://docs.oracle.com/javase/7/docs/api/java/util/Random.html)
-* [Location-Independent Access to Resources
-](https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html).
+* [Location-Independent Access to Resources](https://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html).
 * [How do I invoke a Java method when given the method name as a string?](https://stackoverflow.com/questions/160970/how-do-i-invoke-a-java-method-when-given-the-method-name-as-a-string)
 * [Oracle documentation on Shape](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Shape.html)
 * [Oracle documentation on InvocationTargetException](https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/InvocationTargetException.html)
 * [Oracle documentation on JavaFx Color](https://docs.oracle.com/javafx/2/api/javafx/scene/paint/Color.html)
 * [The Java ternary operator examples](https://alvinalexander.com/java/edu/pj/pj010018)
+* [Line Chart Documentation](https://docs.oracle.com/javafx/2/charts/line-chart.htm#CIHGBCFI)
+* [More on Self Replication CA](https://www.asa3.org/ASA/PSCF/1989/PSCF3-89Byl.html)
+* [More on Byl's CA](http://cafaq.com/apps/index.php)
+* [Langton's Loop](https://en.wikipedia.org/wiki/Langton's_loops)
+* [Byl's Loop](https://en.wikipedia.org/wiki/Byl%27s_loop)
+* [Self Replication CA](http://lslwww.epfl.ch/pages/embryonics/thesis/Chapter3.html)
+* [Rock, Paper, Scissor CA](https://www.gamedev.net/blogs/entry/2249737-another-cellular-automaton-video/)
+* [Line Chart Live Updates](https://stackoverflow.com/questions/22089022/line-chart-live-update)
+* [JavaFX Dialogs](https://code.makery.ch/blog/javafx-dialogs-official/)
 * [How to Handle Jave Exception](https://stackify.com/specify-handle-exceptions-java/)
 * [Designing with Interfaces](https://www.artima.com/designtechniques/interfaces.html)
 * [Designing with Exceptions](https://www.javaworld.com/article/2076721/core-java/designing-with-exceptions.html)
 * [OO in one Sentence](https://media.pragprog.com/articles/may_04_oo1.pdf)
+
 
 ### Running the Program
 
