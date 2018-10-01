@@ -26,7 +26,7 @@ public class AntRule extends Rule {
     private Random r;
     private List<AntForageAnt> Ants;
     //Orientations
-    public static final int N = 0;
+    public static final int NDir = 0;
     public static final int NE = 1;
     public static final int E = 2;
     public static final int SE = 3;
@@ -38,7 +38,6 @@ public class AntRule extends Rule {
     /**
      * Constructor for SpreadingOfFireRule.
      * @param grid the grid with states number in each cell
-     * @param ANT_RATIO,MAX_PHEROMONE,EVAPORATION,DIFFUSION,K,N
      */
     public AntRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
@@ -171,7 +170,7 @@ public class AntRule extends Rule {
         else if (cell.getRowIndex() == ant.getrowIndex()-1){
             if (cell.getColIndex()==ant.getcolIndex()+1){return E;}
             else if (cell.getColIndex()==ant.getcolIndex()){return NE;}
-            else if (cell.getColIndex()==ant.getcolIndex()-1){return N;}
+            else if (cell.getColIndex()==ant.getcolIndex()-1){return NDir;}
         }
         else if (cell.getRowIndex() == ant.getrowIndex()){
             if (cell.getColIndex()==ant.getcolIndex()+1){return S;}
@@ -196,7 +195,7 @@ public class AntRule extends Rule {
         //6 here is calculated by 3*2. Three pairs of rol, col indiced are used
         //for the 3 forwared direction neighbours.
         for (int i = ant.getOrientation()*2; i < ant.getOrientation()*2+6;){
-            if (!grid.isOutOfBounds(i, i+1))neighbors.add(grid.item(i, j+1));
+            if (!grid.isOutOfBounds(i, i+1))neighbors.add(grid.item(i, i+1));
             i = i+2;
         }
         return neighbors;
