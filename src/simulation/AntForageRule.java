@@ -4,6 +4,7 @@ package simulation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.DoubleBinaryOperator;
 
 /**
  * @author Yunhao Qing
@@ -12,13 +13,11 @@ import java.util.Random;
  */
 public class AntForageRule extends Rule {
     private final double ANT_RATIO;
-    private final int LIFE_TIME;
     private final double MAX_PHEROMONE;
     private final double EVAPORATION;
     private final double DIFFUSION;
     private final double K;
     private final double N;
-
     private Random r;
     private List<AntForageAnt> Ants;
 
@@ -30,12 +29,11 @@ public class AntForageRule extends Rule {
     public AntForageRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         ANT_RATIO = extraParameters.get(0);
-        LIFE_TIME = (int)(Math.floor(extraParameters.get(1)));
-        MAX_PHEROMONE = extraParameters.get(2);;
-        EVAPORATION = extraParameters.get(3);
-        DIFFUSION = extraParameters.get(4);
-        K = extraParameters.get(5);
-        N = extraParameters.get(6);
+        MAX_PHEROMONE = extraParameters.get(1);;
+        EVAPORATION = extraParameters.get(2);
+        DIFFUSION = extraParameters.get(3);
+        K = extraParameters.get(4);
+        N = extraParameters.get(5);
         initialiseAnts();
     }
 
@@ -45,7 +43,7 @@ public class AntForageRule extends Rule {
             for (int j = 0; j < this.getGrid().getNumCol(); j++) {
                 AntForageCell cell = (AntForageCell) this.getGrid().item(i, j);
                 if (cell.getState() == AntForageCell.EMPTY && r.nextDouble() < ANT_RATIO) {
-                    Ants.add(new AntForageAnt(i,j,LIFE_TIME));
+                    Ants.add(new AntForageAnt(i,j));
                 }
             }
         }
@@ -69,46 +67,117 @@ public class AntForageRule extends Rule {
         }
     }
 
-
     public void antReturnToNest(AntForageAnt ant){
-        AntForageCell cell = (AntForageCell) this.getGrid().item(ant.getxIndex(), ant.getxIndex());
-        List<Cell> neighbors = this.getNeighbors(ant.getxIndex(), ant.getyIndex());
-        //search through neighbours to get i, j of the neighbour that has the most home pheromones
-        int i = 0;//TO BE REPLACED
-        int j = 0;//TO BE REPLACED
-        ant.setxIndex(i);
-        ant.setyIndex(j);
+        AntForageCell currentCell = (AntForageCell)this.getGrid().item(ant.getrowIndex(), ant.getcolIndex());
+        List<Cell> neighbors = this.getGrid().getAllNeighbors(ant.getrowIndex(), ant.getcolIndex());
+        dropFoodPheromones(currentCell,neighbors);
+        if (!forwardLocations(ant).isEmpty()) neighbors = forwardLocations(ant);
+        Cell moveToCell = this.getGrid().item(ant.getrowIndex()+1, ant.getcolIndex());
+        double maxPhero = 0;
+        for (Cell c : neighbors){
+            AntForageCell antcell = (AntForageCell)c;
+            if (antcell.getNestPheromones()>=maxPhero){
+                moveToCell = c;
+                maxPhero = antcell.getNestPheromones();
+            }
+        }
+        ant.setOrientation(determineNewOrientation(moveToCell,ant));
+        ant.setcolIndex(moveToCell.getColIndex());
+        ant.setrowIndex(moveToCell.getRowIndex());
+        if (moveToCell.getState() == AntForageCell.NEST){
+            ant.changeHaveFood();
+        }
+    }
 
+    public void dropHomePheromones(AntForageCell currentCell,List<Cell> neighbors){
+        if (currentCell.getState()== AntForageCell.NEST)
+            currentCell.setNestPheromones(MAX_PHEROMONE);
+        else{
+            double maxPhero = 0;
+            for (Cell cell : neighbors){
+                AntForageCell thisCell = (AntForageCell)cell;
+                maxPhero = Math.max(maxPhero,thisCell.getNestPheromones());
+            }
+            if (maxPhero - 2 - currentCell.getNestPheromones()>0)
+                currentCell.setNestPheromones(currentCell.getNestPheromones()+1);
+        }
+    }
 
+    public void dropFoodPheromones(AntForageCell currentCell,List<Cell> neighbors){
+        if (currentCell.getState()== AntForageCell.FOOD)
+            currentCell.setNestPheromones(MAX_PHEROMONE);
+        else{
+            double maxPhero = 0;
+            for (Cell cell : neighbors){
+                AntForageCell thisCell = (AntForageCell)cell;
+                maxPhero = Math.max(maxPhero,thisCell.getFoodPheromones());
+            }
+            if (maxPhero - 2 - currentCell.getFoodPheromones()>0)
+                currentCell.setFoodPheromones(currentCell.getFoodPheromones()+1);
+        }
+    }
 
-
+    public int determineNewOrientation(Cell cell, AntForageAnt ant){
+        if (cell.getRowIndex() == ant.getrowIndex()+1){
+            if (cell.getColIndex()==ant.getcolIndex()+1){return 3;}
+            else if (cell.getColIndex()==ant.getcolIndex()-1){return 7;}
+        }
+        else if (cell.getRowIndex() == ant.getrowIndex()-1){
+            if (cell.getColIndex()==ant.getcolIndex()+1){return 2;}
+            else if (cell.getColIndex()==ant.getcolIndex()){return 1;}
+            else if (cell.getColIndex()==ant.getcolIndex()-1){return 0;}
+        }
+        else if (cell.getRowIndex() == ant.getrowIndex()){
+            if (cell.getColIndex()==ant.getcolIndex()+1){return 4;}
+            else if (cell.getColIndex()==ant.getcolIndex()){return 5;}
+            else if (cell.getColIndex()==ant.getcolIndex()-1){return 6;}
+        }
+        return -1;
     }
 
     //0 = N,1 = NE,2 = E,3 = SE,4 = S,5 = SW,6 = W,7 = NW
-    /*public List<Cell> forwardLocations(AntForageAnt ant){
+    public List<Cell> forwardLocations(AntForageAnt ant){
         Grid grid = this.getGrid();
         List<Cell> neighbors = new ArrayList<>();
-        int x = ant.getxIndex();
-        int y = ant.getyIndex();
-        int[] index = {x,y-1,x-1,y-1,x-1,y,x-1,y+1,x,y+1,x+1,y+1,x+1,y,x+1,y-1,x,y-1,x-1,y-1};
+        int row = ant.getrowIndex();
+        int col = ant.getcolIndex();
+        int[] index = {row-1,col,row-1,col+1,row,col+1,row+1,col+1,row+1,col,
+                row+1,col-1,row,col-1,row-1,col-1,row-1,col,row-1,col+1};
         for (int i = ant.getOrientation()*2; i < ant.getOrientation()*2+6;){
-            addCell(i,i+1,grid,neighbors);
+            addCell(index[i],index[i+1],grid,neighbors);
             i = i+2;
         }
         return neighbors;
     }
-
 
     public void addCell(int i, int j, Grid grid, List<Cell> neighbors){
         if (!grid.isOutOfBounds(i, j)) {
             neighbors.add(grid.item(i, j));
         }
     }
-    */
 
-    public void antFindFoodSource(AntForageAnt ant){}
-
-
+    public void antFindFoodSource(AntForageAnt ant){
+        AntForageCell currentCell = (AntForageCell)this.getGrid().item(ant.getrowIndex(), ant.getcolIndex());
+        List<Cell> neighbors = this.getGrid().getAllNeighbors(ant.getrowIndex(), ant.getcolIndex());
+        dropHomePheromones(currentCell,neighbors);
+        if (!forwardLocations(ant).isEmpty()) neighbors = forwardLocations(ant);
+        Cell moveToCell = this.getGrid().item(ant.getrowIndex()+1, ant.getcolIndex());
+        double maxPhero = 0;
+        for (Cell c : neighbors){
+            AntForageCell antcell = (AntForageCell)c;
+            if (antcell.getFoodPheromones()>=maxPhero){
+                moveToCell = c;
+                maxPhero = antcell.getFoodPheromones();
+            }
+        }
+        ant.setOrientation(determineNewOrientation(moveToCell,ant));
+        ant.setcolIndex(moveToCell.getColIndex());
+        ant.setrowIndex(moveToCell.getRowIndex());
+        if (moveToCell.getState() == AntForageCell.FOOD){
+            ant.changeHaveFood();
+            moveToCell.setNextState(2);
+        }
+    }
 
     public void pheromonesEvaporateAndDiffuse(){
         for (int i = 0; i < this.getGrid().getNumRow(); i++){
@@ -116,6 +185,8 @@ public class AntForageRule extends Rule {
                 AntForageCell cell = (AntForageCell) this.getGrid().item(i, j);
                 cell.setFoodPheromones(cell.getFoodPheromones()*(1-EVAPORATION));
                 //EVAPORATION
+                if(cell.getNextState()==-1)
+                    cell.setNextState(cell.getState());
             }
         }
     }
