@@ -6,9 +6,13 @@ import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -23,7 +27,9 @@ import rule.Rule;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -36,6 +42,7 @@ public class UIManager {
     // constant screen dimensions
     private final static int SPLASH_SIZE = 300;
     private final static int PANEL_WIDTH = 175;
+    private final static int CHART_HEIGHT = 200;
     private final static int LAYOUT_SPACING = 20;
     private final static int USER_PANEL_ITEM_SPACING = 20;
 
@@ -65,10 +72,13 @@ public class UIManager {
     private ComboBox<String> cellShapeButton;
     private Slider mySpeedSlider;
     private Rule myRule;
-    private int myGenerationCount=1;
+    private int myGenerationCount=0;
     private Text myGenerationsDisplay;
     private Text myErrorDisplay;
     private GridUI myGridUI;
+    private Grid myGrid;
+    private LineChart myLineChart;
+    private XYChart.Series[] mySeriesArray;
 
     // file read components
     private File myFile;
@@ -126,10 +136,16 @@ public class UIManager {
         myGenerationsDisplay.setText(myTextResources.getString("GenerationText")+myGenerationCount);
 
         // update cells
-        System.out.print(myRule.getClass().getName());
         myRule.determineNextStates();
         myRule.updateGrid();
         myGridUI.updateAppearance();
+
+        var stateMap = myRule.getStateMap();
+        for (Integer key : stateMap.keySet()) {
+            int currPop = myGrid.getStateCount(key);
+            mySeriesArray[key].getData().add(new XYChart.Data(myGenerationCount, currPop));
+        }
+
     }
 
 
@@ -227,7 +243,7 @@ public class UIManager {
         var height = Double.parseDouble(myGraphicResources.getString("HeightOfSimulation"));
 
         var root = new Group();
-        var scene = new Scene(root, width+PANEL_WIDTH, height);
+        var scene = new Scene(root, width+PANEL_WIDTH, height+CHART_HEIGHT);
         var border = new BorderPane();
 
         // user panel
@@ -254,14 +270,14 @@ public class UIManager {
         // grid region
         var gridRegion = new Pane();
         gridRegion.setPrefSize(width, height);
-        var grid = new Grid(reader, myGridType, myCellShape);
+        myGrid = new Grid(reader, myGridType, myCellShape);
         Class<?> clazz = null;
         Constructor<?> constructor = null;
         Object instance = null;
         try {
             clazz = Class.forName("UI.GridUI" + myCellShape);
             constructor = clazz.getConstructor(Grid.class, ResourceBundle.class);
-            instance = constructor.newInstance(grid, myGraphicResources);
+            instance = constructor.newInstance(myGrid, myGraphicResources);
         } catch (ClassNotFoundException e) {
             // TODO: error handling
             e.printStackTrace();
@@ -277,15 +293,40 @@ public class UIManager {
 
         myGridUI = (GridUI) instance;
         var gridNodes = myGridUI.getMyNodes();
-        myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
+        myRule = makeRuleByReflection(myGrid, reader.getName(), reader.getExtraParameters());
+
+        // chart region
+        var chartRegion = new HBox();
+        chartRegion.setPrefSize(width, CHART_HEIGHT);
+        final NumberAxis xAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Generation");
+        yAxis.setLabel("Population");
+        myLineChart = new LineChart<>(xAxis,yAxis);
+        myLineChart.setTitle("Cell Population by State Over Time");
+        myLineChart.setCreateSymbols(false);
+        myLineChart.setLegendVisible(true);
+        var stateMap = myRule.getStateMap();
+        mySeriesArray = new XYChart.Series[stateMap.size()];
+        for (int ind = 0; ind<stateMap.size(); ind++) {
+            mySeriesArray[ind] = new XYChart.Series<>();
+        }
+        for (Integer key : stateMap.keySet()) {
+            int currPop = myGrid.getStateCount(key);
+            mySeriesArray[key].getData().add(new XYChart.Data(myGenerationCount, currPop));
+            mySeriesArray[key].setName(stateMap.get(key));
+        }
+        myLineChart.getData().addAll(mySeriesArray);
 
         // add elements to each region
         userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
                 pauseButton, stepButton, speedText, mySpeedSlider);
         gridRegion.getChildren().addAll(gridNodes);
+        chartRegion.getChildren().add(myLineChart);
 
         // set layout regions
         border.setRight(userPanel);
+        border.setBottom(chartRegion);
         border.setLeft(gridRegion);
 
         // add layout to root
@@ -333,7 +374,7 @@ public class UIManager {
         simToSplashButton.setOnAction( event -> {
             myAnimation.stop();
             stage.setScene(splash.getScene());
-            myGenerationCount = 1;
+            myGenerationCount = 0;
         } );
 
     }
