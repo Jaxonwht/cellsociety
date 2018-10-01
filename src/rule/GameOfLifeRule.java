@@ -11,15 +11,15 @@ import java.util.List;
  * A specific Rule class for GameOfLife game, adapting from https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules.
  */
 public class GameOfLifeRule extends Rule {
-    // If number of neighbors < UNDERPOPULATION_THRESHOLD, underpopulation happens.
     private final int UNDERPOPULATION_THRESHOLD;
-    // If number of neighbors > OVERPOPULATION_THRESHOLD, overpopulation happens.
     private final int OVERPOPULATION_THRESHOLD;
 
     public GameOfLifeRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         UNDERPOPULATION_THRESHOLD = (int) Math.floor(extraParameters.get(0));
         OVERPOPULATION_THRESHOLD = (int) Math.floor(extraParameters.get(1));
+        this.getStateMap().put(GameOfLifeCell.ALIVE, "ALIVE");
+        this.getStateMap().put(GameOfLifeCell.DEAD, "DEAD");
     }
 
     @Override
@@ -33,7 +33,7 @@ public class GameOfLifeRule extends Rule {
         }
     }
     
-    public void checkCell(Cell cell, List<Cell> neighbors){
+    private void checkCell(Cell cell, List<Cell> neighbors){
         int numAliveNeighbors = 0;
         for (Cell neighbor : neighbors) {
             if (neighbor != null && neighbor.getState() == GameOfLifeCell.ALIVE) {

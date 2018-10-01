@@ -3,8 +3,7 @@ package rule;
 import cell.Cell;
 import simulation.Grid;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Haotian Wang
@@ -14,6 +13,7 @@ public abstract class Rule {
 
     public final static Random rand = new Random();
     private Grid myGrid;
+    private Map<Integer,String> myStateMap = new HashMap<>();
 
     /**
      * Construct a Rule object using grid as the only parameter.
@@ -36,24 +36,9 @@ public abstract class Rule {
     }
 
     /**
-     * @author Julia Saveliff
-     * Reset the next state of each cell to uninitialized value
-     */
-    public void clearNextStates() {
-        for (int i = 0; i < myGrid.getNumRow(); i++) {
-            for (int j = 0; j < myGrid.getNumCol(); j++) {
-                Cell cell = myGrid.item(i, j);
-                cell.setNextState(Cell.UNINITIALIZED);
-            }
-        }
-    }
-
-    /**
      * Calculate and set the next states of all the cells in the grid.
      */
     public abstract void determineNextStates();
-
-
 
     /**
      * Allow access for the subclasses of rule to the abstract Rule class' Grid object.
@@ -62,4 +47,9 @@ public abstract class Rule {
     protected Grid getGrid () {
         return myGrid;
     }
+
+    public Map<Integer,String> getStateMap() {
+        return myStateMap;
+    }
+
 }

@@ -5,6 +5,7 @@
 		<title>spreadingOfFire_1</title>
 		<author>Team13</author>
 		<extraParameters>probCatch probGrowth burningCount</extraParameters>
+		<description>This xml file is for fire simulation testing. The grid is of small size and we can see the changes of individual cell clearly in this xml file.</description>
 	</simulation>
 	<params>
 		<probCatch>0.3</probCatch>

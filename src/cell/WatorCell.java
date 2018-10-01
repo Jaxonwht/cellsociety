@@ -1,7 +1,5 @@
 package cell;
 
-import cell.Cell;
-
 /**
  * @author Yunhao Qing
  * This is a class specific for WatorCell, cell behaviours are set based on

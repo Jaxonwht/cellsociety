@@ -5,9 +5,10 @@
         <title>rockPaperScissor_2</title>
         <author>Team13</author>
         <extraParameters>opacityChange</extraParameters>
+        <description>This xml file implements the Rock, Paper, Scissor simulation. It has a larger grid and smaller opacity change than the first Rock, Paper, Scissor xml file.</description>
     </simulation>
     <params>
-        <opacityChange>0.5</opacityChange>
+        <opacityChange>0.25</opacityChange>
     </params>
     <dimConfig>
         <grid>

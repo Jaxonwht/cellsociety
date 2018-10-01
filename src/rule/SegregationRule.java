@@ -16,6 +16,9 @@ public class SegregationRule extends Rule {
     public SegregationRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         SATISFACTION_THRESHOLD = extraParameters.get(0);
+        this.getStateMap().put(SegregationCell.EMPTY, "EMPTY");
+        this.getStateMap().put(SegregationCell.TYPE_A, "TYPE A");
+        this.getStateMap().put(SegregationCell.TYPE_B, "TYPE B");
     }
 
     @Override
@@ -25,7 +28,6 @@ public class SegregationRule extends Rule {
                 Cell cell = this.getGrid().item(i, j);
 
                 if (cell.getState() == SegregationCell.TYPE_A || cell.getState() == SegregationCell.TYPE_B) {
-                    // If Type A or Type B...
                     int numSameType = 0;
                     List<Cell> neighbors = getGrid().getAllNeighbors(i, j);
                     for (Cell neighbor : neighbors) {
@@ -34,7 +36,6 @@ public class SegregationRule extends Rule {
                         }
                     }
                     if (numSameType / (float) neighbors.size() < SATISFACTION_THRESHOLD) {
-                        // If unsatisfied...
                         int destX = Rule.rand.nextInt(this.getGrid().getNumCol());
                         int destY = Rule.rand.nextInt(this.getGrid().getNumRow());
                         while (this.getGrid().item(destX, destY).getState() != SegregationCell.EMPTY
@@ -46,11 +47,9 @@ public class SegregationRule extends Rule {
                         this.getGrid().item(destX, destY).setNextState(cell.getState());
                         cell.setNextState(SegregationCell.EMPTY);
                     } else {
-                        // If satisfied...
                         cell.setNextState(cell.getState());
                     }
                 } else if (cell.getState() == SegregationCell.EMPTY && cell.getNextState() == Cell.UNINITIALIZED) {
-                    // If uninitialized empty...
                     cell.setNextState(SegregationCell.EMPTY);
                 }
             }

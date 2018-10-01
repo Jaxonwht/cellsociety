@@ -5,6 +5,7 @@
         <title>spreadingOfFire_1</title>
         <author>Team13</author>
         <extraParameters>probCatch probGrowth burningCount</extraParameters>
+        <description>This xml file is for fire simulation testing. The xml is interesting as the probGrowth parameter is set to be 0 in this xml file, which means that tree will not grow from empty field. This helps us in testing as we can focus on other changes, e.g. the change from normal tree to burning tree.</description>
     </simulation>
     <params>
         <probCatch>0.4</probCatch>

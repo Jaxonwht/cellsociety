@@ -1,8 +1,5 @@
 package cell;
 
-
-import cell.Cell;
-
 /**
  * @author Yunhao Qing
  * This is a class specific for SpreadingOfFireCell, cell behaviours are set 

@@ -13,7 +13,7 @@ import java.util.List;
  * adapting rules from http://nifty.stanford.edu/2007/shiflet-fire/.
  */
 public class SpreadingOfFireRule extends Rule {
-    private final int MY_BURNING_COUNT; //how long the tree has been buring
+    private final int MY_BURNING_COUNT;
     private final double PROB_GROWTH;
     private final double PROB_CATCH;
     
@@ -27,9 +27,12 @@ public class SpreadingOfFireRule extends Rule {
         PROB_CATCH = extraParameters.get(0);
         PROB_GROWTH = extraParameters.get(1);
         MY_BURNING_COUNT = (int) Math.floor(extraParameters.get(2));
+        this.getStateMap().put(SpreadingOfFireCell.NORMAL, "NORMAL");
+        this.getStateMap().put(SpreadingOfFireCell.BURNING, "BURNING");
+        this.getStateMap().put(SpreadingOfFireCell.EMPTY, "EMPTY");
     }
     
-    public void determineNextStatesBurning(SpreadingOfFireCell cell) {
+    private void determineNextStatesBurning(SpreadingOfFireCell cell) {
         cell.setBurningTime(cell.getBurningTime() + 1);
         if (cell.getBurningTime() == MY_BURNING_COUNT) {
             cell.setBurningTime(0);
@@ -39,7 +42,7 @@ public class SpreadingOfFireRule extends Rule {
         }
     }
     
-    public void determineNextStatesNormal(Cell cell, List<Cell> neighbors){
+    private void determineNextStatesNormal(Cell cell, List<Cell> neighbors){
         boolean check = false;
         for (Cell neighbor : neighbors) {
             if (neighbor != null && neighbor.getState() == SpreadingOfFireCell.BURNING) {
@@ -53,7 +56,7 @@ public class SpreadingOfFireRule extends Rule {
         }
     }
     
-    public void determineNextStatesEmpty(SpreadingOfFireCell cell) {
+    private void determineNextStatesEmpty(SpreadingOfFireCell cell) {
         if (rand.nextDouble() < PROB_GROWTH){
             cell.setNextState(SpreadingOfFireCell.NORMAL);
         } else {

@@ -3,12 +3,20 @@ package UI;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -23,6 +31,7 @@ import rule.Rule;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -34,10 +43,15 @@ import java.util.ResourceBundle;
  */
 public class UIManager {
     // constant screen dimensions
-    private final static int SPLASH_SIZE = 300;
-    private final static int PANEL_WIDTH = 175;
-    private final static int LAYOUT_SPACING = 20;
-    private final static int USER_PANEL_ITEM_SPACING = 20;
+    private final int SPLASH_SIZE;
+    private final int PANEL_WIDTH;
+    private final int LAYOUT_SPACING;
+    private final int USER_PANEL_ITEM_SPACING;
+    private final int PADDING;
+    private final int SIMULATION_WIDTH;
+    private final int SIMULATION_HEIGHT;
+    private final int CHART_HEIGHT;
+    private final int SLIDER_WIDTH;
 
     // button text
     private ResourceBundle myTextResources;
@@ -65,16 +79,20 @@ public class UIManager {
     private ComboBox<String> cellShapeButton;
     private Slider mySpeedSlider;
     private Rule myRule;
-    private int myGenerationCount=1;
+    private int myGenerationCount = 0;
     private Text myGenerationsDisplay;
     private Text myErrorDisplay;
     private GridUI myGridUI;
+    private Grid myGrid;
+    private XYChart.Series[] mySeriesArray;
 
     // file read components
     private File myFile;
     private Text myFileText;
     private String myGridType;
     private String myCellShape;
+    private boolean gridTypeChosen;
+    private boolean cellShapeChosen;
 
     // animation components
     private Timeline myAnimation;
@@ -88,6 +106,25 @@ public class UIManager {
         myGraphicResources = ResourceBundle.getBundle(DEFAULT_GRAPHIC_RESOURCE_FILE);
         myStage = stage;
         myStage.setTitle(myTextResources.getString("Title"));
+
+        SPLASH_SIZE = getIntValueFromResource("SplashSize");
+        PANEL_WIDTH = getIntValueFromResource("PanelWidth");
+        LAYOUT_SPACING = getIntValueFromResource("LayoutSpacing");
+        USER_PANEL_ITEM_SPACING = getIntValueFromResource("UserPanelItemSpacing");
+        PADDING = getIntValueFromResource("Padding");
+        SIMULATION_WIDTH = getIntValueFromResource("SimulationWidth");
+        SIMULATION_HEIGHT = getIntValueFromResource("SimulationHeight");
+        CHART_HEIGHT = getIntValueFromResource("ChartHeight");
+        SLIDER_WIDTH = getIntValueFromResource("SliderWidth");
+    }
+
+    /**
+     *
+     * @param key
+     * @return
+     */
+    private int getIntValueFromResource(String key) {
+        return Integer.parseInt(myGraphicResources.getString(key));
     }
 
     /**
@@ -129,6 +166,13 @@ public class UIManager {
         myRule.determineNextStates();
         myRule.updateGrid();
         myGridUI.updateAppearance();
+
+        var stateMap = myRule.getStateMap();
+        for (Integer key : stateMap.keySet()) {
+            int currPop = myGrid.getStateCount(key);
+            mySeriesArray[key].getData().add(new XYChart.Data(myGenerationCount, currPop));
+        }
+
     }
 
 
@@ -157,9 +201,9 @@ public class UIManager {
 
 
         gridTypeButton.setOnAction(event -> {
+            gridTypeChosen = true;
             myGridType =  gridTypeButton.getSelectionModel().getSelectedItem();
         });
-
 
         var selectCellShape = new Text(myTextResources.getString("SelectCellShape"));
         cellShapeButton = new ComboBox<>();
@@ -167,19 +211,24 @@ public class UIManager {
         cellShapeButton.setEditable(true);
 
         cellShapeButton.setOnAction(event -> {
+            cellShapeChosen = true;
             myCellShape =  cellShapeButton.getSelectionModel().getSelectedItem();
         });
 
-
-
-        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton, selectGridType,
-                gridTypeButton,selectCellShape, cellShapeButton);
+        layout.getChildren().addAll(selectGridType, gridTypeButton,selectCellShape, cellShapeButton,
+                chooseFileButton, selectedFile, myFileText, splashToSimButton);
         root.getChildren().add(layout);
 
         var fileChooser = new FileChooser();
-        chooseFileButton.setOnAction( event -> handleFile(fileChooser.showOpenDialog(myStage)) );
-
-
+        chooseFileButton.setOnAction( event -> {
+            if (cellShapeChosen && gridTypeChosen) {
+                handleFile(fileChooser.showOpenDialog(myStage));
+                cellShapeChosen=false;
+                gridTypeChosen=false;
+            } else {
+                showWarningPopup(myTextResources.getString("InstructionText"));
+            }
+        });
 
         return root;
 
@@ -207,7 +256,6 @@ public class UIManager {
             try {
                 handleReader(new ReadXML(myFile));
             } catch (Exception e) {
-                e.printStackTrace();
                 myFileText.setText(myTextResources.getString("FileErrorText"));
             }
         } else {
@@ -221,22 +269,81 @@ public class UIManager {
      * @return root node of simulation screen
      */
     private Group setupSimulation(ReadXML reader) {
-        // set up layout of scene
-        var width = Double.parseDouble(myGraphicResources.getString("WidthOfSimulation"));
-        var height = Double.parseDouble(myGraphicResources.getString("HeightOfSimulation"));
-
         var root = new Group();
-        var scene = new Scene(root, width+PANEL_WIDTH, height);
+        var scene = new Scene(root, SIMULATION_WIDTH+PANEL_WIDTH, SIMULATION_HEIGHT+CHART_HEIGHT);
         var border = new BorderPane();
 
-        // user panel
+        var userPanel = buildUserRegion(reader);
+        var gridRegion = buildGridRegion(reader);
+        var chartRegion = buildChartRegion();
+
+        border.setRight(userPanel);
+        border.setTop(chartRegion);
+        border.setLeft(gridRegion);
+
+        root.getChildren().add(border);
+        return root;
+    }
+
+    /**
+     *
+     * @param reader
+     * @return
+     */
+    private Node buildUserRegion(ReadXML reader) {
         var userPanel = new VBox(USER_PANEL_ITEM_SPACING);
-        userPanel.setPrefSize(PANEL_WIDTH,height);
+        userPanel.setPadding(new Insets(PADDING, PADDING, PADDING, PADDING));
+        userPanel.setPrefSize(PANEL_WIDTH,SIMULATION_HEIGHT);
         userPanel.setAlignment(Pos.CENTER);
 
-        // user controls
+        var texts = buildTexts(reader);
+        var buttons = buildButtons();
+        var speedControl = buildSpeedControl();
+
+        userPanel.getChildren().addAll(texts);
+        userPanel.getChildren().addAll(buttons);
+        userPanel.getChildren().addAll(speedControl);
+
+        return userPanel;
+    }
+
+    private List<Node> buildSpeedControl() {
+        List<Node> speedControl = new ArrayList<>();
+        var speedText = new Text(myTextResources.getString("SpeedText"));
+        mySpeedSlider = new Slider();
+        mySpeedSlider.setMin(MIN_RATE);
+        mySpeedSlider.setMax(MAX_RATE);
+        mySpeedSlider.setValue(RATE);
+        mySpeedSlider.setPrefWidth(SLIDER_WIDTH);
+
+        speedControl.add(speedText);
+        speedControl.add(mySpeedSlider);
+
+        return speedControl;
+    }
+
+    private List<Text> buildTexts(ReadXML reader) {
+        List<Text> texts = new ArrayList<>();
+        var author = new Text(reader.getAuthor());
+        author.setWrappingWidth(PANEL_WIDTH);
+        var description = new Text(reader.getDescription());
+        description.setWrappingWidth(PANEL_WIDTH);
+        var parameters = new Text(reader.getMyParameters());
+        parameters.setWrappingWidth(PANEL_WIDTH);
         myErrorDisplay = new Text();
         myGenerationsDisplay = new Text(myTextResources.getString("GenerationText")+myGenerationCount);
+
+        texts.add(author);
+        texts.add(description);
+        texts.add(parameters);
+        texts.add(myErrorDisplay);
+        texts.add(myGenerationsDisplay);
+
+        return texts;
+    }
+
+    private List<Button> buildButtons() {
+        List<Button> buttons = new ArrayList<>();
         simToSplashButton = makeButton("LoadText");
         var playButton = makeButton("PlayText");
         playButton.setOnAction( event -> handlePlay() );
@@ -244,53 +351,89 @@ public class UIManager {
         pauseButton.setOnAction( event -> handlePause() );
         var stepButton = makeButton("StepText");
         stepButton.setOnAction( event -> handleStep() );
-        var speedText = new Text(myTextResources.getString("SpeedText"));
-        mySpeedSlider = new Slider();
-        mySpeedSlider.setMin(MIN_RATE);
-        mySpeedSlider.setMax(MAX_RATE);
-        mySpeedSlider.setValue(RATE);
 
-        // grid region
+        buttons.add(simToSplashButton);
+        buttons.add(pauseButton);
+        buttons.add(playButton);
+        buttons.add(stepButton);
+
+        return buttons;
+    }
+
+    /**
+     *
+     * @param reader
+     * @return
+     */
+    private Node buildGridRegion(ReadXML reader) {
         var gridRegion = new Pane();
-        gridRegion.setPrefSize(width, height);
-        var grid = new Grid(reader, myGridType, myCellShape);
+        gridRegion.setPrefSize(SIMULATION_WIDTH, SIMULATION_HEIGHT);
+        myGrid = new Grid(reader, myGridType, myCellShape);
         Class<?> clazz = null;
         Constructor<?> constructor = null;
         Object instance = null;
         try {
             clazz = Class.forName("UI.GridUI" + myCellShape);
             constructor = clazz.getConstructor(Grid.class, ResourceBundle.class);
-            instance = constructor.newInstance(grid, myGraphicResources);
+            instance = constructor.newInstance(myGrid, myGraphicResources);
         } catch (ClassNotFoundException e) {
-            // TODO: error handling
-            e.printStackTrace();
+            showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("ClassNotFoundText"));
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("NoSuchMethodText"));
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("InstantiationText"));
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("IllegalAccessText"));
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            showWarningPopup(e.getMessage() + "\n" + myTextResources.getString("InvocationTargetText"));
         }
 
         myGridUI = (GridUI) instance;
         var gridNodes = myGridUI.getMyNodes();
-        myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
-        // add elements to each region
-        userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
-                pauseButton, stepButton, speedText, mySpeedSlider);
+        myRule = makeRuleByReflection(myGrid, reader.getName(), reader.getExtraParameters());
+
         gridRegion.getChildren().addAll(gridNodes);
 
-        // set layout regions
-        border.setRight(userPanel);
-        border.setLeft(gridRegion);
+        return gridRegion;
+    }
 
-        // add layout to root
-        root.getChildren().add(border);
+    public static void showWarningPopup(String message) {
+        var alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
 
-        return root;
+    /**
+     *
+     * @return
+     */
+    private Node buildChartRegion() {
+        var chartRegion = new HBox();
+        chartRegion.setPrefSize(SIMULATION_WIDTH, CHART_HEIGHT);
+        final NumberAxis xAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel(myTextResources.getString("XAxisText"));
+        yAxis.setLabel(myTextResources.getString("YAxisText"));
+        var lineChart = new LineChart<>(xAxis,yAxis);
+        lineChart.setTitle(myTextResources.getString("ChartTitleText"));
+        lineChart.setCreateSymbols(false);
+        lineChart.setLegendVisible(true);
+        lineChart.setLegendSide(Side.RIGHT);
+        var stateMap = myRule.getStateMap();
+        mySeriesArray = new XYChart.Series[stateMap.size()];
+        for (int ind = 0; ind<stateMap.size(); ind++) {
+            mySeriesArray[ind] = new XYChart.Series<>();
+        }
+        for (Integer key : stateMap.keySet()) {
+            int currPop = myGrid.getStateCount(key);
+            mySeriesArray[key].getData().add(new XYChart.Data(myGenerationCount, currPop));
+            mySeriesArray[key].setName(stateMap.get(key));
+        }
+        lineChart.getData().addAll(mySeriesArray);
 
+        chartRegion.getChildren().add(lineChart);
+
+        return chartRegion;
     }
 
     /**
@@ -330,8 +473,8 @@ public class UIManager {
         });
         simToSplashButton.setOnAction( event -> {
             myAnimation.stop();
-            stage.setScene(splash.getScene());
-            myGenerationCount = 1;
+            create();
+            myGenerationCount = 0;
         } );
 
     }
@@ -349,7 +492,6 @@ public class UIManager {
      * To be called when user pauses simulation.
      */
     private void handlePause() {
-        // pause animation
         myAnimation.pause();
     }
 
@@ -357,7 +499,6 @@ public class UIManager {
      * To be called when user starts simulation.
      */
     private void handlePlay() {
-        // resume animation
         myAnimation.play();
     }
 
@@ -365,7 +506,6 @@ public class UIManager {
      * To be called when user steps through simulation.
      */
     private void handleStep() {
-        // step through animation
         myAnimation.pause();
         step(SECOND_DELAY);
     }
