@@ -42,6 +42,7 @@ public abstract class GridUI {
     private Map<Integer, Paint> intToPaintMap;
     private Map<Integer, Image> intToImageMap;
     private List<Node> myNodes;
+    private ResourceBundle myTextResources = ResourceBundle.getBundle("UI/UI_text");
 
     public GridUI(Grid grid, ResourceBundle resource) {
         myCellResources = resource;
@@ -61,6 +62,10 @@ public abstract class GridUI {
         for (int i = 0; i < myGrid.getNumRow(); i++) {
             for (int j = 0 ; j < myGrid.getNumCol(); j++) {
                 int state = myGrid.item(i, j).getState();
+                if (!intToPaintMap.isEmpty() && !intToImageMap.isEmpty()) {
+                    UIManager.showWarningPopup(myTextResources.getString("ShapeImageText"));
+                    return;
+                }
                 if (intToPaintMap.containsKey(state)) {
                     addShape(i, j, state);
                 }
@@ -68,14 +73,22 @@ public abstract class GridUI {
                     addImageView(i, j, state);
                 }
                 else {
-                    // TODO: error handling
                     String appearance = myCellResources.getString("State" + state);
                     if (!appearance.startsWith("Image")) {
+                        if (!stringToPaintMap.containsKey(appearance)) {
+                            UIManager.showWarningPopup(myTextResources.getString("NodeInitializationText"));
+                            return;
+                        }
                         intToPaintMap.put(state, stringToPaintMap.get(appearance));
                         addShape(i, j, state);
                     }
                     else {
-                        intToImageMap.put(state, new Image(getClass().getClassLoader().getResourceAsStream(appearance.split("/")[1])));
+                        try{
+                            intToImageMap.put(state, new Image(getClass().getClassLoader().getResourceAsStream(appearance.split("/")[1])));
+                        } catch (Exception e) {
+                            UIManager.showWarningPopup(myTextResources.getString("ImageNotFoundText"));
+                            return;
+                        }
                         addImageView(i, j, state);
                     }
                 }
@@ -106,7 +119,7 @@ public abstract class GridUI {
 
     protected double getSimulationWidth() { return simulationWidth; }
 
-    protected double getSimulationHeight() { return simulationWidth; }
+    protected double getSimulationHeight() { return simulationHeight; }
 
     protected Map<Integer, Paint> getIntToPaintMap() { return intToPaintMap; }
 

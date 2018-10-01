@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import UI.UIManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -17,18 +19,18 @@ public class ReadXML {
     private int column;
     private int[][] cellState;
     private List<Double> extraParameters;
-    public final static Random rand = new Random();
-    Document document;
-    public final static String XMLFileOpenException = "The system is unable to open the file, the file may be damaged." +
+    private final static Random rand = new Random();
+    private Document document;
+    private final static String XMLFileOpenException = "The system is unable to open the file, the file may be damaged." +
             "Please select a valid XML file";
-    public final static String XMLFileSimException = "Invalid or no simulation type given.";
-    public final static String XMLFileGridException = "Grid Configuration not given or incorrectly formatted.";
-    public final static String XMLFileCellStateException = "The cell configuration in the XML is missing or " +
+    private final static String XMLFileSimException = "Invalid or no simulation type given.";
+    private final static String XMLFileGridException = "Grid Configuration not given or incorrectly formatted.";
+    private final static String XMLFileCellStateException = "The cell configuration in the XML is missing or " +
             "incorrect or not supported at this point of time.";
-    public final static String XMLFileParaException = "The extra parameters in the XML files are missing or incorrectly" +
+    private final static String XMLFileParaException = "The extra parameters in the XML files are missing or incorrectly" +
             "formatted.";
-    public final static String XMLFileAuthorException ="The author is not found or incorrectly formatted.";
-    public final static String XMLFileDescriptionException = "The description is not found or incorrectly formatted.";
+    private final static String XMLFileAuthorException ="The author is not found or incorrectly formatted.";
+    private final static String XMLFileDescriptionException = "The description is not found or incorrectly formatted.";
 
 
 
@@ -43,20 +45,20 @@ public class ReadXML {
      * It reads the type of simulation, grid and initial states configuration
      * and extra parameters for each specific simulation.
      */
-    public ReadXML (File file) throws Exception {
+    public ReadXML (File file) {
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             document = documentBuilder.parse(file);
             document.getDocumentElement().normalize();
         } catch (Exception e ) {
-            throw new Exception(XMLFileOpenException);
+            UIManager.showWarningPopup(XMLFileOpenException);
         }
         try {
             this.name = returnString("name");
         }
         catch (Exception e ) {
-            throw new Exception(XMLFileSimException);
+            UIManager.showWarningPopup(XMLFileSimException);
         }
         this.extraParameters = new ArrayList<>();
         readGrid();
@@ -65,19 +67,19 @@ public class ReadXML {
         try{
         author = returnString("author");}
         catch (Exception e){
-            throw new Exception(XMLFileAuthorException);
+            UIManager.showWarningPopup(XMLFileAuthorException);
         }
         try{
         description = returnString("description"); }
         catch(Exception e){
-            throw new Exception(XMLFileDescriptionException);
+            UIManager.showWarningPopup(XMLFileDescriptionException);
         }
     }
     
     /**
      * Read in initial state for each cell and update the 2D array cellState.
      */
-    private void readState() throws Exception {
+    private void readState() {
         try {
             NodeList typeList = document.getElementsByTagName("cellState");
             String dataType = typeList.item(0).getAttributes().getNamedItem("dataType").getNodeValue();
@@ -90,7 +92,7 @@ public class ReadXML {
             }
         }
         catch (Exception e){
-            throw new Exception(XMLFileCellStateException);
+            UIManager.showWarningPopup(XMLFileCellStateException);
         }
 
     }
@@ -150,7 +152,7 @@ public class ReadXML {
     /**
      * Return the extra parameters specified in the XML file if there is any.
      */
-    private void readExtraParameters() throws Exception{
+    private void readExtraParameters() {
         try {
             myParameters = new HashMap<>();
             String parameters = returnString("extraParameters");
@@ -164,21 +166,19 @@ public class ReadXML {
             }
         }
         catch (Exception e){
-            throw new Exception(XMLFileParaException);
+            UIManager.showWarningPopup(XMLFileParaException);
         }
     }
     /**
      * Read in the grid configuration and initialise the 2D array cellState.
      */
-    private void readGrid() throws Exception{
+    private void readGrid() {
         try{
-        // width = returnInt("width");
-        // height = returnInt("height");
         row = returnInt("row");
         column = returnInt("col");
         cellState = new int[row][column];}
         catch (Exception e){
-            throw new Exception(XMLFileGridException);
+            UIManager.showWarningPopup(XMLFileGridException);
         }
     }
 
