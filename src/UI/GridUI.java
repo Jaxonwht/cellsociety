@@ -45,8 +45,8 @@ public abstract class GridUI {
 
     public GridUI(Grid grid, ResourceBundle resource) {
         myCellResources = resource;
-        simulationHeight = Double.parseDouble(myCellResources.getString("HeightOfSimulation"));
-        simulationWidth = Double.parseDouble(myCellResources.getString("WidthOfSimulation"));
+        simulationHeight = Double.parseDouble(myCellResources.getString("SimulationHeight"));
+        simulationWidth = Double.parseDouble(myCellResources.getString("SimulationWidth"));
         myNodes = new ArrayList<>();
         myGrid = grid;
         intToImageMap = new HashMap<>();
