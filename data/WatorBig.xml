@@ -5,6 +5,7 @@
         <title>wator_1</title>
         <author>Team13</author>
         <extraParameters>reproductionFish reproductionShark</extraParameters>
+        <description>This xml file is made for Wator simulation. It contains many fish and many shark in the initial setting. The grid is of medium size and we can see whether our code work for this medium-size grid.</description>
     </simulation>
     <params>
         <reproductionFish>5.0</reproductionFish>
