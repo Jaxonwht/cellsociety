@@ -14,7 +14,6 @@ public abstract class Rule {
 
     public final static Random rand = new Random();
     private Grid myGrid;
-    private List<Integer> myStateList;
 
     /**
      * Construct a Rule object using grid as the only parameter.
@@ -63,6 +62,4 @@ public abstract class Rule {
     protected Grid getGrid () {
         return myGrid;
     }
-
-    public List<Integer> getStateList() { return myStateList; }
 }
