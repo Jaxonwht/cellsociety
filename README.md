@@ -214,14 +214,15 @@ showing how its amount changes over time. The user can also do comparison betwee
 
 Haotian Wang
 
-* a
+* I have been working on separating backend and the UI. I enjoyed the process a lot, it is so fun to see how much changes I made and how
+flexible our codes become after I re-construct the structure of our project.
 
 Yunhao Qing
 
 * The project is very time-consuming. I get much more used to using Git as a part of a team through doing this project. I am responsible for mostly backend coding and I am very satisfied with working on backend.I learn about how flexibility of codes is important as making changes on flexible codes is much easier and changing codes is what we do all the time.
 
-
 Julia Saveliff
 
-* a
+* I have been working on the GUI and I really like the experience. Learning how all the UI components work, how the UI components are connected to the back-end and learning how to handle user input were
+challenging but fun as well. I have also been doing a lot of testing and debugging, it feels great to see how the UI becomes more perfect and beautiful over time.
 
