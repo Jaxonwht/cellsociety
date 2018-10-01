@@ -5,7 +5,7 @@
         <title>rockPaperScissor_1</title>
         <author>Team13</author>
         <extraParameters>opacityIncrement</extraParameters>
-        <description></description>
+        <description>This xml file implements the Rock, Paper, Scissor simulation. This file is unique because only Rock and Paper exist, so one will die out quickly.</description>
     </simulation>
     <params>
         <opacityIncrement>0.5</opacityIncrement>
