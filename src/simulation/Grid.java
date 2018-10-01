@@ -185,18 +185,6 @@ public class Grid {
         System.out.print("\n");
     }
 
-    public int getStateCount(int state) {
-        int count=0;
-        for (int i=0; i<myNumRow; i++) {
-            for (int j = 0; j < myNumCol; j++) {
-                if (myCells[i][j].getState() == state) {
-                    count += 1;
-                }
-            }
-        }
-        return count;
-    }
-
 }
 
 
