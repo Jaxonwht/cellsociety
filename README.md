@@ -84,6 +84,9 @@ Hours Spent: 100+ hours for each person
 * [Oracle documentation on InvocationTargetException](https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/InvocationTargetException.html)
 * [Oracle documentation on JavaFx Color](https://docs.oracle.com/javafx/2/api/javafx/scene/paint/Color.html)
 * [The Java ternary operator examples](https://alvinalexander.com/java/edu/pj/pj010018)
+* [How to Handle Jave Exception](https://stackify.com/specify-handle-exceptions-java/)
+* [Designing with Interfaces](https://www.artima.com/designtechniques/interfaces.html)
+* [Designing with Exceptions](https://www.javaworld.com/article/2076721/core-java/designing-with-exceptions.html)
 
 ### Running the Program
 
@@ -129,6 +132,8 @@ of the grid's dimensions or if a cell goes unassigned
 
 * If during a simulation, the user presses the `Load new simulation` button, but then just
 presses `Start simulation` without loading a file, the simulation screen will not clear
+
+* The Ant Foraging is not finished.
 
 
 ### Notes
