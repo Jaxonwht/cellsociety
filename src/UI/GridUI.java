@@ -13,7 +13,7 @@ import java.util.*;
 
 /**
  * @author Haotian Wang
- * This class handles the change of appearances of nodes
+ * This abstract class handles the change of appearances of nodes. It initializes and updates Shape or ImageView of the various cells in the 2D array of the Grid class. Whether the cells will have a Shape or an ImageView depends on the specifications in UI_graphic.properties file.
  */
 public abstract class GridUI {
     private ResourceBundle myCellResources;

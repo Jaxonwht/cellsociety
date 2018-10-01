@@ -14,21 +14,41 @@ Finish Date: 09/23/2018
 Hours Spent:
 
 ### Primary Roles
-* CA: Julia Saveliff
-* UIManager: Julia Saveliff
-* Grid: Julia Saveliff
-* Cell: Haotian Wang
-    * GameOfLifeCell: Haotian Wang
-    * SegregationCell: Haotian Wang
-    * SpreadingOfFireCell: Yunhao Qing
-    * WartorCell: Yunhao Qing
-* Rule: Haotian Wang
-    * GameOfLifeRule: Haotian Wang
-    * SegregationRule: Haotian Wang, Julia Saveliff
-    * SpreadingOfFireRule: Yunhao Qing
-    * WatorRule: Yunhao Qing
+* cell
+    * Cell: Haotian Wang
+        * GameOfLifeCell: Haotian Wang
+        * LoopCell: Julia Saveliff
+        * RockPaperScissorCell: Julia Saveliff
+        * SegregationCell: Haotian Wang
+        * SpreadingOfFireCell: Yunhao Qing
+        * WatorCell: Yunhao Qing
+        * AntCell: Yunhao Qing
+            * AntForageAnt: Yunhao Qing
+* controller
+    * CA: Julia Saveliff, Haotian Wang
+* simulation
+    * Grid: Haotian Wang, Julia Saveliff
+* rule
+    * Rule: Haotian Wang
+        * GameOfLifeRule: Haotian Wang
+        * SegregationRule: Haotian Wang, Julia Saveliff
+        * SpreadingOfFireRule: Yunhao Qing
+        * WatorRule: Yunhao Qing
+        * AntRule: Yunhao Qing
+        * LoopRule: Julia Saveliff
+        * RockPaperScissorRule: Julia Saveliff
+* UI
+    * UIManager: Julia Saveliff, Haotian Wang
+    * GridUI: Haotian Wang
+        * GridUIHexagon: Haotian Wang
+        * GridUISquare: Haotian Wang
+        * GridUITriangle: Haotian Wang
+    * UI property files
+        * UI_graphic.properties: Haotian Wang
+        * UI_text.properties: Julia Saveliff
 * ReadXML: Julia Saveliff, Yunhao Qing, Haotian Wang
 * XML format: Yunhao Qing
+* Error Handling Check: Yunhao Qing
 
 ### Resources Used
 

@@ -277,7 +277,6 @@ public class UIManager {
         myGridUI = (GridUI) instance;
         var gridNodes = myGridUI.getMyNodes();
         myRule = makeRuleByReflection(grid, reader.getName(), reader.getExtraParameters());
-
         // add elements to each region
         userPanel.getChildren().addAll(myErrorDisplay, myGenerationsDisplay, simToSplashButton, playButton,
                 pauseButton, stepButton, speedText, mySpeedSlider);
