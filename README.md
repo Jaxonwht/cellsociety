@@ -124,8 +124,6 @@ Interesting data files:
 * `data/gameOfLifeReappear.xml` involves a reappearing pattern of states
 * `data/WatorLonelyShark.xml` shows what happens when there's only one non-reproducing shark
 
-Features implemented:
-
 Assumptions or Simplifications:
 
 * Simulation automatically stops after 500 generations 
@@ -148,6 +146,11 @@ presses `Start simulation` without loading a file, the simulation screen will no
 
 
 ### Notes
+
+XML tage and Display information on GUI
+
+* In an effort to help you verify your project's design, add a tag to the XML configuration file format that notes a description for the simulation (i.e, what it is trying to test, its source, or why you think it is interesting) and a way in the GUI to see all the information about a simulation (author, description, and initial parameter values).<\br><\br>
+* We accomplished this by adding a description tag in each xml file. The parameters, description and author can be displayed on the GUI for the user to easily understand the nature of the XML file and what it is testing specifically.
 
 Simulation:
 
