@@ -5,6 +5,7 @@
         <title>wator_1</title>
         <author>Team13</author>
         <extraParameters>reproductionFish reproductionShark</extraParameters>
+        <description>This xml file is made for Wator simulation. It contains many fish and only one shark in the initial setting, so the user can see clearly how the only shark moves, reproduces and eats the fish clearly. This xml is helpful in debugging as behaviours are clearly shown.</description>
     </simulation>
     <params>
         <reproductionFish>7.0</reproductionFish>
