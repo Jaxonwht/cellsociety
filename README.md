@@ -215,7 +215,8 @@ showing how its amount changes over time. The user can also do comparison betwee
 Haotian Wang
 
 * I have been working on separating backend and the UI. I enjoyed the process a lot, it is so fun to see how much changes I made and how
-flexible our codes become after I re-construct the structure of our project.
+flexible our codes become after I re-construct the structure of our project. I feel I understand the 'Open For Extension,Closed for Modification' much more
+after this project.
 
 Yunhao Qing
 
