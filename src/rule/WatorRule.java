@@ -24,6 +24,9 @@ public class WatorRule extends Rule {
         super(grid, extraParameters);
         REPRODUCTION_FISH = (int) Math.floor(extraParameters.get(0));
         REPRODUCTION_SHARK = (int) Math.floor(extraParameters.get(1));
+        this.getStateList().add(WatorCell.SHARK);
+        this.getStateList().add(WatorCell.EMPTY);
+        this.getStateList().add(WatorCell.FISH);
     }
     
     /** 

@@ -20,6 +20,8 @@ public class GameOfLifeRule extends Rule {
         super(grid, extraParameters);
         UNDERPOPULATION_THRESHOLD = (int) Math.floor(extraParameters.get(0));
         OVERPOPULATION_THRESHOLD = (int) Math.floor(extraParameters.get(1));
+        this.getStateList().add(GameOfLifeCell.ALIVE);
+        this.getStateList().add(GameOfLifeCell.DEAD);
     }
 
     @Override
