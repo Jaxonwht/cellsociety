@@ -217,8 +217,8 @@ public class UIManager {
             myCellShape =  cellShapeButton.getSelectionModel().getSelectedItem();
         });
 
-        layout.getChildren().addAll(chooseFileButton, selectedFile, myFileText, splashToSimButton, selectGridType,
-                gridTypeButton,selectCellShape, cellShapeButton);
+        layout.getChildren().addAll(selectGridType, gridTypeButton,selectCellShape, cellShapeButton,
+                chooseFileButton, selectedFile, myFileText, splashToSimButton);
         root.getChildren().add(layout);
 
         var fileChooser = new FileChooser();
