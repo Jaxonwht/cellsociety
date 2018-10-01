@@ -3,8 +3,7 @@ package rule;
 import cell.Cell;
 import simulation.Grid;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Haotian Wang
@@ -14,6 +13,7 @@ public abstract class Rule {
 
     public final static Random rand = new Random();
     private Grid myGrid;
+    private Map<Integer,String> myStateMap = new HashMap<>();
 
     /**
      * Construct a Rule object using grid as the only parameter.
@@ -62,4 +62,9 @@ public abstract class Rule {
     protected Grid getGrid () {
         return myGrid;
     }
+
+    public Map<Integer,String> getStateMap() {
+        return myStateMap;
+    }
+
 }

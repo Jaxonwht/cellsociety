@@ -18,6 +18,10 @@ public class RockPaperScissorRule extends Rule {
     public RockPaperScissorRule(Grid grid, List<Double> extraParameters) {
         super(grid, extraParameters);
         OPACITY_INCREMENT = extraParameters.get(0);
+        this.getStateMap().put(RockPaperScissorCell.EMPTY, "EMPTY");
+        this.getStateMap().put(RockPaperScissorCell.PAPER, "PAPER");
+        this.getStateMap().put(RockPaperScissorCell.ROCK, "ROCK");
+        this.getStateMap().put(RockPaperScissorCell.SCISSOR, "SCISSOR");
     }
 
     @Override
