@@ -3,7 +3,10 @@ cell society
 
 This project implements a cellular automata simulator.
 
-Authors (in alphabetical order): Haotian Wang, Julia Saveliff, Yunhao Qing
+Authors (in alphabetical order):
+* Haotian Wang (hw186),
+* Julia Saveliff (jms247)
+* Yunhao Qing (yq50)
 
 ### Timeline
 
