@@ -232,7 +232,7 @@ public class Grid {
     private int[] wrapAround(int i, int j) {
         if (!isOutOfBounds(i, j)) { return new int[]{i, j}; }
         else {
-            int[] ans = new int[2];
+            int[] ans = new int[] {i,j};
             if (i < 0) { ans[0] = myNumRow + i; }
             else if (i >= myNumRow) { ans[0] = i - myNumRow; }
             if (j < 0) { ans[1] = myNumCol + j; }
