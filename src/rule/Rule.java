@@ -51,5 +51,4 @@ public abstract class Rule {
     public Map<Integer,String> getStateMap() {
         return myStateMap;
     }
-
 }

@@ -94,7 +94,6 @@ public class ReadXML {
         catch (Exception e){
             UIManager.showWarningPopup(XMLFileCellStateException);
         }
-
     }
 
     private void readStateList() {
@@ -108,7 +107,6 @@ public class ReadXML {
                 cellState[index/column][index%column] = stateNumber;
             }
         }
-
     }
 
     private void readStateRatio() {
@@ -169,6 +167,7 @@ public class ReadXML {
             UIManager.showWarningPopup(XMLFileParaException);
         }
     }
+
     /**
      * Read in the grid configuration and initialise the 2D array cellState.
      */
