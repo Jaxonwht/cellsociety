@@ -6,7 +6,6 @@ package cell;
  * based on http://nifty.stanford.edu/2011/scott-wator-world/.
  * The SpreadingOfFireCell can have 3 states, being empty, a normal tree or 
  * a burning tree.
-
  */
 public class SpreadingOfFireCell extends Cell {
     public static final int EMPTY = 0;

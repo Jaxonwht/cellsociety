@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  * @author Haotian Wang, Julia Saveliff
  * A class for the underlying grid in the various simulations. Most notably int contains references to the actual cells organized in a 2D array. An important function of this class is to retrieve the direct members or all members of a cell located at a specific index.
  */
+
 public class Grid {
     private static final int[][] SQUARE_DIRECT = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     private static final int[][] SQUARE_ALL = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1,-1}};
